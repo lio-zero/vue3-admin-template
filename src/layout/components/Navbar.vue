@@ -1,29 +1,47 @@
 <template>
   <div class="navbar">
-    <!-- 面包屑 -->
+    <hamburger
+      id="hamburger-container"
+      :is-active="opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
     <breadcrumb class="breadcrumb-container"></breadcrumb>
 
-    <!-- 右侧下拉菜单 -->
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="/src/assets/logo.png" class="user-avatar" />
+          <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          ></el-avatar>
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item> 首页 </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/57code/vite2-in-action/">
-            <el-dropdown-item>我的Github</el-dropdown-item>
-          </a>
-        </el-dropdown-menu>
+        <template #dropdown>
+          <el-dropdown-menu class="user-dropdown">
+            <router-link to="/">
+              <el-dropdown-item> 首页 </el-dropdown-item>
+            </router-link>
+            <a target="_blank" href="https://github.com/lio-zero/vite-wj">
+              <el-dropdown-item>我的Github</el-dropdown-item>
+            </a>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import Breadcrumb from './Breadcrumb.vue'
+import Hamburger from '@/components/Hamburger/index.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
+const store = useStore()
+const opened = computed(() => store.state.opened)
+
+const toggleSideBar = () => {
+  store.state.opened = !store.state.opened
+}
 </script>
 <style lang="scss" scoped>
 .navbar {

@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import AppLink from './Link.vue'
 import Item from './Item.vue'
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { isExternal } from '@/utils/validate'
 import { resolve } from 'path-browserify'
 

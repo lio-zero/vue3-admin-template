@@ -1,10 +1,7 @@
 import axios from 'axios'
 
 const service = axios.create({
-  // 在请求地址前面加上 baseURL
   baseURL: import.meta.env.VITE_BASE_API,
-  // 当发送跨域请求时携带cookie
-  // withCredentials: true,
   timeout: 5000
 })
 

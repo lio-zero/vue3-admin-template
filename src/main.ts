@@ -4,10 +4,15 @@ import '@/styles/index.scss'
 import store from './store'
 import 'normalize.css/normalize.css'
 import router from './router'
-import { Setting, Message } from '@element-plus/icons'
 import svgIcon from './icons/index.vue'
+import 'nprogress/nprogress.css'
+import 'element-plus/dist/index.css'
+// import * as EleIcon from '@element-plus/icons'
 
 const app = createApp(App)
-app.component('setting', Setting)
-app.component('message', Message)
+
+// for (const key in EleIcon) {
+//   app.component(key, EleIcon[key])
+// }
+
 app.use(router).use(store).component('svg-icon', svgIcon).mount('#app')

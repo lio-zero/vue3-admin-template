@@ -25,5 +25,6 @@ const name = ref('el-fade-in')
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding: 20px;
 }
 </style>
