@@ -1,12 +1,12 @@
 <template>
-  <div class="navbar">
+  <div class="navbar flex items-center">
     <hamburger
       id="hamburger-container"
       :is-active="opened"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
-    <breadcrumb class="breadcrumb-container"></breadcrumb>
+    <breadcrumb class="breadcrumb-container flex-1"></breadcrumb>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
@@ -19,11 +19,12 @@
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
             <router-link to="/">
-              <el-dropdown-item> 首页 </el-dropdown-item>
+              <el-dropdown-item>首页</el-dropdown-item>
             </router-link>
             <a target="_blank" href="https://github.com/lio-zero/vite-wj">
               <el-dropdown-item>我的Github</el-dropdown-item>
             </a>
+            <el-dropdown-item @click="signOut">退出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -35,12 +36,17 @@ import Breadcrumb from './Breadcrumb.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import Cookies from 'js-cookie'
 
 const store = useStore()
-const opened = computed(() => store.state.opened)
+const opened = computed(() => store.state.sidebar.opened)
 
-const toggleSideBar = () => {
-  store.state.opened = !store.state.opened
+const toggleSideBar = () => store.dispatch('toggleSideBar')
+
+const signOut = () => {
+  localStorage.removeItem('token')
+  Cookies.remove('userInfo')
+  history.back()
 }
 </script>
 <style lang="scss" scoped>

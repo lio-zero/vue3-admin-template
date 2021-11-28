@@ -19,7 +19,7 @@
             style="width: 100%; margin-bottom: 20px"
             :loading="loading"
             type="primary"
-            @click="login()"
+            @click="loginBtn"
           >
             登录
           </el-button>
@@ -57,10 +57,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { validUsername } from '@/utils/validate.js'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { login } from '@/api/login.js'
+import { useStore } from 'vuex'
+import Cookies from 'js-cookie'
 
 const validateUsername = (rule, value, callback) => {
   if (!validUsername(value)) {
@@ -77,10 +80,11 @@ const validatePassword = (rule, value, callback) => {
   }
 }
 const model = reactive({
-  username: 'admin',
+  username: 'lio',
   password: '123456'
 })
 
+const store = useStore()
 const redirect = ref('')
 const loading = ref(false)
 const checked = ref(false)
@@ -94,13 +98,15 @@ const rules = reactive({
 const loginForm = ref(null)
 const router = useRouter()
 
-const login = () => {
+const loginBtn = () => {
   loginForm.value.validate(async valid => {
     if (valid) {
-      // loading.value = true
-      // await this.$store.dispatch('user/login', this.model)
+      const data = await login({ name: model.username, password: model.password })
+      Cookies.set('userInfo', JSON.stringify(data.user))
+      localStorage.setItem('token', data.token)
       router.push({ path: '/' })
-      // loading.value = false
+      ElMessage.success('登录成功')
+      // await store.dispatch('user/login', this.model)
     } else {
       ElMessage.error('账号密码错误')
     }
@@ -108,7 +114,7 @@ const login = () => {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep .el-input__inner {
+:v-deep(.el-input__inner) {
   padding: 20px 40px;
 }
 .login-container {

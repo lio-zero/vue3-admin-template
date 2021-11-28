@@ -1,3 +1,7 @@
+/**
+ * @param {string} path
+ * @returns {Boolean}
+ */
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
@@ -29,6 +33,6 @@ export function validateComfirmPass(rule, value, callback) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  const valid_map = ['admin', 'editor']
+  const valid_map = ['admin', 'editor', 'lio']
   return valid_map.indexOf(str.trim()) >= 0
 }

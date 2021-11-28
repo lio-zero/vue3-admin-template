@@ -1,22 +1,23 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import NProgress from 'nprogress'
 import permission from './modules/permission'
+import middleware from '../middleware'
 
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/Login.vue'),
+    hidden: true
   },
   {
     path: '/',
-    name: 'Home',
     component: Layout,
     redirect: '/dashboard',
     children: [
       {
-        path: '/dashboard',
+        path: 'dashboard',
+        name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
         meta: { title: '首页', icon: 'home' }
       }
@@ -42,13 +43,6 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  NProgress.start()
-  next()
-})
-
-router.afterEach(() => {
-  NProgress.done()
-})
+middleware(router)
 
 export default router

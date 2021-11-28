@@ -29,7 +29,7 @@ const getBreadcrumb = () => {
   let matched = route.matched.filter(item => item.meta && item.meta.title)
   const first = matched[0]
 
-  if (isDashboard(first)) {
+  if (!isDashboard(first)) {
     matched = [{ path: '/dashboard', meta: { title: '首页' } }].concat(matched)
   }
 
@@ -51,6 +51,7 @@ const pathCompile = path => {
   var toPath = compile(path)
   return toPath(route.params)
 }
+
 const handleLink = item => {
   const { redirect, path } = item
   if (redirect) {

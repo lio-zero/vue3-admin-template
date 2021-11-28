@@ -1,15 +1,14 @@
 <template>
-  <!-- <el-main>
-    <router-view />
-  </el-main> -->
   <section class="app-main">
     <!-- 内部应该显示子路由页面信息 -->
-    <!-- <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view> -->
-    <transition :name="name" mode="out-in">
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+    <!-- <transition :name="name" mode="out-in">
       <router-view />
-    </transition>
+    </transition> -->
   </section>
 </template>
 

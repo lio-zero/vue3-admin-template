@@ -1,14 +1,14 @@
 <template>
-  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+  <div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
+        :collapse="true"
         :unique-opened="false"
         :collapse-transition="false"
+        :background-color="variables.menuBg"
         :active-text-color="variables.menuActiveText"
+        :text-color="variables.menuText"
         mode="vertical"
       >
         <sidebar-item
@@ -19,11 +19,11 @@
         />
       </el-menu>
     </el-scrollbar>
-  </el-aside>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, toRaw, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { routes } from '@/router/index.ts'
 import SidebarItem from './SidebarItem.vue'
@@ -44,12 +44,12 @@ const activeMenu = computed(() => {
   return path
 })
 
-const isCollapse = computed(() => store.state.opened)
+const isCollapse = computed(() => store.state.sidebar.opened)
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-submenu,
-::v-deep .el-menu-item {
+:v-deep(.el-sub-menu),
+:v-deep(.el-menu-item) {
   .svg-icon {
     font-size: 20px;
     margin-right: 10px;
@@ -57,7 +57,7 @@ const isCollapse = computed(() => store.state.opened)
     transition: all 0.3s;
   }
   &:hover > .svg-icon,
-  .el-submenu__title:hover > .svg-icon {
+  .el-sub-menu__title:hover > .svg-icon {
     transform: scale(1.2);
   }
 }
