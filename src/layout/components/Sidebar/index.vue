@@ -1,31 +1,29 @@
 <template>
-  <div>
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="true"
-        :unique-opened="false"
-        :collapse-transition="false"
-        :background-color="variables.menuBg"
-        :active-text-color="variables.menuActiveText"
-        :text-color="variables.menuText"
-        mode="vertical"
-      >
-        <sidebar-item
-          v-for="route in routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
-      </el-menu>
-    </el-scrollbar>
-  </div>
+  <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-menu
+      :default-active="activeMenu"
+      :collapse="isCollapse"
+      :unique-opened="false"
+      :collapse-transition="false"
+      :background-color="variables.menuBg"
+      :active-text-color="variables.menuActiveText"
+      :text-color="variables.menuText"
+      mode="vertical"
+    >
+      <sidebar-item
+        v-for="route in routes"
+        :key="route.path"
+        :item="route"
+        :base-path="route.path"
+      />
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { routes } from '@/router/index.ts'
+// import { routes } from '@/router/index.ts'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/variables.module.scss'
 import { useStore } from 'vuex'
@@ -33,8 +31,8 @@ import { useStore } from 'vuex'
 const route = useRoute()
 const store = useStore()
 
+const routes = store.state.routes
 const activeMenu = computed(() => {
-  const route = useRoute()
   const { meta, path } = route
 
   // 如果设置路径，侧栏将突出显示您设置的路径
@@ -44,21 +42,21 @@ const activeMenu = computed(() => {
   return path
 })
 
-const isCollapse = computed(() => store.state.sidebar.opened)
+const isCollapse = computed(() => !store.state.sidebar.opened)
 </script>
 
 <style lang="scss" scoped>
-:v-deep(.el-sub-menu),
-:v-deep(.el-menu-item) {
-  .svg-icon {
-    font-size: 20px;
-    margin-right: 10px;
-    vertical-align: -0.25em;
-    transition: all 0.3s;
-  }
-  &:hover > .svg-icon,
-  .el-sub-menu__title:hover > .svg-icon {
-    transform: scale(1.2);
-  }
-}
+// :v-deep(.el-sub-menu),
+// :v-deep(.el-menu-item) {
+//   .svg-icon {
+//     font-size: 20px;
+//     margin-right: 10px;
+//     vertical-align: -0.25em;
+//     transition: all 0.3s;
+//   }
+//   &:hover > .svg-icon,
+//   .el-sub-menu__title:hover > .svg-icon {
+//     transform: scale(1.2);
+//   }
+// }
 </style>

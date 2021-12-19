@@ -61,7 +61,7 @@ import { reactive, ref } from 'vue'
 import { validUsername } from '@/utils/validate.js'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { login } from '@/api/login.js'
+import { login, getUserInfo } from '@/api/login.js'
 import { useStore } from 'vuex'
 import Cookies from 'js-cookie'
 
@@ -101,12 +101,9 @@ const router = useRouter()
 const loginBtn = () => {
   loginForm.value.validate(async valid => {
     if (valid) {
-      const data = await login({ name: model.username, password: model.password })
-      Cookies.set('userInfo', JSON.stringify(data.user))
-      localStorage.setItem('token', data.token)
-      router.push({ path: '/' })
+      await store.dispatch('login', model)
       ElMessage.success('登录成功')
-      // await store.dispatch('user/login', this.model)
+      router.push({ path: '/' })
     } else {
       ElMessage.error('账号密码错误')
     }

@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './variables.module.scss';
 @import './mixin.scss';
 @import './element-push.scss';
 @import './transition.scss';
-@import './variables.module.scss';
 @import './sidebar.scss';
 
 *,

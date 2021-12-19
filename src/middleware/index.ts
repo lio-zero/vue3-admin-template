@@ -1,31 +1,21 @@
 import { isNavigationFailure, NavigationFailureType } from 'vue-router'
 import NProgress from 'nprogress'
+import { getToken } from '@/utils/auth'
+import store from '@/store'
 
 export default router => {
-  router.beforeEach((to: any, from: any, next: any) => {
+  router.beforeEach(async (to: any, from: any, next: any) => {
     NProgress.start()
-    // if (!to.meta.isPublic && !localStorage.token) next({ path: '/login' })
-    // next()
 
-    // if (to.path === '/login') {
-    //   next({ path: '/' })
-    //   NProgress.done()
-    // }
-    // if (!localStorage.token) {
-    //   next({ path: '/login' })
-    //   NProgress.done() // 页面导航结束
-    // } else {
-    //   next()
-    // }
-
-    if (!localStorage.token) {
+    if (getToken()) {
+      store.dispatch('getUserInfo')
+      next()
+    } else {
       if (to.path === '/login') {
         next()
       } else {
         next({ path: '/login' })
       }
-    } else {
-      next()
     }
   })
 

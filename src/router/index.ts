@@ -19,7 +19,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'home' }
+        meta: { title: '首页', icon: 'home', badge: 'new' }
       }
     ]
   },

@@ -8,9 +8,15 @@ export function login(data) {
   })
 }
 
-export function getUserInfo(data) {
+export function getUserInfo(id) {
   return http({
-    url: '/login',
+    url: `/api/user/getUserDetail/${id}`
+  })
+}
+
+export function getNewToken(data) {
+  return http({
+    url: `/refreshToken`,
     method: 'post',
     data
   })

@@ -7,12 +7,12 @@ import router from './router'
 import svgIcon from './icons/index.vue'
 import 'nprogress/nprogress.css'
 import 'element-plus/dist/index.css'
-// import * as EleIcon from '@element-plus/icons'
+import * as EleIcon from '@element-plus/icons'
 
 const app = createApp(App)
 
-// for (const key in EleIcon) {
-//   app.component(key, EleIcon[key])
-// }
+for (const key in EleIcon) {
+  app.component(key, EleIcon[key])
+}
 
-app.use(router).use(store).component('svg-icon', svgIcon).mount('#app')
+app.use(store).use(router).component('svg-icon', svgIcon).mount('#app')

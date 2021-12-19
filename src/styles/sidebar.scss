@@ -67,21 +67,21 @@
     .submenu-title-noDropdown,
     .el-sub-menu__title {
       &:hover {
-        background-color: var(--background-color-hover) !important;
+        background-color: $menuHover !important;
       }
     }
 
     .is-active > .el-sub-menu__title {
-      color: var(--sub-menu-active-text) !important;
+      color: $subMenuActiveText !important;
     }
 
     & .nest-menu .el-sub-menu > .el-sub-menu__title,
     & .el-sub-menu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: var(--sub-menu-bg) !important;
+      background-color: $subMenuBg !important;
 
       &:hover {
-        background-color: var(--sub-menu-hover) !important;
+        background-color: $subMenuHover !important;
       }
     }
   }
@@ -116,6 +116,18 @@
 
         .el-sub-menu__icon-arrow {
           display: none;
+        }
+      }
+    }
+
+    .el-menu--collapse {
+      .el-menu-item {
+          & > span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
         }
       }
     }

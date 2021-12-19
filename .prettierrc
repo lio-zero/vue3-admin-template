@@ -9,5 +9,5 @@
   "trailingComma": "none",
   "arrowParens": "avoid",
   "printWidth": 100,
-  "bracketSpacing": true,
+  "bracketSpacing": true
 }

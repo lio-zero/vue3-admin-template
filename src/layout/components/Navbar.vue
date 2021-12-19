@@ -3,17 +3,20 @@
     <hamburger
       id="hamburger-container"
       :is-active="opened"
-      class="hamburger-container"
+      class="hamburger-container cursor-pointer"
       @toggleClick="toggleSideBar"
     />
     <breadcrumb class="breadcrumb-container flex-1"></breadcrumb>
 
+    <el-tooltip class="mr-6 mt-2 cursor-pointer" effect="dark" content="消息" placement="bottom">
+      <el-badge class="" is-dot>
+        <el-icon size="20"><bell /></el-icon>
+      </el-badge>
+    </el-tooltip>
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <el-avatar
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-          ></el-avatar>
+          <el-avatar shape="square" :src="store.state.avatar"></el-avatar>
           <i class="el-icon-caret-bottom" />
         </div>
         <template #dropdown>
@@ -24,7 +27,7 @@
             <a target="_blank" href="https://github.com/lio-zero/vite-wj">
               <el-dropdown-item>我的Github</el-dropdown-item>
             </a>
-            <el-dropdown-item @click="signOut">退出</el-dropdown-item>
+            <el-dropdown-item @click="layout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -43,9 +46,8 @@ const opened = computed(() => store.state.sidebar.opened)
 
 const toggleSideBar = () => store.dispatch('toggleSideBar')
 
-const signOut = () => {
-  localStorage.removeItem('token')
-  Cookies.remove('userInfo')
+const layout = async () => {
+  await store.dispatch('logout')
   history.back()
 }
 </script>
