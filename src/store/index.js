@@ -37,7 +37,7 @@ export default createStore({
     },
     device: 'desktop',
     size: Cookies.get('size') || 'medium',
-    user_info: Cookies.get('user_info') && JSON.parse(Cookies.get('user_info')),
+    user_info: '',
     routes: filterAsyncRoutes(routes, ['admin']),
     addRoutes: [],
     token: getToken(),
@@ -80,6 +80,9 @@ export default createStore({
     SET_INTRODUCTION: (state, introduction) => {
       state.introduction = introduction
     },
+    SET_USER_INFO: (state, userInfo) => {
+      state.user_info = userInfo
+    },
     SET_NAME: (state, name) => {
       state.name = name
     },
@@ -112,6 +115,7 @@ export default createStore({
       commit('SET_NAME', name)
       commit('SET_AVATAR', avatar)
       commit('SET_INTRODUCTION', introduction)
+      commit('SET_USER_INFO', data)
       return data
     },
     async logout({ commit, state, dispatch }) {
