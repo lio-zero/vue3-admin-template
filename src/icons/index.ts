@@ -7,7 +7,7 @@ const hasViewBox = /(viewBox="[^>+].*?")/g
 const clearReturn = /(\r)|(\n)/g
 
 // 查找svg文件
-function svgFind(e) {
+function svgFind(e: any): any {
   const arr = []
   const dirents = readdirSync(e, { withFileTypes: true })
   for (const dirent of dirents) {

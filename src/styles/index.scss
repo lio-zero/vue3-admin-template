@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
 
 @import './variables.module.scss';
 @import './mixin.scss';
@@ -38,7 +38,54 @@ body::-webkit-scrollbar-thumb {
   border-radius: 12px;
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #999;
+  text-decoration: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: #aaa;
+  text-decoration: none;
+}
+
 // 进度条颜色
 #nprogress .bar {
   background-color: plum !important;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mr-6 {
+  margin-right: 24px;
+}
+
+.mt-2 {
+  margin-top: 6px;
+}
+
+img {
+  max-width: 100%;
 }

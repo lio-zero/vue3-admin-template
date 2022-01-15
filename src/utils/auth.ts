@@ -11,14 +11,14 @@ export function getRefreshToken() {
   return Cookies.get(RefreshTokenKey)
 }
 
-export function setToken(token) {
+export function setToken(token: string) {
   return Cookies.set(TokenKey, token)
 }
 
-export function setRefreshToken(token) {
+export function setRefreshToken(token: string) {
   return Cookies.set(RefreshTokenKey, token)
 }
 
-export function removeToken(key) {
+export function removeToken(key: string) {
   return Cookies.remove(key)
 }

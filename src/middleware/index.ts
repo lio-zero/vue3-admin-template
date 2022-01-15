@@ -2,10 +2,13 @@ import { isNavigationFailure, NavigationFailureType } from 'vue-router'
 import NProgress from 'nprogress'
 import { getToken } from '@/utils/auth'
 import store from '@/store'
+import { getPageTitle } from '@/utils/get-page-title'
 
-export default router => {
+export default (router: any) => {
   router.beforeEach(async (to: any, from: any, next: any) => {
     NProgress.start()
+
+    document.title = getPageTitle(to.meta.title)
 
     if (getToken()) {
       store.dispatch('getUserInfo')

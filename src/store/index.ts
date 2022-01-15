@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
-import getters from './getters.js'
+import getters from './getters'
 import Cookies from 'js-cookie'
 import { getToken, setToken, setRefreshToken, getRefreshToken, removeToken } from '@/utils/auth'
-import { login, getUserInfo, getNewToken } from '@/api/login.js'
+import { login, getUserInfo, getNewToken } from '@/api/login.ts'
 import jwtDecode from 'jwt-decode'
 
 import { routes } from '@/router'

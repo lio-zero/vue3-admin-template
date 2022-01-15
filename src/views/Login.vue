@@ -57,11 +57,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { validUsername } from '@/utils/validate.js'
+import { reactive, ref, Ref } from 'vue'
+import { validUsername } from '@/utils/validate.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { login, getUserInfo } from '@/api/login.js'
+import { login, getUserInfo } from '@/api/login.ts'
 import { useStore } from 'vuex'
 import Cookies from 'js-cookie'
 
@@ -79,23 +79,29 @@ const validatePassword = (rule, value, callback) => {
     callback()
   }
 }
-const model = reactive({
+
+interface User {
+  username: string
+  password: string
+}
+
+const model: User = reactive({
   username: 'lio',
   password: '123456'
 })
 
 const store = useStore()
-const redirect = ref('')
-const loading = ref(false)
-const checked = ref(false)
-const forgetPass = ref(true)
+const redirect: Ref<string> = ref('')
+const loading: Ref<boolean> = ref(false)
+const checked: Ref<boolean> = ref(false)
+const forgetPass: Ref<boolean> = ref(true)
 
 const rules = reactive({
   username: [{ required: true, trigger: 'blur', validator: validateUsername }],
   password: [{ required: true, trigger: 'blur', validator: validatePassword }]
 })
 
-const loginForm = ref(null)
+const loginForm: Ref<null> = ref(null)
 const router = useRouter()
 
 const loginBtn = () => {

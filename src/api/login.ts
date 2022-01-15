@@ -1,6 +1,6 @@
-import http from '@/utils/request.js'
+import http from '@/utils/request.ts'
 
-export function login(data) {
+export function login(data: any) {
   return http({
     url: '/login',
     method: 'post',
@@ -8,13 +8,13 @@ export function login(data) {
   })
 }
 
-export function getUserInfo(id) {
+export function getUserInfo(id: number) {
   return http({
     url: `/api/user/getUserDetail/${id}`
   })
 }
 
-export function getNewToken(data) {
+export function getNewToken(data: any) {
   return http({
     url: `/refreshToken`,
     method: 'post',

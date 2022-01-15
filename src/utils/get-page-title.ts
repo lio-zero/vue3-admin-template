@@ -1,8 +1,8 @@
 // import defaultSettings from '@/settings'
 
-const title = 'Vue Blog Admin'
+const title = 'Vue Admin Template'
 
-export default function getPageTitle(pageTitle) {
+export function getPageTitle(pageTitle: string) {
   if (pageTitle) {
     return `${pageTitle} - ${title}`
   }

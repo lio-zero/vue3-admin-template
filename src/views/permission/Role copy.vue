@@ -1,23 +1,9 @@
 <template>
   <el-button type="primary" @click="handleAddRole">新增角色</el-button>
   <el-table :data="tableData" border style="width: 100%; margin-top: 30px">
-    <template #empty>
-      <el-empty description="暂无数据"></el-empty>
-    </template>
-    <el-table-column align="center" prop="id" label="id" width="80"></el-table-column>
-    <el-table-column align="center" prop="name" label="姓名" width="220"></el-table-column>
-    <el-table-column align="center" prop="email" label="邮箱" width="220"></el-table-column>
-    <el-table-column align="center" prop="phone" label="手机"></el-table-column>
-    <el-table-column align="center" prop="userGroup" label="用户组"></el-table-column>
-    <el-table-column align="center" prop="status" label="状态">
-      <template #default="scope">
-        <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
-          <circle-check-filled v-if="scope.row.status" />
-          <circle-close-filled v-else />
-        </el-icon>
-        <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
-      </template>
-    </el-table-column>
+    <el-table-column align="center" prop="id" label="id" width="220"> </el-table-column>
+    <el-table-column align="center" prop="name" label="角色" width="220"> </el-table-column>
+    <el-table-column align="center" prop="description" label="描述"> </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
@@ -32,21 +18,18 @@
     :before-close="handleClose"
   >
     <el-form :model="role" label-width="80px" label-position="left">
-      <el-form-item label="用户组">
-        <el-input v-model="role.name" placeholder="用户组" />
-      </el-form-item>
-      <el-form-item label="名称">
-        <el-input v-model="role.display_name" placeholder="名称" />
+      <el-form-item label="角色">
+        <el-input v-model="role.name" placeholder="角色" />
       </el-form-item>
       <el-form-item label="描述">
         <el-input
           v-model="role.description"
           :autosize="{ minRows: 2, maxRows: 4 }"
           type="textarea"
-          placeholder="描述"
+          placeholder="角色描述"
         />
       </el-form-item>
-      <el-form-item label="权限">
+      <el-form-item label="菜单">
         <el-tree
           ref="tree"
           :data="pageList"
@@ -61,35 +44,52 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="save">确认</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确认</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
-import { addRole, getAllRole, deleteRole, updateRole } from '@/api/role'
+import { reactive, ref, nextTick } from 'vue'
 import { routes } from '@/router'
 import { resolve } from 'path-browserify'
 import { RouteRecordRaw } from 'vue-router'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+const defaultRole = {
+  id: '',
+  name: '',
+  description: '',
+  routes: []
+}
 const dialogType = ref('new')
 const dialogVisible = ref(false)
 const tree = ref()
 const checkStrictly = ref(false)
-const role = ref({})
-let tableData = ref(null)
+const role = ref(Object.assign({}, defaultRole))
 const defaultProps = reactive({
   children: 'children',
   label: 'title'
 })
-
-onMounted(async () => {
-  tableData.value = await getAllRole()
-})
+const tableData = reactive([
+  {
+    id: 1,
+    name: 'editor',
+    description: '普通编辑。可以查看除权限页以外的所有页面'
+  },
+  {
+    id: 2,
+    name: 'admin',
+    description: '超级管理员。有权查看所有页面'
+  },
+  {
+    id: 3,
+    name: 'visitor',
+    description: '只是个访客。只能看到主页和文档页'
+  }
+])
 
 const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecordRaw) => {
   let onlyOneChild = null
@@ -162,14 +162,13 @@ const handleEdit = (score: any) => {
 
 const pageList = generateRoutes(routes)
 
-const handleDelete = (score: any) => {
+const handleDelete = (index: any, row: any) => {
   ElMessageBox.confirm('确定删除该用户权限？', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
   })
-    .then(async () => {
-      await deleteRole({ id: score.row.id })
+    .then(() => {
       ElMessage({
         type: 'success',
         message: '删除完成'
@@ -199,28 +198,8 @@ const handleAddRole = () => {
   if (tree.value) {
     tree.value.setCheckedNodes([])
   }
-
   dialogType.value = 'new'
   dialogVisible.value = true
-}
-
-const save = async () => {
-  console.log(role.value)
-  console.log(pageList)
-  return
-  if (dialogType.value === 'new') {
-    const data = await addRole(role.value)
-
-    console.log(data)
-  } else {
-    const data = await updateRole(role.value)
-    console.log(data)
-  }
-  ElMessage({
-    type: 'success',
-    message: '保存成功'
-  })
-  dialogVisible.value = false
 }
 </script>
 

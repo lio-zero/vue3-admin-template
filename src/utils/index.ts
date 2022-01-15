@@ -1,6 +1,6 @@
-export function deepClone(source) {
+export function deepClone(source: any) {
   if (!source && typeof source !== 'object') {
-    throw new Error('error arguments', 'deepClone')
+    throw new Error('error arguments')
   }
   const targetObj = source.constructor === Array ? [] : {}
   Object.keys(source).forEach(keys => {
