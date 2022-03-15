@@ -1,19 +1,23 @@
-import { defineConfig, ConfigEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import Components from 'unplugin-vue-components/vite'
-// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { resolve } from 'path'
 import { createSvg } from './src/icons/index'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
+import AutoImport from 'unplugin-auto-import/vite'
+import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
   plugins: [
     vue(),
-    // Components({
-    //   resolvers: [ElementPlusResolver()]
-    // }),
-    createSvg('./src/icons/svg/')
+    VueSetupExtend(),
+    eslintPlugin(),
+    createSvg('./src/icons/svg/'),
+    AutoImport({
+      // dts: 'src/auto-imports.d.ts', // 可以自定义文件生成的位置，默认是根目录下
+      imports: ['vue']
+    })
   ],
   resolve: {
     alias: {
@@ -21,6 +25,12 @@ export default defineConfig({
     }
   },
   css: {},
+  server: {
+    port: 8080,
+    open: true,
+    https: false,
+    cors: true
+  },
   build: {
     terserOptions: {
       compress: {

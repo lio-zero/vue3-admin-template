@@ -11,10 +11,10 @@
       mode="vertical"
     >
       <sidebar-item
-        v-for="route in routes"
-        :key="route.path"
-        :item="route"
-        :base-path="route.path"
+        v-for="item in routes"
+        :key="item.path"
+        :item="item"
+        :base-path="item.path"
       />
     </el-menu>
   </el-scrollbar>

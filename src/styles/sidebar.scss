@@ -99,9 +99,9 @@
       padding: 0 !important;
       position: relative;
 
-        .svg-icon {
-          margin-left: 20px;
-        }
+      .svg-icon {
+        margin-left: 20px;
+      }
     }
 
     .el-sub-menu {
@@ -122,12 +122,12 @@
 
     .el-menu--collapse {
       .el-menu-item {
-          & > span {
-            height: 0;
-            width: 0;
-            overflow: hidden;
-            visibility: hidden;
-            display: inline-block;
+        & > span {
+          height: 0;
+          width: 0;
+          overflow: hidden;
+          visibility: hidden;
+          display: inline-block;
         }
       }
     }

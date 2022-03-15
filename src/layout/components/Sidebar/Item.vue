@@ -4,16 +4,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  icon: {
-    type: String,
-    default: ''
-  }
-})
+defineProps<{ title: string; icon?: string }>()
 </script>
 
 <style scoped>
@@ -24,7 +15,7 @@ defineProps({
 }
 </style>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { h, resolveComponent } from 'vue'
 export default {
   props: {
@@ -50,7 +41,7 @@ export default {
       ])
   }
 }
-</script>
+</script> -->
 
 <style scoped>
 .sub-el-icon {

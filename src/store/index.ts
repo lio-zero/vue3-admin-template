@@ -1,23 +1,29 @@
 import { createStore } from 'vuex'
 import getters from './getters'
 import Cookies from 'js-cookie'
-import { getToken, setToken, setRefreshToken, getRefreshToken, removeToken } from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  setRefreshToken,
+  getRefreshToken,
+  removeToken
+} from '@/utils/auth'
 import { login, getUserInfo, getNewToken } from '@/api/login.ts'
 import jwtDecode from 'jwt-decode'
 
 import { routes } from '@/router'
-function hasPermission(roles, route) {
+function hasPermission(roles: any, route: any) {
   if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+    return roles.some((role: any) => route.meta.roles.includes(role))
   } else {
     return true
   }
 }
 
-function filterAsyncRoutes(routes, roles) {
-  const res = []
+function filterAsyncRoutes(routes: any, roles: any) {
+  const res: any = []
 
-  routes.forEach(route => {
+  routes.forEach((route: any) => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
@@ -32,7 +38,9 @@ function filterAsyncRoutes(routes, roles) {
 export default createStore({
   state: {
     sidebar: {
-      opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+      opened: Cookies.get('sidebarStatus')
+        ? !!+Cookies.get('sidebarStatus')
+        : true,
       withoutAnimation: false
     },
     device: 'desktop',
@@ -48,7 +56,7 @@ export default createStore({
   },
   getters,
   mutations: {
-    TOGGLE_SIDEBAR: state => {
+    TOGGLE_SIDEBAR: (state: any) => {
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
       if (state.sidebar.opened) {
@@ -57,52 +65,52 @@ export default createStore({
         Cookies.set('sidebarStatus', 0)
       }
     },
-    CLOSE_SIDEBAR: (state, withoutAnimation) => {
+    CLOSE_SIDEBAR: (state: any, withoutAnimation: any) => {
       Cookies.set('sidebarStatus', 0)
       state.sidebar.opened = false
       state.sidebar.withoutAnimation = withoutAnimation
     },
-    TOGGLE_DEVICE: (state, device) => {
+    TOGGLE_DEVICE: (state: any, device: any) => {
       state.device = device
     },
-    SET_SIZE: (state, size) => {
+    SET_SIZE: (state: any, size: any) => {
       state.size = size
       Cookies.set('size', size)
     },
-    SET_ROUTES: (state, routes) => {
-      state.addRoutes = routes
-      state.routes = constantRoutes.concat(routes)
-    },
     // 用户 Token
-    SET_TOKEN: (state, token) => {
+    SET_TOKEN: (state: any, token: any) => {
       state.token = token
     },
-    SET_INTRODUCTION: (state, introduction) => {
+    SET_INTRODUCTION: (state: any, introduction: any) => {
       state.introduction = introduction
     },
-    SET_USER_INFO: (state, userInfo) => {
+    SET_USER_INFO: (state: any, userInfo: any) => {
       state.user_info = userInfo
     },
-    SET_NAME: (state, name) => {
+    SET_NAME: (state: any, name: any) => {
       state.name = name
     },
-    SET_AVATAR: (state, avatar) => {
+    SET_AVATAR: (state: any, avatar: any) => {
       state.avatar = avatar
     },
-    SET_ROLES: (state, roles) => {
+    SET_ROLES: (state: any, roles: any) => {
       state.roles = roles
     }
   },
   actions: {
-    async login({ commit }, userInfo) {
+    async login({ commit }: any, userInfo: any) {
       const { username, password } = userInfo
-      const { token, refreshToken } = await login({ username: username.trim(), password: password })
+      const { token, refreshToken } = await login({
+        username: username.trim(),
+        password: password
+      })
+
       commit('SET_TOKEN', token)
       setToken(token)
       setRefreshToken(refreshToken)
     },
-    async getUserInfo({ commit, state }) {
-      const { id, exp, iat } = jwtDecode(state.token)
+    async getUserInfo({ commit, state }: any) {
+      const { id }: any = jwtDecode(state.token)
       const data = await getUserInfo(id)
 
       if (!data) {
@@ -118,46 +126,30 @@ export default createStore({
       commit('SET_USER_INFO', data)
       return data
     },
-    async logout({ commit, state, dispatch }) {
+    async logout({ commit }: any) {
       // const { id } = jwtDecode(state.token)
       // const data = await logout(id)
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken('Admin-Token')
-      // resetRouter()
-
-      // 重置已访问视图和缓存视图
-      // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-      // dispatch('tagsView/delAllViews', null, { root: true })
     },
     // 刷新 token
-    async refreshToken({ commit }) {
+    async refreshToken({ commit }: any) {
       const token = await getNewToken({ token: getRefreshToken() })
       commit('SET_TOKEN', token)
       setToken(token)
     },
-    generateRoutes({ commit }, roles) {
-      return new Promise(resolve => {
-        let accessedRoutes
-        if (roles.includes('admin')) {
-          accessedRoutes = asyncRoutes || []
-        } else {
-          accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-        }
-        commit('SET_ROUTES', accessedRoutes)
-        resolve(accessedRoutes)
-      })
-    },
-    toggleSideBar({ commit }) {
+
+    toggleSideBar({ commit }: any) {
       commit('TOGGLE_SIDEBAR')
     },
-    closeSideBar({ commit }, { withoutAnimation }) {
+    closeSideBar({ commit }: any, { withoutAnimation }: any) {
       commit('CLOSE_SIDEBAR', withoutAnimation)
     },
-    toggleDevice({ commit }, device) {
+    toggleDevice({ commit }: any, device: any) {
       commit('TOGGLE_DEVICE', device)
     },
-    setSize({ commit }, size) {
+    setSize({ commit }: any, size: any) {
       commit('SET_SIZE', size)
     }
   },

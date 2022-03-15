@@ -4,24 +4,50 @@
     <template #empty>
       <el-empty description="暂无数据"></el-empty>
     </template>
-    <el-table-column align="center" prop="id" label="id" width="80"></el-table-column>
-    <el-table-column align="center" prop="name" label="姓名" width="220"></el-table-column>
-    <el-table-column align="center" prop="email" label="邮箱" width="220"></el-table-column>
+    <el-table-column
+      align="center"
+      prop="id"
+      label="id"
+      width="80"
+    ></el-table-column>
+    <el-table-column
+      align="center"
+      prop="name"
+      label="姓名"
+      width="220"
+    ></el-table-column>
+    <el-table-column
+      align="center"
+      prop="email"
+      label="邮箱"
+      width="220"
+    ></el-table-column>
     <el-table-column align="center" prop="phone" label="手机"></el-table-column>
-    <el-table-column align="center" prop="userGroup" label="用户组"></el-table-column>
+    <el-table-column
+      align="center"
+      prop="userGroup"
+      label="用户组"
+    ></el-table-column>
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
-        <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
+        <el-icon
+          class="align-middle mr-2"
+          :color="scope.row.status ? '#67C23A' : '#F56C6C'"
+        >
           <circle-check-filled v-if="scope.row.status" />
           <circle-close-filled v-else />
         </el-icon>
-        <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
+        <span class="align-middle">{{
+          scope.row.status ? '正常' : '禁用'
+        }}</span>
       </template>
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)">删除</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+          >删除</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -68,16 +94,27 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
+<script setup lang="ts" name="User">
+import { Ref, ref, reactive, onMounted } from 'vue'
 import { addUser, getAllUser, deleteUser, updateUser } from '@/api/user'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-const dialogType = ref('new')
-const dialogVisible = ref(false)
-const user = ref({})
-let tableData = ref(null)
+interface userGroup {
+  value: string
+  label: string
+}
+
+const user: Ref<any> = ref({})
+const dialogType: Ref<string> = ref('new')
+const dialogVisible: Ref<boolean> = ref(false)
+const options: userGroup[] = reactive([
+  {
+    value: '选项1',
+    label: '黄金糕'
+  }
+])
+let tableData: Ref<null> = ref(null)
 
 onMounted(async () => {
   tableData.value = await getAllUser()

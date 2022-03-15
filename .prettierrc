@@ -7,7 +7,14 @@
   "tabWidth": 2,
   "printWidth": 80,
   "arrowParens": "avoid",
-  "jsxBracketSameLine": false,
   "jsxSingleQuote": false,
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "printWidth": 200
+      }
+    }
+  ]
 }

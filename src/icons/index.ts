@@ -8,8 +8,8 @@ const clearReturn = /(\r)|(\n)/g
 
 // 查找svg文件
 function svgFind(e: any): any {
-  const arr = []
-  const dirents = readdirSync(e, { withFileTypes: true })
+  const arr: any = []
+  const dirents: any = readdirSync(e, { withFileTypes: true })
   for (const dirent of dirents) {
     if (dirent.isDirectory()) arr.push(...svgFind(e + dirent.name + '/'))
     else {
@@ -17,15 +17,23 @@ function svgFind(e: any): any {
         .toString()
         .replace(clearReturn, '')
         .replace(svgTitle, ($1, $2) => {
-          let width = 0,
-            height = 0,
-            content = $2.replace(clearHeightWidth, (s1, s2, s3) => {
+          let width = 0
+          let height = 0
+          let content = $2.replace(
+            clearHeightWidth,
+            (s1: any, s2: any, s3: any) => {
               if (s2 === 'width') width = s3
               else if (s2 === 'height') height = s3
               return ''
-            })
-          if (!hasViewBox.test($2)) content += `viewBox="0 0 ${width} ${height}"`
-          return `<symbol id="${idPerfix}-${dirent.name.replace('.svg', '')}" ${content}>`
+            }
+          )
+          if (!hasViewBox.test($2)) {
+            content += `viewBox="0 0 ${width} ${height}"`
+          }
+          return `<symbol id="${idPerfix}-${dirent.name.replace(
+            '.svg',
+            ''
+          )}" ${content}>`
         })
         .replace('</svg>', '</symbol>')
       arr.push(svg)
@@ -34,7 +42,7 @@ function svgFind(e: any): any {
   return arr
 }
 
-// 生成svg
+// 生成 svg
 export const createSvg = (path: any, perfix = 'icon') => {
   if (path === '') return
   idPerfix = perfix

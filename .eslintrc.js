@@ -1,29 +1,53 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
+    ecmaVersion: 12,
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineExpose: 'readonly',
+    withDefaults: 'readonly'
+  },
+  parser: 'vue-eslint-parser',
   env: {
     browser: true,
     node: true,
-    es6: true
+    es2021: true
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    // 'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'vue-global-api',
+    'plugin:prettier/recommended',
+    'prettier' // eslint-config-prettier 的缩写
+  ],
+  // eslint-plugin-vue、@typescript-eslint/eslint-plugin、eslint-plugin-prettier 的缩写
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
 
-  // add your custom rules here
-  //it is base on https://github.com/vuejs/eslint-config-vue
+  // 在这里添加您的自定义规则
+  // 它是基于 https://github.com/vuejs/eslint-config-vue
   rules: {
-    'vue/max-attributes-per-line': [
-      2,
-      {
-        singleline: 10,
-        multiline: {
-          max: 1,
-          allowFirstLine: false
-        }
-      }
-    ],
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-var': 'error',
+    'prettier/prettier': 'error',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
@@ -230,7 +254,14 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [2, 'never'],
+    'space-before-function-paren': [
+      2,
+      {
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'always'
+      }
+    ],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
@@ -264,7 +295,7 @@ module.exports = {
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'object-curly-spacing': [
-      2,
+      1,
       'always',
       {
         objectsInObjects: false

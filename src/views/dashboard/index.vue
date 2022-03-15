@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Dashboard">
 import { useMouse, useCounter, useTitle } from '@vueuse/core'
 const { x, y } = useMouse()
 </script>

@@ -16,10 +16,18 @@
         <el-input v-model.number="ruleForm.phone" maxlength="11"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password" type="password" autocomplete="off"></el-input>
+        <el-input
+          v-model="ruleForm.password"
+          type="password"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="comfirmPwd">
-        <el-input v-model="ruleForm.comfirmPwd" type="password" autocomplete="off"></el-input>
+        <el-input
+          v-model="ruleForm.comfirmPwd"
+          type="password"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="saveForm">保存</el-button>

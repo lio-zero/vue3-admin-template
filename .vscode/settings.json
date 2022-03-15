@@ -1,7 +1,10 @@
 {
-    "liveServer.settings.port": 5501,
-    "cSpell.words": [
-      "nprogress",
-      "vueuse"
-    ]
+  "liveServer.settings.port": 5501,
+  "cSpell.words": ["nprogress", "vueuse"],
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  "files.exclude": {
+    "**/.history": true
+  }
 }

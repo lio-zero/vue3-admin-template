@@ -1,4 +1,4 @@
-/// <reference types="vite/client" />
+// / <reference types="vite/client" />
 
 // *.d.ts 声明文件，用于类型检测，声明第三方库的类型
 declare module '*.vue' {
@@ -17,5 +17,7 @@ declare module '@/store'
 declare module '@/router'
 declare module '@/utils'
 declare module '@/utils/*'
+declare module '@/types/*'
 declare module '@/api/*'
 declare module '@/config/*'
+declare module '@/styles/*'

@@ -1,21 +1,39 @@
 <template>
   <el-button type="primary" @click="handleAddPermission">新增权限</el-button>
-  <el-table :data="permissionList" style="width: 100%; margin-top: 30px" row-key="id" border>
+  <el-table
+    :data="permissionList"
+    style="width: 100%; margin-top: 30px"
+    row-key="id"
+    border
+  >
     <template #empty>
       <el-empty description="暂无数据"></el-empty>
     </template>
-    <el-table-column align="left" prop="id" label="id" width="220"> </el-table-column>
-    <!-- <el-table-column align="center" prop="permission" label="权限" width="220"> </el-table-column> -->
-    <el-table-column align="center" prop="name" label="名称" width="220"> </el-table-column>
-    <el-table-column align="center" prop="redirect_url" label="跳转地址" width="220">
+    <el-table-column align="left" prop="id" label="id" width="220">
     </el-table-column>
-    <el-table-column align="center" prop="description" label="描述"> </el-table-column>
-    <el-table-column align="center" prop="display_icon" label="ICON"> </el-table-column>
+    <!-- <el-table-column align="center" prop="permission" label="权限" width="220"> </el-table-column> -->
+    <el-table-column align="center" prop="name" label="名称" width="220">
+    </el-table-column>
+    <el-table-column
+      align="center"
+      prop="redirect_url"
+      label="跳转地址"
+      width="220"
+    >
+    </el-table-column>
+    <el-table-column align="center" prop="description" label="描述">
+    </el-table-column>
+    <el-table-column align="center" prop="display_icon" label="ICON">
+    </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
-        <el-button size="mini" @click="handleAddPermission(scope)">新增</el-button>
+        <el-button size="mini" @click="handleAddPermission(scope)"
+          >新增</el-button
+        >
         <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)">删除</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+          >删除</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -65,7 +83,7 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Permission">
 import { ref, Ref, onMounted } from 'vue'
 import {
   addPermission,
@@ -76,36 +94,33 @@ import {
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-const dialogType = ref('new')
-const dialogVisible = ref(false)
-const permission = ref({})
+const dialogType: Ref<string> = ref('new')
+const currentPage: Ref<number> = ref(5)
+const dialogVisible: Ref<boolean> = ref(false)
+const permission: Ref<any> = ref({})
 let permissionList: Ref<object[]> = ref([])
-const currentPage = ref(5)
 
-// https://blog.csdn.net/qq_37746973/article/details/78662177
-const buildTree = (list: object[]): object[] => {
-  let temp: object = {}
-  let tree: object[] = []
-  for (let item of list) {
-    temp[item.id] = item
-  }
-
-  for (let i in temp) {
-    if (temp[i].parent_id && temp[temp[i].parent_id]) {
-      if (!temp[temp[i].parent_id].children) {
-        temp[temp[i].parent_id].children = []
-      }
-      temp[temp[i].parent_id].children.push(temp[i])
-    } else {
-      tree.push(temp[i])
+const getChildren = (data: any, result: object[], pid: number): void => {
+  for (const item of data) {
+    if (item.parent_id === pid) {
+      const newItem = { ...item, children: [] }
+      result.push(newItem)
+      getChildren(data, newItem.children, item.id)
     }
   }
-  return tree
+}
+
+// https://blog.csdn.net/qq_37746973/article/details/78662177
+
+const buildTree = (data: object[], pid: number): object[] => {
+  const result: object[] = []
+  getChildren(data, result, pid)
+  return result
 }
 
 onMounted(async () => {
   const data = await getAllPermission()
-  permissionList.value = buildTree(data)
+  permissionList.value = buildTree(data, 0)
 })
 
 const handleEdit = (score: any) => {

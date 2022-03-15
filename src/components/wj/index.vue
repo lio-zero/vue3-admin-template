@@ -83,18 +83,30 @@ const submitResult = () => {
             :key="sub_item"
             @change="handleResult"
           >
-            <el-radio :label="sub_index" size="medium">{{ sub_index }} : {{ sub_item }}</el-radio>
+            <el-radio :label="sub_index" size="medium"
+              >{{ sub_index }} : {{ sub_item }}</el-radio
+            >
           </el-radio-group>
         </div>
       </div>
     </div>
   </div>
-  <el-button class="previous" v-if="currentSlide > 0" @click="currentSlide--">上一题</el-button>
-  <el-button class="next" v-if="currentSlide < 2" @click="currentSlide++">下一题</el-button>
-  <el-button class="submit" :class="{ active: true }" v-if="currentSlide > 1" @click="submitResult"
+  <el-button class="previous" v-if="currentSlide > 0" @click="currentSlide--"
+    >上一题</el-button
+  >
+  <el-button class="next" v-if="currentSlide < 2" @click="currentSlide++"
+    >下一题</el-button
+  >
+  <el-button
+    class="submit"
+    :class="{ active: true }"
+    v-if="currentSlide > 1"
+    @click="submitResult"
     >提交测验</el-button
   >
-  <div id="results" v-if="result">{{ numCorrect }} out of {{ myQuestions.length }}</div>
+  <div id="results" v-if="result">
+    {{ numCorrect }} out of {{ myQuestions.length }}
+  </div>
 </template>
 
 <style lang="scss">

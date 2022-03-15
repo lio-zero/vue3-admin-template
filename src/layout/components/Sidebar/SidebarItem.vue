@@ -20,9 +20,18 @@
       </app-link>
     </template>
 
-    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-sub-menu
+      v-else
+      ref="subMenu"
+      :index="resolvePath(item.path)"
+      popper-append-to-body
+    >
       <template #title>
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+        <item
+          v-if="item.meta"
+          :icon="item.meta && item.meta.icon"
+          :title="item.meta.title"
+        />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -39,7 +48,7 @@
 <script setup lang="ts">
 import AppLink from './Link.vue'
 import Item from './Item.vue'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { isExternal } from '@/utils/validate'
 import { resolve } from 'path-browserify'
 

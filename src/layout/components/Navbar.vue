@@ -4,11 +4,16 @@
       id="hamburger-container"
       :is-active="opened"
       class="hamburger-container cursor-pointer"
-      @toggleClick="toggleSideBar"
+      @toggle-click="toggleSideBar"
     />
     <breadcrumb class="breadcrumb-container flex-1"></breadcrumb>
 
-    <el-tooltip class="mr-6 mt-2 cursor-pointer" effect="dark" content="消息" placement="bottom">
+    <el-tooltip
+      class="mr-6 mt-2 cursor-pointer"
+      effect="dark"
+      content="消息"
+      placement="bottom"
+    >
       <el-badge class="" is-dot>
         <el-icon size="20"><bell /></el-icon>
       </el-badge>
@@ -39,7 +44,6 @@ import Breadcrumb from './Breadcrumb.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import Cookies from 'js-cookie'
 
 const store = useStore()
 const opened = computed(() => store.state.sidebar.opened)

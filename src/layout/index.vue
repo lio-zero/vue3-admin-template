@@ -1,7 +1,7 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <!-- <div v-if="device === 'mobile' && sidebar.opened"> -->
-    <sidebar class="sidebar-container" />
+    <sidebar-component class="sidebar-container" />
     <div class="main-container">
       <navbar />
       <app-main />
@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import Sidebar from './components/Sidebar/index.vue'
+import SidebarComponent from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
 import Navbar from './components/Navbar.vue'
-import { ref, computed, onMounted, onBeforeMount, onBeforeUnmount } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()

@@ -8,5 +8,5 @@ jobs:
     name: my actions_name
     runs-on: ubuntu-latest
     steps:
-      - name: Print Nmae 
+      - name: Print Nmae
         run: echo O.O

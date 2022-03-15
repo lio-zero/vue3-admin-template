@@ -1,4 +1,4 @@
-import http from '@/utils/request.js'
+import http from '@/utils/request.ts'
 
 export function addRole(data: any) {
   return http({

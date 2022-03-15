@@ -1,16 +1,11 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ElMessage } from 'element-plus'
 import { getToken, removeToken } from './auth'
 import store from '@/store'
 import router from '@/router'
 import errorMap from '@/config/constants'
 
-interface MyAxiosInstance extends AxiosInstance {
-  (config: AxiosRequestConfig): Promise<any>
-  (url: string, config?: AxiosRequestConfig): Promise<any>
-}
-
-const http: MyAxiosInstance = axios.create({
+const http = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: 5000
 })

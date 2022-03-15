@@ -1,13 +1,18 @@
 <template>
   <el-button type="primary" @click="handleAddRole">新增角色</el-button>
   <el-table :data="tableData" border style="width: 100%; margin-top: 30px">
-    <el-table-column align="center" prop="id" label="id" width="220"> </el-table-column>
-    <el-table-column align="center" prop="name" label="角色" width="220"> </el-table-column>
-    <el-table-column align="center" prop="description" label="描述"> </el-table-column>
+    <el-table-column align="center" prop="id" label="id" width="220">
+    </el-table-column>
+    <el-table-column align="center" prop="name" label="角色" width="220">
+    </el-table-column>
+    <el-table-column align="center" prop="description" label="描述">
+    </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)">删除</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+          >删除</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -44,7 +49,9 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确认</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确认</el-button
+        >
       </span>
     </template>
   </el-dialog>
@@ -91,7 +98,10 @@ const tableData = reactive([
   }
 ])
 
-const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecordRaw) => {
+const onlyOneShowingChild = (
+  children: RouteRecordRaw[] = [],
+  parent: RouteRecordRaw
+) => {
   let onlyOneChild = null
   const showingChildren = children.filter(item => !item.hidden)
   // 当只有一个路由时，默认情况下会显示该子路由

@@ -17,7 +17,7 @@
 import { compile } from 'path-to-regexp'
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-const levelList = ref(null)
+const levelList: any = ref(null)
 const router = useRouter()
 const route = useRoute()
 
@@ -26,8 +26,8 @@ const getBreadcrumb = () => {
   // 1 一个数组，包含当前路由的所有嵌套路径片段的路由记录
   // 2 一个路由匹配到的所有路由记录会暴露为 $route 对象 (还有在导航守卫中的路由对象) 的 $route.matched 数组
   // 仅显示带有 meta.title 的路由
-  let matched = route.matched.filter(item => item.meta && item.meta.title)
-  const first = matched[0]
+  let matched: any = route.matched.filter(item => item.meta && item.meta.title)
+  const first: any = matched[0]
 
   if (!isDashboard(first)) {
     matched = [{ path: '/dashboard', meta: { title: '首页' } }].concat(matched)
@@ -35,11 +35,12 @@ const getBreadcrumb = () => {
 
   // 拿到路由元信息 meta 中的存在的 title
   levelList.value = matched.filter(
-    item => item.meta && item.meta.title && item.meta.breadcrumb !== false
+    (item: any) =>
+      item.meta && item.meta.title && item.meta.breadcrumb !== false
   )
 }
 
-const isDashboard = route => {
+const isDashboard = (route: any) => {
   const name = route && route.name
   if (!name) {
     return false
@@ -47,12 +48,12 @@ const isDashboard = route => {
   return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
 }
 
-const pathCompile = path => {
-  var toPath = compile(path)
+const pathCompile = (path: string) => {
+  const toPath = compile(path)
   return toPath(route.params)
 }
 
-const handleLink = item => {
+const handleLink = (item: { redirect: string; path: string }) => {
   const { redirect, path } = item
   if (redirect) {
     router.push(redirect)

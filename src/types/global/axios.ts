@@ -1,5 +1,11 @@
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
-export type ResponseType = 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream'
+export type ResponseType =
+  | 'arraybuffer'
+  | 'blob'
+  | 'document'
+  | 'json'
+  | 'text'
+  | 'stream'
 
 export interface AxiosRequest {
   baseURL?: string
