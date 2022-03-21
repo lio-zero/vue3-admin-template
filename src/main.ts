@@ -9,6 +9,8 @@ import 'normalize.css/normalize.css'
 import 'nprogress/nprogress.css'
 import '@/styles/index.scss'
 import 'element-plus/dist/index.css'
+// import { State } from '@/types/vuex/app.ts'
+// console.log(State)
 
 const app = createApp(App)
 

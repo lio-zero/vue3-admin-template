@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { isExternal as isExt } from '@/utils/validate'
-import { computed } from 'vue'
 const props = defineProps({
   to: {
     type: String,

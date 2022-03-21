@@ -67,9 +67,9 @@ const props = defineProps({
   }
 })
 
-const onlyOneChild = ref(null)
-const hasOneShowingChild = (children = [], parent) => {
-  const showingChildren = children.filter(item => {
+const onlyOneChild: any = ref(null)
+const hasOneShowingChild = (children = [], parent: any) => {
+  const showingChildren = children.filter((item: any) => {
     if (item.hidden) {
       return false
     } else {
@@ -89,7 +89,7 @@ const hasOneShowingChild = (children = [], parent) => {
   }
   return false
 }
-const resolvePath = routePath => {
+const resolvePath = (routePath: any) => {
   if (isExternal(routePath)) {
     return routePath
   }

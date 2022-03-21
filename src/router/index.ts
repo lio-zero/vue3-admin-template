@@ -7,8 +7,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue'),
-    hidden: true
+    component: () => import('@/views/Login.vue')
   },
   {
     path: '/',
@@ -35,6 +34,15 @@ export const routes: Array<RouteRecordRaw> = [
         meta: { title: '个人设置', icon: 'settings' }
       }
     ]
+  },
+  {
+    path: '/404',
+    name: 'NotFount',
+    component: () => import('@/views/NotFount.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
   }
 ]
 

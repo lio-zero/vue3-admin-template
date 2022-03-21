@@ -1,10 +1,16 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { createSvg } from './src/icons/index'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import AutoImport from 'unplugin-auto-import/vite'
 import eslintPlugin from 'vite-plugin-eslint'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import {
+  createStyleImportPlugin,
+  ElementPlusResolve
+} from 'vite-plugin-style-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,8 +21,21 @@ export default defineConfig({
     eslintPlugin(),
     createSvg('./src/icons/svg/'),
     AutoImport({
-      // dts: 'src/auto-imports.d.ts', // 可以自定义文件生成的位置，默认是根目录下
-      imports: ['vue']
+      imports: ['vue', 'vue-router', '@vueuse/head', '@vueuse/core'],
+      dts: 'src/auto-imports.d.ts'
+    }),
+    eslintPlugin({
+      // https://blog.csdn.net/xuefeng11111/article/details/121688821
+      cache: false
+    }),
+    createStyleImportPlugin({
+      resolves: [ElementPlusResolve()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+      extensions: ['vue'],
+      include: [/\.vue$/, /\.vue\?vue/],
+      dts: 'src/components.d.ts'
     })
   ],
   resolve: {

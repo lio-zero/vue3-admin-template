@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts" name="User">
-import { Ref, ref, reactive, onMounted } from 'vue'
+import { Ref } from 'vue'
 import { addUser, getAllUser, deleteUser, updateUser } from '@/api/user'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -114,7 +114,7 @@ const options: userGroup[] = reactive([
     label: '黄金糕'
   }
 ])
-let tableData: Ref<null> = ref(null)
+const tableData = ref(null)
 
 onMounted(async () => {
   tableData.value = await getAllUser()

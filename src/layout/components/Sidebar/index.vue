@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 // import { routes } from '@/router/index.ts'
 import SidebarItem from './SidebarItem.vue'

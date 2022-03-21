@@ -84,7 +84,6 @@
 </template>
 
 <script setup lang="ts" name="Permission">
-import { ref, Ref, onMounted } from 'vue'
 import {
   addPermission,
   getAllPermission,
@@ -98,7 +97,7 @@ const dialogType: Ref<string> = ref('new')
 const currentPage: Ref<number> = ref(5)
 const dialogVisible: Ref<boolean> = ref(false)
 const permission: Ref<any> = ref({})
-let permissionList: Ref<object[]> = ref([])
+const permissionList: Ref<object[]> = ref([])
 
 const getChildren = (data: any, result: object[], pid: number): void => {
   for (const item of data) {

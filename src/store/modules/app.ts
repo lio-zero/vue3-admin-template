@@ -1,4 +1,6 @@
 import Cookies from 'js-cookie'
+import { State } from '@/types/vuex/app.ts'
+console.log(11, State)
 
 const state = {
   sidebar: {

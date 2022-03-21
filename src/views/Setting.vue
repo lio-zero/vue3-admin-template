@@ -1,8 +1,8 @@
 <template>
   <div class="setting-container">
     <el-form
-      status-icon
       ref="FormData"
+      status-icon
       class="demo-ruleForm"
       label-width="120px"
       :model="ruleForm"
@@ -22,9 +22,9 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="comfirmPwd">
+      <el-form-item label="确认密码" prop="confirmPwd">
         <el-input
-          v-model="ruleForm.comfirmPwd"
+          v-model="ruleForm.confirmPwd"
           type="password"
           autocomplete="off"
         ></el-input>
@@ -38,21 +38,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, reactive } from 'vue'
+import { Ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
 // import { validatePass, validateComfirmPass } from '@/utils/validate'
 
 const store = useStore()
-const userInfo = ref(store.state.user_info)
-userInfo.value.comfirmPwd = userInfo.value.password
+type ruleType = {
+  email: string
+  phone: number
+  password: string
+  confirmPwd: string
+}
+
+const userInfo = reactive(store.state.user_info)
+userInfo.confirmPwd = userInfo.password
 const labelPosition: Ref<string> = ref('right')
-const FormData: Ref<null> = ref(null)
-const ruleForm: object = reactive(userInfo)
-const emailReg = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/
+const FormData = ref()
+const ruleForm: ruleType = reactive(userInfo)
+// const emailReg = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/
+const emailReg =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/
 
-const validEmail = (rule, value, callback) => {
+const validEmail = (rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入邮箱'))
   } else if (!emailReg.test(value)) {
@@ -62,7 +71,7 @@ const validEmail = (rule, value, callback) => {
   }
 }
 
-const validPhone = (rule, value, callback) => {
+const validPhone = (rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请输入手机号'))
   } else if (value.toString().length < 10) {
@@ -74,7 +83,7 @@ const validPhone = (rule, value, callback) => {
   }
 }
 
-const validPass = (rule, value, callback) => {
+const validPass = (rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
   } else {
@@ -85,7 +94,7 @@ const validPass = (rule, value, callback) => {
   }
 }
 
-const validComfirmPwd = (rule, value, callback) => {
+const validConfirmPwd = (rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
   } else if (value !== ruleForm.password) {
@@ -99,11 +108,11 @@ const rules: object = reactive({
   email: [{ validator: validEmail, trigger: 'blur' }],
   phone: [{ validator: validPhone, trigger: 'blur' }],
   password: [{ validator: validPass, trigger: 'blur' }],
-  comfirmPwd: [{ validator: validComfirmPwd, trigger: 'blur' }]
+  confirmPwd: [{ validator: validConfirmPwd, trigger: 'blur' }]
 })
 
-const saveForm = formName => {
-  FormData.value.validate(valid => {
+const saveForm = () => {
+  FormData.value.validate((valid: boolean) => {
     if (valid) {
       ElMessage({
         message: '保存成功',
@@ -115,7 +124,7 @@ const saveForm = formName => {
   })
 }
 
-const resetForm = formName => FormData.value.resetFields()
+const resetForm = () => FormData.value.resetFields()
 </script>
 
 <style scoped lang="scss">

@@ -79,7 +79,6 @@
   </div>
 </template>
 <script setup lang="ts" name="Login">
-import { ref, Ref, reactive } from 'vue'
 import { validUsername } from '@/utils/validate.ts'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -107,7 +106,6 @@ const model: User = reactive({
 })
 
 const store = useStore()
-const redirect: Ref<string> = ref('')
 const loading: Ref<boolean> = ref(false)
 const checked: Ref<boolean> = ref(false)
 const forgetPass: Ref<boolean> = ref(true)

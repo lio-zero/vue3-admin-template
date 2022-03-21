@@ -6,16 +6,10 @@
         <component :is="Component" />
       </keep-alive>
     </router-view>
-    <!-- <transition :name="name" mode="out-in">
-      <router-view />
-    </transition> -->
   </section>
 </template>
 
-<script setup lang="ts">
-// import { ref } from 'vue'
-// const name = ref('el-fade-in')
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .app-main {

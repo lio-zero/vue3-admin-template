@@ -37,7 +37,6 @@ const store = useStore()
 
 const device = computed(() => store.state.device)
 const sidebar = computed(() => store.state.sidebar)
-
 const classObj = computed(() => {
   return {
     hideSidebar: !sidebar.value.opened,

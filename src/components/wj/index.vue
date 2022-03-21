@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Ref, ref } from 'vue'
-
 interface questionsType {
   readonly id: number
   readonly question: string
@@ -8,10 +6,10 @@ interface questionsType {
   readonly correctAnswer: string
 }
 
-let result: Ref<boolean> = ref(false)
-let currentSlide: Ref<number> = ref(0)
-let numCorrect: Ref<number> = ref(0)
-let items: Ref<object> = ref({
+const result: Ref<boolean> = ref(false)
+const currentSlide: Ref<number> = ref(0)
+const numCorrect: Ref<number> = ref(0)
+const items: Ref<object> = ref({
   '1': 0,
   '2': 0,
   '3': 0
@@ -67,20 +65,20 @@ const submitResult = () => {
   <div class="quiz-container">
     <div id="quiz">
       <div
-        class="slide"
-        :class="{ 'active-slide': index === currentSlide }"
         v-for="(item, index) in myQuestions"
         :key="item.question"
+        class="slide"
+        :class="{ 'active-slide': index === currentSlide }"
       >
         <div class="question">{{ item.question }}</div>
         <!-- lightgreen-color -->
         <!-- red-color -->
         <div class="answers" :class="{ 'lightgreen-color': true }">
           <el-radio-group
-            class="label"
-            v-model="items[item.id]"
             v-for="(sub_item, sub_index) in item.answers"
             :key="sub_item"
+            v-model="items[item.id]"
+            class="label"
             @change="handleResult"
           >
             <el-radio :label="sub_index" size="medium"
@@ -91,20 +89,20 @@ const submitResult = () => {
       </div>
     </div>
   </div>
-  <el-button class="previous" v-if="currentSlide > 0" @click="currentSlide--"
+  <el-button v-if="currentSlide > 0" class="previous" @click="currentSlide--"
     >上一题</el-button
   >
-  <el-button class="next" v-if="currentSlide < 2" @click="currentSlide++"
+  <el-button v-if="currentSlide < 2" class="next" @click="currentSlide++"
     >下一题</el-button
   >
   <el-button
+    v-if="currentSlide > 1"
     class="submit"
     :class="{ active: true }"
-    v-if="currentSlide > 1"
     @click="submitResult"
     >提交测验</el-button
   >
-  <div id="results" v-if="result">
+  <div v-if="result" id="results">
     {{ numCorrect }} out of {{ myQuestions.length }}
   </div>
 </template>

@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts" name="Role">
-import { reactive, ref, onMounted } from 'vue'
 import { addRole, getAllRole, deleteRole, updateRole } from '@/api/role'
 import { routes } from '@/router'
 import { resolve } from 'path-browserify'
@@ -107,7 +106,7 @@ const dialogVisible = ref(false)
 const tree = ref()
 const checkStrictly = ref(false)
 const role = ref({})
-let tableData = ref(null)
+const tableData = ref(null)
 const defaultProps = reactive({
   children: 'children',
   label: 'title'
@@ -234,9 +233,9 @@ const handleAddRole = () => {
 }
 
 const save = async () => {
-  console.log(role.value)
-  console.log(pageList)
-  return
+  // console.log(role.value)
+  // console.log(pageList)
+  // return
   if (dialogType.value === 'new') {
     const data = await addRole(role.value)
 

@@ -3,6 +3,7 @@ import NProgress from 'nprogress'
 import { getToken } from '@/utils/auth'
 import store from '@/store'
 import { getPageTitle } from '@/utils/get-page-title'
+NProgress.configure({ showSpinner: false })
 
 export default (router: any) => {
   router.beforeEach(async (to: any, from: any, next: any) => {
@@ -14,11 +15,8 @@ export default (router: any) => {
       store.dispatch('getUserInfo')
       next()
     } else {
-      if (to.path === '/login') {
-        next()
-      } else {
-        next({ path: '/login' })
-      }
+      if (to.path === '/login') next()
+      else next({ path: '/login' })
     }
   })
 

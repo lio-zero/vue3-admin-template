@@ -43,7 +43,6 @@
 import Breadcrumb from './Breadcrumb.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
 
 const store = useStore()
 const opened = computed(() => store.state.sidebar.opened)

@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, nextTick } from 'vue'
 import { routes } from '@/router'
 import { resolve } from 'path-browserify'
 import { RouteRecordRaw } from 'vue-router'
