@@ -12,10 +12,14 @@
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
-          <item
+          <el-icon
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
           />
+          <template #title>
+            <span v-if="onlyOneChild.meta && onlyOneChild.meta.title">
+              {{ onlyOneChild.meta.title }}
+            </span>
+          </template>
         </el-menu-item>
       </app-link>
     </template>
@@ -47,8 +51,8 @@
 
 <script setup lang="ts">
 import AppLink from './Link.vue'
-import Item from './Item.vue'
-import { ref } from 'vue'
+import Item from './Item.tsx'
+import ElIcon from './ElIcon.tsx'
 import { isExternal } from '@/utils/validate'
 import { resolve } from 'path-browserify'
 
@@ -93,11 +97,21 @@ const resolvePath = (routePath: any) => {
   if (isExternal(routePath)) {
     return routePath
   }
+
   if (isExternal(props.basePath)) {
     return props.basePath
   }
+
   return resolve(props.basePath, routePath)
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.sub-el-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+</style>

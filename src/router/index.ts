@@ -7,7 +7,8 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/LoginPage.vue'),
+    hidden: true
   },
   {
     path: '/',
@@ -18,7 +19,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'home', badge: 'new' }
+        meta: { title: '首页', icon: 'HomeFilled', badge: 'new' }
       }
     ]
   },
@@ -31,7 +32,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'index',
         name: 'Setting',
         component: () => import('@/views/Setting.vue'),
-        meta: { title: '个人设置', icon: 'settings' }
+        meta: { title: '个人设置', icon: 'Tools' }
       }
     ]
   },

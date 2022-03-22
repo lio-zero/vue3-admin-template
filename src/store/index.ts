@@ -99,23 +99,17 @@ export default createStore({
   },
   actions: {
     async login({ commit }: any, userInfo: any) {
-      const { username, password } = userInfo
-      const { token, refreshToken } = await login({
-        username: username.trim(),
-        password: password
-      })
+      const { token, refreshToken } = await login(userInfo)
 
       commit('SET_TOKEN', token)
       setToken(token)
-      setRefreshToken(refreshToken)
+      refreshToken && setRefreshToken(refreshToken)
     },
     async getUserInfo({ commit, state }: any) {
       const { id }: any = jwtDecode(state.token)
       const data = await getUserInfo(id)
 
-      if (!data) {
-        return '验证失败，请重新登录。'
-      }
+      if (!data) return '验证失败，请重新登录。'
 
       const { role, name, avatar, introduction } = data
 
@@ -132,6 +126,7 @@ export default createStore({
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken('Admin-Token')
+      removeToken('Refresh-Token')
     },
     // 刷新 token
     async refreshToken({ commit }: any) {

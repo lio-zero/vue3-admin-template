@@ -44,8 +44,8 @@
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+        <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
+        <el-button size="small" type="danger" @click="handleDelete(scope)"
           >删除</el-button
         >
       </template>
@@ -94,6 +94,7 @@
 </template>
 
 <script setup lang="ts" name="Role">
+import { Ref } from 'vue'
 import { addRole, getAllRole, deleteRole, updateRole } from '@/api/role'
 import { routes } from '@/router'
 import { resolve } from 'path-browserify'
@@ -101,12 +102,18 @@ import { RouteRecordRaw } from 'vue-router'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+type RoleType = {
+  name?: string
+  display_name?: string
+  description?: string
+}
+
 const dialogType = ref('new')
 const dialogVisible = ref(false)
 const tree = ref()
 const checkStrictly = ref(false)
-const role = ref({})
-const tableData = ref(null)
+const role: Ref<RoleType> = ref({})
+const tableData: any = ref(null)
 const defaultProps = reactive({
   children: 'children',
   label: 'title'
@@ -121,7 +128,7 @@ const onlyOneShowingChild = (
   parent: RouteRecordRaw
 ) => {
   let onlyOneChild = null
-  const showingChildren = children.filter(item => !item.hidden)
+  const showingChildren = children.filter((item: any) => !item.hidden)
   // 当只有一个路由时，默认情况下会显示该子路由
   if (showingChildren.length === 1) {
     onlyOneChild = showingChildren[0]

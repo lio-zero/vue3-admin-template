@@ -53,8 +53,8 @@
       overflow: hidden;
     }
 
-    .svg-icon {
-      margin-right: 16px;
+    .el-icon {
+      margin-right: 14px;
     }
 
     .el-menu {
@@ -99,8 +99,12 @@
       padding: 0 !important;
       position: relative;
 
-      .svg-icon {
-        margin-left: 20px;
+      .el-menu-tooltip__trigger {
+        padding: 0 !important;
+      }
+
+      .el-icon {
+        margin-left: 16px;
       }
     }
 
@@ -110,8 +114,8 @@
       & > .el-sub-menu__title {
         padding: 0 !important;
 
-        .svg-icon {
-          margin-left: 20px;
+        .el-icon {
+          margin-left: 16px;
         }
 
         .el-sub-menu__icon-arrow {
@@ -120,17 +124,17 @@
       }
     }
 
-    .el-menu--collapse {
-      .el-menu-item {
-        & > span {
-          height: 0;
-          width: 0;
-          overflow: hidden;
-          visibility: hidden;
-          display: inline-block;
-        }
-      }
-    }
+    // .el-menu--collapse {
+    //   .el-menu-item {
+    //     & > span {
+    //       height: 0;
+    //       width: 0;
+    //       overflow: hidden;
+    //       visibility: hidden;
+    //       display: inline-block;
+    //     }
+    //   }
+    // }
 
     .el-menu--collapse {
       .el-sub-menu {
@@ -182,7 +186,7 @@
 // when menu collapsed
 .el-menu--vertical {
   & > .el-menu {
-    .svg-icon {
+    .el-icon {
       margin-right: 16px;
     }
   }

@@ -44,8 +44,8 @@
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+        <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
+        <el-button size="small" type="danger" @click="handleDelete(scope)"
           >删除</el-button
         >
       </template>
@@ -114,7 +114,7 @@ const options: userGroup[] = reactive([
     label: '黄金糕'
   }
 ])
-const tableData = ref(null)
+const tableData: any = ref(null)
 
 onMounted(async () => {
   tableData.value = await getAllUser()

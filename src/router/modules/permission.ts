@@ -5,7 +5,11 @@ export default {
   name: 'User',
   component: Layout,
   redirect: '/permission/user',
-  meta: { title: '后台权限管理', icon: 'users', roles: ['admin', 'editor'] },
+  meta: {
+    title: '后台权限管理',
+    icon: 'Operation',
+    roles: ['admin', 'editor']
+  },
   children: [
     {
       path: 'user',

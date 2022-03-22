@@ -18,7 +18,7 @@ export default defineConfig({
   plugins: [
     vue(),
     VueSetupExtend(),
-    eslintPlugin(),
+    // eslintPlugin(),
     createSvg('./src/icons/svg/'),
     AutoImport({
       imports: ['vue', 'vue-router', '@vueuse/head', '@vueuse/core'],
@@ -45,7 +45,7 @@ export default defineConfig({
   },
   css: {},
   server: {
-    port: 8080,
+    port: 8089,
     open: true,
     https: false,
     cors: true

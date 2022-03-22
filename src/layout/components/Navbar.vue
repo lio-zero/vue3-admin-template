@@ -8,19 +8,14 @@
     />
     <breadcrumb class="breadcrumb-container flex-1"></breadcrumb>
 
-    <el-tooltip
-      class="mr-6 mt-2 cursor-pointer"
-      effect="dark"
-      content="消息"
-      placement="bottom"
-    >
-      <el-badge class="" is-dot>
-        <el-icon size="20"><bell /></el-icon>
-      </el-badge>
-    </el-tooltip>
     <div class="right-menu">
+      <el-tooltip effect="dark" content="消息" placement="bottom">
+        <el-badge class="right-menu-item cursor-pointer" is-dot>
+          <el-icon size="20"><bell /></el-icon>
+        </el-badge>
+      </el-tooltip>
       <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
+        <div class="avatar-wrapper cursor-pointer">
           <el-avatar shape="square" :src="store.state.avatar"></el-avatar>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -61,8 +56,15 @@ const layout = async () => {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  padding: 0;
+
+  .hamburger-container {
+    height: 100%;
+    line-height: 46px;
+  }
+
   .breadcrumb-container {
-    float: left;
+    // float: left;
   }
   .right-menu {
     float: right;
@@ -107,5 +109,10 @@ const layout = async () => {
       }
     }
   }
+}
+
+:v-deep(.el-badge__content) {
+  top: 16px;
+  right: 10px;
 }
 </style>

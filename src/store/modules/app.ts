@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie'
 import { State } from '@/types/vuex/app.ts'
-console.log(11, State)
 
-const state = {
+const state: State = {
   sidebar: {
     opened: Cookies.get('sidebarStatus')
       ? !!+Cookies.get('sidebarStatus')

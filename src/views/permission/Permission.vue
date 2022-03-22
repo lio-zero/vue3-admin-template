@@ -27,11 +27,11 @@
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
-        <el-button size="mini" @click="handleAddPermission(scope)"
+        <el-button size="small" @click="handleAddPermission(scope)"
           >新增</el-button
         >
-        <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope)"
+        <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
+        <el-button size="small" type="danger" @click="handleDelete(scope)"
           >删除</el-button
         >
       </template>
@@ -84,6 +84,7 @@
 </template>
 
 <script setup lang="ts" name="Permission">
+import { Ref } from 'vue'
 import {
   addPermission,
   getAllPermission,
