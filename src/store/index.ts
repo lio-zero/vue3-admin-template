@@ -1,13 +1,7 @@
 import { createStore } from 'vuex'
 import getters from './getters'
 import Cookies from 'js-cookie'
-import {
-  getToken,
-  setToken,
-  setRefreshToken,
-  getRefreshToken,
-  removeToken
-} from '@/utils/auth'
+import { getToken, setToken, setRefreshToken, getRefreshToken, removeToken } from '@/utils/auth'
 import { login, getUserInfo, getNewToken } from '@/api/login.ts'
 import jwtDecode from 'jwt-decode'
 
@@ -38,12 +32,12 @@ function filterAsyncRoutes(routes: any, roles: any) {
 export default createStore({
   state: {
     sidebar: {
-      opened: Cookies.get('sidebarStatus')
-        ? !!+Cookies.get('sidebarStatus')
-        : true,
+      opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
       withoutAnimation: false
     },
-    device: 'desktop',
+    app: {
+      device: 'desktop'
+    },
     size: Cookies.get('size') || 'medium',
     user_info: '',
     routes: filterAsyncRoutes(routes, ['admin']),

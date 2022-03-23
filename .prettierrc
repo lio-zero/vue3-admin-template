@@ -5,10 +5,13 @@
   "trailingComma": "none",
   "useTabs": false,
   "tabWidth": 2,
-  "printWidth": 80,
+  "printWidth": 100,
   "arrowParens": "avoid",
-  "jsxSingleQuote": false,
+  "endOfLine": "auto",
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": true,
   "bracketSameLine": false,
+  "htmlWhitespaceSensitivity": "strict",
   "overrides": [
     {
       "files": "*.json",

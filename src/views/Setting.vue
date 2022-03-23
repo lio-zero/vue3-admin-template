@@ -1,39 +1,68 @@
 <template>
   <div class="setting-container">
-    <el-form
-      ref="FormData"
-      status-icon
-      class="demo-ruleForm"
-      label-width="120px"
-      :model="ruleForm"
-      :rules="rules"
-      :label-position="labelPosition"
-    >
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="ruleForm.email"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号码" prop="phone">
-        <el-input v-model.number="ruleForm.phone" maxlength="11"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          v-model="ruleForm.password"
-          type="password"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPwd">
-        <el-input
-          v-model="ruleForm.confirmPwd"
-          type="password"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="saveForm">保存</el-button>
-        <el-button @click="resetForm">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="center-vertical" id="account-form-container">
+      <el-form
+        ref="FormData"
+        status-icon
+        class="demo-ruleForm card card-body bg-light"
+        id="account-form"
+        label-width="120px"
+        :model="ruleForm"
+        :rules="rules"
+        :label-position="labelPosition"
+      >
+        <h6>个人信息</h6>
+        <hr />
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label col-form-label-sm">姓名</label>
+          <div class="col-sm-9">
+            <input
+              class="form-control"
+              id="name-tf"
+              type="text"
+              name="name"
+              v-model="ruleForm.name"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label col-form-label-sm">邮箱</label>
+          <div class="col-sm-9">
+            <input
+              class="form-control"
+              id="email-tf"
+              type="email"
+              name="email"
+              v-model="ruleForm.email"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label col-form-label-sm">用户名</label>
+          <div class="col-sm-9">
+            <input
+              class="form-control disabled"
+              id="user-tf"
+              type="text"
+              name="user"
+              v-model="ruleForm.name"
+            />
+          </div>
+        </div>
+        <div class="form-group row margin-zero">
+          <label class="col-sm-3 col-form-label col-form-label-sm">密码</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="email-tf" type="password" name="pass" />
+          </div>
+        </div>
+        <hr />
+        <div class="form-buttons">
+          <div class="btn btn-outline-dark" id="account-form-btn1">删除</div>
+          <div class="btn btn-primary" id="account-form-btn2">更新</div>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -48,11 +77,10 @@ type ruleType = {
   email: string
   phone: number
   password: string
-  confirmPwd: string
+  name: string
 }
 
 const userInfo = reactive(store.state.user_info)
-userInfo.confirmPwd = userInfo.password
 const labelPosition: Ref<string> = ref('right')
 const FormData = ref()
 const ruleForm: ruleType = reactive(userInfo)
@@ -128,9 +156,9 @@ const resetForm = () => FormData.value.resetFields()
 </script>
 
 <style scoped lang="scss">
-.setting-container {
-  margin: auto;
-  max-width: 400px;
-  height: 100%;
+@import '@/styles/login.scss';
+
+.center-vertical {
+  width: 440px;
 }
 </style>

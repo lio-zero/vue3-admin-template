@@ -4,50 +4,24 @@
     <template #empty>
       <el-empty description="暂无数据"></el-empty>
     </template>
-    <el-table-column
-      align="center"
-      prop="id"
-      label="id"
-      width="80"
-    ></el-table-column>
-    <el-table-column
-      align="center"
-      prop="name"
-      label="姓名"
-      width="220"
-    ></el-table-column>
-    <el-table-column
-      align="center"
-      prop="email"
-      label="邮箱"
-      width="220"
-    ></el-table-column>
+    <el-table-column align="center" prop="id" label="id" width="80"></el-table-column>
+    <el-table-column align="center" prop="name" label="姓名" width="220"></el-table-column>
+    <el-table-column align="center" prop="email" label="邮箱" width="220"></el-table-column>
     <el-table-column align="center" prop="phone" label="手机"></el-table-column>
-    <el-table-column
-      align="center"
-      prop="userGroup"
-      label="用户组"
-    ></el-table-column>
+    <el-table-column align="center" prop="userGroup" label="用户组"></el-table-column>
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
-        <el-icon
-          class="align-middle mr-2"
-          :color="scope.row.status ? '#67C23A' : '#F56C6C'"
-        >
+        <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
           <circle-check-filled v-if="scope.row.status" />
           <circle-close-filled v-else />
         </el-icon>
-        <span class="align-middle">{{
-          scope.row.status ? '正常' : '禁用'
-        }}</span>
+        <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
       </template>
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="small" type="danger" @click="handleDelete(scope)"
-          >删除</el-button
-        >
+        <el-button size="small" type="danger" @click="handleDelete(scope)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -106,6 +80,7 @@ type RoleType = {
   name?: string
   display_name?: string
   description?: string
+  routes?: string
 }
 
 const dialogType = ref('new')
@@ -123,10 +98,7 @@ onMounted(async () => {
   tableData.value = await getAllRole()
 })
 
-const onlyOneShowingChild = (
-  children: RouteRecordRaw[] = [],
-  parent: RouteRecordRaw
-) => {
+const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecordRaw) => {
   let onlyOneChild = null
   const showingChildren = children.filter((item: any) => !item.hidden)
   // 当只有一个路由时，默认情况下会显示该子路由
@@ -143,7 +115,7 @@ const onlyOneShowingChild = (
   return false
 }
 
-const generateRoutes = (routes: RouteRecordRaw[] = [], basePath = '/') => {
+const generateRoutes = (routes: any = [], basePath = '/') => {
   const res: RouteRecordRaw[] = []
   for (let route of routes) {
     if (route.hidden) {
@@ -168,8 +140,8 @@ const generateRoutes = (routes: RouteRecordRaw[] = [], basePath = '/') => {
   return res
 }
 
-const generateArr = routes => {
-  let data = []
+const generateArr = (routes: any) => {
+  let data: any = []
   routes.forEach((route: any) => {
     data.push(route)
     if (route.children) {

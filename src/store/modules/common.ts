@@ -5,12 +5,12 @@ const common = {
   },
   mutations: {
     // 折叠侧边栏
-    TOGGLE_SIDEBAR(state) {
+    TOGGLE_SIDEBAR(state: { isCollapse: boolean }) {
       state.isCollapse = !state.isCollapse
     }
   },
   actions: {
-    toggleSidebar({ commit }) {
+    toggleSidebar({ commit }: any) {
       commit('TOGGLE_SIDEBAR')
     }
   }

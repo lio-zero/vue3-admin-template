@@ -19,3 +19,10 @@
 .el-badge__content {
   border: none;
 }
+
+.navbar {
+  .el-badge__content {
+    top: 12px;
+    left: 24px;
+  }
+}

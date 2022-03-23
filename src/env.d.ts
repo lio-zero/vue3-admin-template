@@ -1,4 +1,4 @@
-// / <reference types="vite/client" />
+/// <reference types="vite/client" />
 
 // *.d.ts 声明文件，用于类型检测，声明第三方库的类型
 declare module '*.vue' {
@@ -6,6 +6,14 @@ declare module '*.vue' {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
   const component: DefineComponent<{}, {}, any>
   export default component
+}
+
+interface ImportMetaEnv {
+  readonly VITE_BASE_API: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }
 
 declare module 'js-cookie'

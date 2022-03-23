@@ -16,3 +16,6 @@ dist-ssr
 wj
 node-login
 *copy.vue
+deploy.sh
+fast-vue3
+docs

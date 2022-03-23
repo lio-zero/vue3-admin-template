@@ -10,23 +10,18 @@
       :text-color="variables.menuText"
       mode="vertical"
     >
-      <sidebar-item
-        v-for="item in routes"
-        :key="item.path"
-        :item="item"
-        :base-path="item.path"
-      />
+      <sidebar-item v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
     </el-menu>
   </el-scrollbar>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+// @ts-ignore
 import { routes } from '@/router/index.ts'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/variables.module.scss'
 import { useStore } from 'vuex'
-console.log(routes)
 
 const route = useRoute()
 const store = useStore()

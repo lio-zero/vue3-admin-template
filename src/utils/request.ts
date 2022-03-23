@@ -1,20 +1,20 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
 import { getToken, removeToken } from './auth'
 import store from '@/store'
 import router from '@/router'
 import errorMap from '@/config/constants'
 
-const http = axios.create({
+const http: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: 5000
 })
 
 // 请求拦截
 http.interceptors.request.use(
-  config => {
+  (config: AxiosRequestConfig) => {
     if (getToken()) {
-      config.headers['Authorization'] = 'Bearer ' + (getToken() || '')
+      config.headers!.Authorization = 'Bearer ' + (getToken() || '')
     }
     return config
   },

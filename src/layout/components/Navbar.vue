@@ -63,9 +63,6 @@ const layout = async () => {
     line-height: 46px;
   }
 
-  .breadcrumb-container {
-    // float: left;
-  }
   .right-menu {
     float: right;
     height: 100%;
@@ -75,7 +72,7 @@ const layout = async () => {
     }
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
+      padding: 0 16px;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;

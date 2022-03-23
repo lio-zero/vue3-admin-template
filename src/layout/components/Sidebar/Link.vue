@@ -20,7 +20,7 @@ const type = computed(() => {
   }
   return 'router-link'
 })
-const linkProps = to => {
+const linkProps = (to: string) => {
   if (isExternal.value) {
     return {
       href: to,

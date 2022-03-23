@@ -1,9 +1,12 @@
-module.exports = {
+const { defineConfig } = require('eslint-define-config')
+
+module.exports = defineConfig({
   root: true,
   parserOptions: {
     ecmaVersion: 12,
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
+    jsxPragma: 'React',
     ecmaFeatures: {
       jsx: true
     }
@@ -18,25 +21,22 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es2021: true
+    es6: true
   },
   extends: [
     'plugin:vue/vue3-recommended',
-    'eslint:recommended',
-    // 'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
+    // 'eslint:recommended',
     'vue-global-api',
     'plugin:prettier/recommended',
     'prettier' // eslint-config-prettier 的缩写
   ],
   // eslint-plugin-vue、@typescript-eslint/eslint-plugin、eslint-plugin-prettier 的缩写
   plugins: ['vue', '@typescript-eslint', 'prettier'],
-
   // 在这里添加您的自定义规则
   // 它是基于 https://github.com/vuejs/eslint-config-vue
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
@@ -47,11 +47,50 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-var': 'error',
-    'prettier/prettier': 'error',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
+    'vue/script-setup-uses-vars': 'error',
+    'prettier/prettier': ['error', { endOfLine: 'off' }],
+    'vue/custom-event-name-casing': 'off',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_'
+      }
+    ],
+    'no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_'
+      }
+    ],
+    'space-before-function-paren': 'off',
+
+    'vue/attributes-order': 'off',
+    'vue/one-component-per-file': 'off',
+    'vue/html-closing-bracket-newline': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/attribute-hyphenation': 'off',
+    'vue/require-default-prop': 'off',
+    'vue/require-explicit-emits': 'off',
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'never',
+          component: 'always'
+        },
+        svg: 'always',
+        math: 'always'
+      }
+    ],
+    'vue/multi-word-component-names': 'off',
     'accessor-pairs': 2,
     'arrow-spacing': [
       2,
@@ -207,13 +246,13 @@ module.exports = {
     ],
     'no-unreachable': 2,
     'no-unsafe-finally': 2,
-    'no-unused-vars': [
-      2,
-      {
-        vars: 'all',
-        args: 'none'
-      }
-    ],
+    // 'no-unused-vars': [
+    //   2,
+    //   {
+    //     vars: 'all',
+    //     args: 'none'
+    //   }
+    // ],
     'no-useless-call': 2,
     'no-useless-computed-key': 2,
     'no-useless-constructor': 2,
@@ -254,14 +293,14 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [
-      2,
-      {
-        anonymous: 'never',
-        named: 'never',
-        asyncArrow: 'always'
-      }
-    ],
+    // 'space-before-function-paren': [
+    //   2,
+    //   {
+    //     anonymous: 'never',
+    //     named: 'never',
+    //     asyncArrow: 'always'
+    //   }
+    // ],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
@@ -275,15 +314,7 @@ module.exports = {
       2,
       'always',
       {
-        markers: [
-          'global',
-          'globals',
-          'eslint',
-          'eslint-disable',
-          '*package',
-          '!',
-          ','
-        ]
+        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
       }
     ],
     'template-curly-spacing': [2, 'never'],
@@ -303,4 +334,4 @@ module.exports = {
     ],
     'array-bracket-spacing': [2, 'never']
   }
-}
+})

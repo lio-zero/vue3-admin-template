@@ -5,8 +5,9 @@
         <span
           v-if="item.redirect === 'noRedirect' || index == levelList.length - 1"
           class="no-redirect"
-          >{{ item.meta.title }}</span
         >
+          {{ item.meta.title }}
+        </span>
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
       </el-breadcrumb-item>
     </transition-group>
@@ -35,8 +36,7 @@ const getBreadcrumb = () => {
 
   // 拿到路由元信息 meta 中的存在的 title
   levelList.value = matched.filter(
-    (item: any) =>
-      item.meta && item.meta.title && item.meta.breadcrumb !== false
+    (item: any) => item.meta && item.meta.title && item.meta.breadcrumb !== false
   )
 }
 

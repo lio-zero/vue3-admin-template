@@ -12,9 +12,7 @@
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
-          <el-icon
-            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-          />
+          <el-icon :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
           <template #title>
             <span v-if="onlyOneChild.meta && onlyOneChild.meta.title">
               {{ onlyOneChild.meta.title }}
@@ -24,18 +22,9 @@
       </app-link>
     </template>
 
-    <el-sub-menu
-      v-else
-      ref="subMenu"
-      :index="resolvePath(item.path)"
-      popper-append-to-body
-    >
+    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <item
-          v-if="item.meta"
-          :icon="item.meta && item.meta.icon"
-          :title="item.meta.title"
-        />
+        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -51,7 +40,9 @@
 
 <script setup lang="ts">
 import AppLink from './Link.vue'
+// @ts-ignore
 import Item from './Item.tsx'
+// @ts-ignore
 import ElIcon from './ElIcon.tsx'
 import { isExternal } from '@/utils/validate'
 import { resolve } from 'path-browserify'
@@ -72,6 +63,7 @@ const props = defineProps({
 })
 
 const onlyOneChild: any = ref(null)
+
 const hasOneShowingChild = (children = [], parent: any) => {
   const showingChildren = children.filter((item: any) => {
     if (item.hidden) {

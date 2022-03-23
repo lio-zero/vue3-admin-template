@@ -1,12 +1,15 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <!-- <div v-if="device === 'mobile' && sidebar.opened"> -->
+    <div
+      v-if="device === 'mobile' && sidebar.opened"
+      class="drawer-bg"
+      @click="handleClickOutside"
+    ></div>
     <sidebar-component class="sidebar-container" />
     <div class="main-container">
       <navbar />
       <app-main />
     </div>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -14,27 +17,11 @@
 import SidebarComponent from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
 import Navbar from './components/Navbar.vue'
-import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
-// const { body } = document
-// const WIDTH = 992 // 参考Bootstrap的响应式设计
-// const subMenu = ref()
-
-// const fixBugIniOS = () => {
-//   const $subMenu = subMenu
-//   if ($subMenu) {
-//     const handleMouseleave = $subMenu.handleMouseleave
-//     $subMenu.handleMouseleave = e => {
-//       if (this.device === 'mobile') {
-//         return
-//       }
-//       handleMouseleave(e)
-//     }
-//   }
-// }
-
+const { body } = document
+const WIDTH = 992 // 参考 Bootstrap 的响应式设计
 const device = computed(() => store.state.device)
 const sidebar = computed(() => store.state.sidebar)
 const classObj = computed(() => {
@@ -46,36 +33,52 @@ const classObj = computed(() => {
   }
 })
 
-// onMounted(() => {
-//   const isMobile = $_isMobile()
-//   if (isMobile) {
-//     store.dispatch('toggleDevice', 'mobile')
-//     store.dispatch('closeSideBar', { withoutAnimation: true })
-//   }
-// })
+const handleFullWidthSizing = () => {
+  const scrollbarWidth = window.innerWidth - document.body.clientWidth
 
-// const $_isMobile = () => {
-//   const rect = body.getBoundingClientRect()
-//   return rect.width - 1 < WIDTH
-// }
+  document.querySelector('body')!.style.width = `calc(100vw - ${scrollbarWidth}px)`
+}
 
-// onBeforeMount(() => {
-//   window.addEventListener('resize', $_resizeHandler)
-// })
-// onBeforeUnmount(() => {
-//   window.removeEventListener('resize', $_resizeHandler)
-// })
+const handleClickOutside = () => {
+  store.dispatch('closeSideBar', { withoutAnimation: false })
+}
 
-// const $_resizeHandler = () => {
-//   if (!document.hidden) {
-//     const isMobile = $_isMobile()
-//     store.dispatch('toggleDevice', isMobile ? 'mobile' : 'desktop')
+const isMobile = () => {
+  const rect = body.getBoundingClientRect()
+  return rect.width - 1 < WIDTH
+}
 
-//     if (isMobile) {
-//       store.dispatch('closeSideBar', { withoutAnimation: true })
-//     }
-//   }
-// }
+const resizeHandler = () => {
+  if (!document.hidden) {
+    store.dispatch('toggleDevice', isMobile() ? 'mobile' : 'desktop')
+
+    if (isMobile()) {
+      store.dispatch('closeSideBar', { withoutAnimation: true })
+    }
+  }
+}
+
+onMounted(() => {
+  handleFullWidthSizing()
+  if (isMobile()) {
+    store.dispatch('toggleDevice', 'mobile')
+    store.dispatch('closeSideBar', { withoutAnimation: true })
+  }
+})
+
+onBeforeMount(() => {
+  window.removeEventListener('resize', resizeHandler)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeHandler)
+})
+
+onBeforeMount(() => {
+  window.addEventListener('resize', resizeHandler)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeHandler)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -84,5 +87,14 @@ const classObj = computed(() => {
   min-height: 100%;
   margin-left: 210px;
   transition: margin-left 0.28s;
+}
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
 }
 </style>
