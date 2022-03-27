@@ -1,20 +1,22 @@
-import { defineConfig, UserConfig, ConfigEnv } from 'vite'
+import { defineConfig, UserConfig, ConfigEnv, loadEnv } from 'vite'
 import { resolve } from 'path'
-// import { createSvg } from './src/icons/index'
-// import eslintPlugin from 'vite-plugin-eslint'
 import { createVitePlugins } from './config/vite/plugins'
 import { VITE_DROP_CONSOLE, VITE_PORT } from './config/constant'
+import { wrapperEnv } from './config/utils'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build'
-  console.log(command, mode)
+  const root = process.cwd()
+  const env = loadEnv(mode, root)
+  const viteEnv = wrapperEnv(env)
   return {
     base: './',
-    plugins: createVitePlugins(isBuild),
+    plugins: createVitePlugins(viteEnv, isBuild),
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src'),
+        '#': resolve(__dirname, 'types')
       }
     },
     css: {

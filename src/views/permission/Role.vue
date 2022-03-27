@@ -2,13 +2,13 @@
   <el-button type="primary" @click="handleAddRole">新增角色</el-button>
   <el-table :data="tableData" border style="width: 100%; margin-top: 30px">
     <template #empty>
-      <el-empty description="暂无数据"></el-empty>
+      <el-empty description="暂无数据" />
     </template>
-    <el-table-column align="center" prop="id" label="id" width="80"></el-table-column>
-    <el-table-column align="center" prop="name" label="姓名" width="220"></el-table-column>
-    <el-table-column align="center" prop="email" label="邮箱" width="220"></el-table-column>
-    <el-table-column align="center" prop="phone" label="手机"></el-table-column>
-    <el-table-column align="center" prop="userGroup" label="用户组"></el-table-column>
+    <el-table-column align="center" prop="id" label="id" width="80" />
+    <el-table-column align="center" prop="name" label="姓名" width="220" />
+    <el-table-column align="center" prop="email" label="邮箱" width="220" />
+    <el-table-column align="center" prop="phone" label="手机" />
+    <el-table-column align="center" prop="userGroup" label="用户组" />
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
         <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
@@ -54,8 +54,7 @@
           :props="defaultProps"
           show-checkbox
           node-key="path"
-        >
-        </el-tree>
+        />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -99,7 +98,7 @@ onMounted(async () => {
 })
 
 const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecordRaw) => {
-  let onlyOneChild = null
+  let onlyOneChild: any = null
   const showingChildren = children.filter((item: any) => !item.hidden)
   // 当只有一个路由时，默认情况下会显示该子路由
   if (showingChildren.length === 1) {

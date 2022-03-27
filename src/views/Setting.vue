@@ -16,25 +16,13 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label col-form-label-sm">姓名</label>
           <div class="col-sm-9">
-            <input
-              class="form-control"
-              id="name-tf"
-              type="text"
-              name="name"
-              v-model="ruleForm.name"
-            />
+            <input class="form-control" type="text" name="name" v-model="ruleForm.name" />
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-3 col-form-label col-form-label-sm">邮箱</label>
           <div class="col-sm-9">
-            <input
-              class="form-control"
-              id="email-tf"
-              type="email"
-              name="email"
-              v-model="ruleForm.email"
-            />
+            <input class="form-control" type="email" name="email" v-model="ruleForm.email" />
           </div>
         </div>
         <hr />
@@ -43,23 +31,22 @@
           <div class="col-sm-9">
             <input
               class="form-control disabled"
-              id="user-tf"
               type="text"
               name="user"
-              v-model="ruleForm.name"
+              v-model="ruleForm.username"
             />
           </div>
         </div>
         <div class="form-group row margin-zero">
           <label class="col-sm-3 col-form-label col-form-label-sm">密码</label>
           <div class="col-sm-9">
-            <input class="form-control" id="email-tf" type="password" name="pass" />
+            <input class="form-control" type="password" name="pass" v-model="ruleForm.password" />
           </div>
         </div>
         <hr />
         <div class="form-buttons">
           <div class="btn btn-outline-dark" id="account-form-btn1">删除</div>
-          <div class="btn btn-primary" id="account-form-btn2">更新</div>
+          <div class="btn btn-primary" id="account-form-btn2" @click="saveForm">更新</div>
         </div>
       </el-form>
     </div>
@@ -75,12 +62,13 @@ import { useStore } from 'vuex'
 const store = useStore()
 type ruleType = {
   email: string
-  phone: number
-  password: string
   name: string
+  username: string
+  password: string
+  phone: number
 }
 
-const userInfo = reactive(store.state.user_info)
+const userInfo = reactive(store.state.userInfo)
 const labelPosition: Ref<string> = ref('right')
 const FormData = ref()
 const ruleForm: ruleType = reactive(userInfo)
@@ -89,7 +77,7 @@ const emailReg =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/
 
-const validEmail = (rule: any, value: string, callback: any) => {
+const validEmail = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入邮箱'))
   } else if (!emailReg.test(value)) {
@@ -99,7 +87,7 @@ const validEmail = (rule: any, value: string, callback: any) => {
   }
 }
 
-const validPhone = (rule: any, value: string, callback: any) => {
+const validPhone = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请输入手机号'))
   } else if (value.toString().length < 10) {
@@ -111,7 +99,7 @@ const validPhone = (rule: any, value: string, callback: any) => {
   }
 }
 
-const validPass = (rule: any, value: string, callback: any) => {
+const validPass = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
   } else {
@@ -122,7 +110,7 @@ const validPass = (rule: any, value: string, callback: any) => {
   }
 }
 
-const validConfirmPwd = (rule: any, value: string, callback: any) => {
+const validConfirmPwd = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
   } else if (value !== ruleForm.password) {
@@ -151,13 +139,10 @@ const saveForm = () => {
     }
   })
 }
-
-const resetForm = () => FormData.value.resetFields()
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/login.scss';
-
 .center-vertical {
   width: 440px;
 }

@@ -1,11 +1,21 @@
 import { createStore } from 'vuex'
 import getters from './getters'
 import Cookies from 'js-cookie'
-import { getToken, setToken, setRefreshToken, getRefreshToken, removeToken } from '@/utils/auth'
-import { login, getUserInfo, getNewToken } from '@/api/login.ts'
-import jwtDecode from 'jwt-decode'
+import {
+  getToken,
+  // setToken,
+  // setRefreshToken,
+  // getRefreshToken,
+  // removeToken,
+  setAuthCache
+} from '@/utils/auth'
+import { USER_INFO_KEY, TOKEN_KEY } from '@/enums/cacheEnum'
+import { PageEnum } from '@/enums/pageEnum'
+import { login, getUserInfo, doLogout } from '@/api/login'
+// import { isArray } from '@/utils/is'
+// import jwtDecode from 'jwt-decode'
+import { routes, router } from '@/router'
 
-import { routes } from '@/router'
 function hasPermission(roles: any, route: any) {
   if (route.meta && route.meta.roles) {
     return roles.some((role: any) => route.meta.roles.includes(role))
@@ -39,14 +49,14 @@ export default createStore({
       device: 'desktop'
     },
     size: Cookies.get('size') || 'medium',
-    user_info: '',
+    userInfo: '',
+    lastUpdateTime: 0,
+    // 登录是否过期
+    sessionTimeout: false,
     routes: filterAsyncRoutes(routes, ['admin']),
     addRoutes: [],
-    token: getToken(),
-    roles: '',
-    name: '',
-    introduction: '',
-    avatar: ''
+    token: null,
+    roles: ''
   },
   getters,
   mutations: {
@@ -70,65 +80,80 @@ export default createStore({
     SET_SIZE: (state: any, size: any) => {
       state.size = size
       Cookies.set('size', size)
-    },
-    // 用户 Token
-    SET_TOKEN: (state: any, token: any) => {
-      state.token = token
-    },
-    SET_INTRODUCTION: (state: any, introduction: any) => {
-      state.introduction = introduction
-    },
-    SET_USER_INFO: (state: any, userInfo: any) => {
-      state.user_info = userInfo
-    },
-    SET_NAME: (state: any, name: any) => {
-      state.name = name
-    },
-    SET_AVATAR: (state: any, avatar: any) => {
-      state.avatar = avatar
-    },
-    SET_ROLES: (state: any, roles: any) => {
-      state.roles = roles
     }
   },
   actions: {
-    async login({ commit }: any, userInfo: any) {
-      const { token, refreshToken } = await login(userInfo)
-
-      commit('SET_TOKEN', token)
-      setToken(token)
-      refreshToken && setRefreshToken(refreshToken)
+    setToken({ state }, info) {
+      state.token = info ? info : ''
+      setAuthCache(TOKEN_KEY, info)
     },
-    async getUserInfo({ commit, state }: any) {
-      const { id }: any = jwtDecode(state.token)
-      const data = await getUserInfo(id)
-
-      if (!data) return '验证失败，请重新登录。'
-
-      const { role, name, avatar, introduction } = data
-
-      commit('SET_ROLES', role)
-      commit('SET_NAME', name)
-      commit('SET_AVATAR', avatar)
-      commit('SET_INTRODUCTION', introduction)
-      commit('SET_USER_INFO', data)
-      return data
+    setUserInfo({ state }, info) {
+      state.userInfo = info
+      state.lastUpdateTime = new Date().getTime()
+      setAuthCache(USER_INFO_KEY, info)
     },
-    async logout({ commit }: any) {
+    setSessionTimeout({ state }, flag) {
+      state.sessionTimeout = flag
+    },
+    resetState({ state }) {
+      state.userInfo = null
+      state.token = ''
+      state.sessionTimeout = false
+    },
+    async login({ dispatch }, userInfo: any) {
+      try {
+        const { token }: any = await login(userInfo)
+        dispatch('setToken', token)
+        return dispatch('afterLoginAction')
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    },
+    async afterLoginAction({ dispatch, state }: any) {
+      if (!getToken) return null
+      const userInfo = await dispatch('getUserInfoAction')
+      const sessionTimeout = state.sessionTimeout
+      if (sessionTimeout) {
+        dispatch('sessionTimeout', false)
+      }
+
+      return userInfo
+
+      // const { id }: any = jwtDecode(state.token)
+      // const data = await getUserInfo(id)
+      // if (!data) return '验证失败，请重新登录。'
+      // return data
+    },
+    async getUserInfoAction({ dispatch }) {
+      if (!getToken) return null
+      const userInfo = await getUserInfo()
+      dispatch('setUserInfo', userInfo)
+      return userInfo
+    },
+    async logout({ dispatch, state }, goLogin = false) {
+      if (state.getToken) {
+        try {
+          await doLogout()
+        } catch {
+          console.log('注销 Token 失败')
+        }
+      }
+      dispatch('setToken', undefined)
+      dispatch('setSessionTimeout', false)
+      dispatch('setUserInfo', null)
+      goLogin && router.push(PageEnum.BASE_LOGIN)
       // const { id } = jwtDecode(state.token)
       // const data = await logout(id)
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken('Admin-Token')
-      removeToken('Refresh-Token')
+      // commit('SET_TOKEN', '')
+      // removeToken('Admin-Token')
+      // removeToken('Refresh-Token')
     },
     // 刷新 token
-    async refreshToken({ commit }: any) {
-      const token = await getNewToken({ token: getRefreshToken() })
-      commit('SET_TOKEN', token)
-      setToken(token)
-    },
-
+    // async refreshToken({ commit }: any) {
+    //   const token = await getNewToken({ token: getRefreshToken() })
+    //   commit('SET_TOKEN', token)
+    //   setToken(token)
+    // },
     toggleSideBar({ commit }: any) {
       commit('TOGGLE_SIDEBAR')
     },

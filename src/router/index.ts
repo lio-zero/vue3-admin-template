@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import permission from './modules/permission'
 import middleware from '../middleware'
@@ -46,8 +46,8 @@ export const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
+export const router = createRouter({
+  history: createWebHashHistory(),
   routes
 })
 

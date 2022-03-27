@@ -1,9 +1,9 @@
 /**
- * @name ConfigPagesPlugin
- * @description 动态生成路由
+ * 基于文件系统的路由生成器的 Vite 插件
+ * https://github.com/hannoeru/vite-plugin-pages
  */
 import Pages from 'vite-plugin-pages'
-export const ConfigPagesPlugin = () => {
+export function configPagesPlugin() {
   return Pages({
     pagesDir: [{ dir: 'src/pages', baseRoute: '' }],
     extensions: ['vue', 'md'],

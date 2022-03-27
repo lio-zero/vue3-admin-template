@@ -3,7 +3,7 @@
  * @description 监听配置文件修改自动重启 Vite
  */
 import ViteRestart from 'vite-plugin-restart'
-export const ConfigRestartPlugin = () => {
+export function configRestartPlugin() {
   return ViteRestart({
     restart: ['*.config.[jt]s', '**/config/*.[jt]s']
   })

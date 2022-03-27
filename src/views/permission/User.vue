@@ -2,52 +2,26 @@
   <el-button type="primary" @click="handleAddUser">新增用户</el-button>
   <el-table :data="tableData" border style="width: 100%; margin-top: 30px">
     <template #empty>
-      <el-empty description="暂无数据"></el-empty>
+      <el-empty description="暂无数据" />
     </template>
-    <el-table-column
-      align="center"
-      prop="id"
-      label="id"
-      width="80"
-    ></el-table-column>
-    <el-table-column
-      align="center"
-      prop="name"
-      label="姓名"
-      width="220"
-    ></el-table-column>
-    <el-table-column
-      align="center"
-      prop="email"
-      label="邮箱"
-      width="220"
-    ></el-table-column>
-    <el-table-column align="center" prop="phone" label="手机"></el-table-column>
-    <el-table-column
-      align="center"
-      prop="userGroup"
-      label="用户组"
-    ></el-table-column>
+    <el-table-column align="center" prop="id" label="id" width="80" />
+    <el-table-column align="center" prop="name" label="姓名" width="220" />
+    <el-table-column align="center" prop="email" label="邮箱" width="220" />
+    <el-table-column align="center" prop="phone" label="手机" />
+    <el-table-column align="center" prop="userGroup" label="用户组" />
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
-        <el-icon
-          class="align-middle mr-2"
-          :color="scope.row.status ? '#67C23A' : '#F56C6C'"
-        >
+        <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
           <circle-check-filled v-if="scope.row.status" />
           <circle-close-filled v-else />
         </el-icon>
-        <span class="align-middle">{{
-          scope.row.status ? '正常' : '禁用'
-        }}</span>
+        <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
       </template>
     </el-table-column>
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="small" type="danger" @click="handleDelete(scope)"
-          >删除</el-button
-        >
+        <el-button size="small" type="danger" @click="handleDelete(scope)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -73,15 +47,14 @@
       <el-form-item label="用户组">
         <el-select v-model="user.userGroup" placeholder="请选择用户组">
           <template #empty>
-            <el-empty description="暂无数据" :image-size="40"></el-empty>
+            <el-empty description="暂无数据" :image-size="40" />
           </template>
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          >
-          </el-option>
+          />
         </el-select>
       </el-form-item>
     </el-form>

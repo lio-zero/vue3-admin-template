@@ -1,21 +1,24 @@
+node_modules
+.DS_Store
+dist
+.npmrc
+.cache
+
+# local env file
+*.local
+
+# Editor directories and files
+.vscode
+
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
-# TernJS port file
-.tern-port
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-wj
-node-login
+# order
 *copy.vue
 deploy.sh
-fast-vue3
 docs
+icons

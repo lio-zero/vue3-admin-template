@@ -1,24 +1,25 @@
-import Cookies from 'js-cookie'
+import { CacheTypeEnum, TOKEN_KEY } from '@/enums/cacheEnum'
+import { Persistent, BasicKeys } from '@/utils/cache/persistent'
+import projectSetting from '@/settings/projectSetting'
 
-const TokenKey = 'Admin-Token'
-const RefreshTokenKey = 'Refresh-Token'
+const { permissionCacheType } = projectSetting
+const isLocal = permissionCacheType === CacheTypeEnum.LOCAL
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return getAuthCache(TOKEN_KEY)
 }
 
-export function getRefreshToken() {
-  return Cookies.get(RefreshTokenKey)
+export function getAuthCache<T>(key: BasicKeys) {
+  const fn = isLocal ? Persistent.getLocal : Persistent.getSession
+  return fn(key) as T
 }
 
-export function setToken(token: string) {
-  return Cookies.set(TokenKey, token)
+export function setAuthCache(key: BasicKeys, value) {
+  const fn = isLocal ? Persistent.setLocal : Persistent.setSession
+  return fn(key, value, true)
 }
 
-export function setRefreshToken(token: string) {
-  return Cookies.set(RefreshTokenKey, token)
-}
-
-export function removeToken(key: string) {
-  return Cookies.remove(key)
+export function clearAuthCache(immediate = true) {
+  const fn = isLocal ? Persistent.clearLocal : Persistent.clearSession
+  return fn(immediate)
 }

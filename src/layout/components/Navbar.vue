@@ -6,7 +6,7 @@
       class="hamburger-container cursor-pointer"
       @toggle-click="toggleSideBar"
     />
-    <breadcrumb class="breadcrumb-container flex-1"></breadcrumb>
+    <breadcrumb class="breadcrumb-container flex-1" />
 
     <div class="right-menu">
       <el-tooltip effect="dark" content="消息" placement="bottom">
@@ -16,8 +16,8 @@
       </el-tooltip>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper cursor-pointer">
-          <el-avatar shape="square" :src="store.state.avatar"></el-avatar>
-          <i class="el-icon-caret-bottom" />
+          <el-avatar shape="square" :src="store.state.userInfo && store.state.userInfo.avatar" />
+          <i class="el-icon-caret-bottom"></i>
         </div>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
@@ -41,7 +41,6 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const opened = computed(() => store.state.sidebar.opened)
-
 const toggleSideBar = () => store.dispatch('toggleSideBar')
 
 const layout = async () => {

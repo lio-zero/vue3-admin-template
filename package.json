@@ -1,27 +1,45 @@
 {
-  "name": "vite-wj",
-  "version": "0.0.0",
+  "name": "vue3-typescript-admin-template",
+  "version": "0.0.1",
+  "private": true,
+  "description": "使用 Vue 技术栈搭建的后台模板",
+  "author": {
+    "name": "lio",
+    "email": "licroning@163.com",
+    "url": "https://github.com/lio-zero"
+  },
+  "keywords": [
+    "vue3",
+    "vite",
+    "admin",
+    "dashboard",
+    "element-plus",
+    "typescript"
+  ],
   "scripts": {
-    "serve": "vite preview",
-    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "serve": "npm run dev",
     "dev": "vite",
+    "build": "cross-env NODE_ENV=production vite build",
+    "preview": "npm run build && vite preview",
+    "preview:dist": "vite preview",
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
     "prepare": "husky install",
     "prettier": "prettier --write .",
     "lint": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
     "lint:fix": "eslint . --fix && npm run prettier"
   },
   "lint-staged": {
-    "*": [
-      "prettier --ignore-unknown --write"
-    ],
-    ".js": [
-      "eslint --fix"
+    "*.{js,jsx,vue,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "@vueuse/core": "^8.0.1",
     "axios": "^0.26.1",
+    "crypto-js": "^4.1.1",
+    "dayjs": "^1.11.0",
     "element-plus": "^2.1.3",
     "fs": "^0.0.2",
     "js-cookie": "^3.0.1",
@@ -43,11 +61,14 @@
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
+    "@vitejs/plugin-legacy": "^1.7.1",
     "@vitejs/plugin-vue": "^2.2.4",
     "@vitejs/plugin-vue-jsx": "^1.3.8",
     "autoprefixer": "^10.4.3",
     "babel-eslint": "^10.1.0",
     "consola": "^2.15.3",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-define-config": "^1.3.0",
@@ -55,8 +76,10 @@
     "eslint-plugin-jest": "^26.1.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.5.0",
+    "fs-extra": "^10.0.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.5",
+    "picocolors": "^1.0.0",
     "postcss": "^8.4.11",
     "prettier": "^2.6.0",
     "rollup-plugin-visualizer": "^5.6.0",
@@ -66,13 +89,33 @@
     "vite": "^2.8.6",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "^1.3.0",
+    "vite-plugin-html": "^3.2.0",
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-pages": "^0.22.0",
+    "vite-plugin-purge-icons": "^0.8.1",
+    "vite-plugin-pwa": "^0.11.13",
     "vite-plugin-restart": "^0.1.1",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue-global-api": "^0.4.1",
     "vue-tsc": "^0.33.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lio-zero/vue3-typescript-admin-template"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lio-zero/vue3-typescript-admin-template/issues"
+  },
+  "homepage": "https://github.com/lio-zero/vue3-typescript-admin-template",
+  "engines": {
+    "node": ">= 16.13.1",
+    "npm": ">= 8.5.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }

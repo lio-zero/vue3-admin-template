@@ -6,14 +6,10 @@ export default defineComponent({
       default: ''
     }
   },
-  setup(props, { slots }) {
+  setup(props) {
     const VNode: any = []
     if (props.icon) {
-      VNode.push(
-        h(resolveComponent('el-icon'), null, () =>
-          h(resolveComponent(props.icon))
-        )
-      )
+      VNode.push(h(resolveComponent('el-icon'), null, () => h(resolveComponent(props.icon))))
     }
     return () => VNode
   }

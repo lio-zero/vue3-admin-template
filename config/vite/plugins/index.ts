@@ -1,49 +1,78 @@
 /**
  * @name createVitePlugins
- * @description 封装plugins数组统一调用
+ * @description 封装 plugins 数组统一调用
  */
 import type { Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-// import { ConfigSvgIconsPlugin } from './svgIcons'
-import { AutoRegistryComponents } from './component'
-import { AutoImportDeps } from './autoImport'
-import { ConfigMockPlugin } from './mock'
-import { ConfigVisualizerConfig } from './visualizer'
-import { ConfigCompressPlugin } from './compress'
-import { ConfigPagesPlugin } from './pages'
-import { ConfigRestartPlugin } from './restart'
-import { ConfigVueSetupExtendPlugin } from './setupExtend'
-import { ConfigCreateStyleImportPlugin } from './styles'
+import legacy from '@vitejs/plugin-legacy'
+import purgeIcons from 'vite-plugin-purge-icons'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import { autoRegistryComponents } from './component'
+import { autoImportDeps } from './autoImport'
+import { configMockPlugin } from './mock'
+import { configVisualizerConfig } from './visualizer'
+import { configCompressPlugin } from './compress'
+import { configPagesPlugin } from './page'
+import { configRestartPlugin } from './restart'
+import { configStyleImportPlugin } from './styleImport'
+import { configPwaConfig } from './pwa'
+import { configSvgIconsPlugin } from './svgIcon'
+// import { configHtmlPlugin } from './html'
 
-export function createVitePlugins(isBuild: boolean) {
+export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
+  const {
+    VITE_LEGACY,
+    VITE_USE_MOCK,
+    VITE_BUILD_COMPRESS,
+    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+  } = viteEnv
+
   const vitePlugins: (Plugin | Plugin[])[] = [
-    // vue支持
+    // vue 支持
     vue(),
-    // JSX支持
+    // JSX 支持
     vueJsx(),
     // 自动按需引入组件
-    AutoRegistryComponents(),
+    autoRegistryComponents(),
     // 自动按需引入依赖
-    AutoImportDeps(),
+    autoImportDeps(),
     // 自动生成路由
-    ConfigPagesPlugin(),
-    // 开启.gz压缩  rollup-plugin-gzip
-    ConfigCompressPlugin(),
+    configPagesPlugin(),
+    // setup name 属性
+    vueSetupExtend(),
     // 监听配置文件改动重启
-    ConfigRestartPlugin(),
-    ConfigVueSetupExtendPlugin(),
-    ConfigCreateStyleImportPlugin()
+    configRestartPlugin()
   ]
 
+  // @vitejs/plugin-legacy
+  VITE_LEGACY && isBuild && vitePlugins.push(legacy())
+
+  // vite-plugin-html
+  // vitePlugins.push(configHtmlPlugin(viteEnv, isBuild))
+
   // vite-plugin-svg-icons
-  // vitePlugins.push(ConfigSvgIconsPlugin(isBuild))
+  vitePlugins.push(configSvgIconsPlugin(isBuild))
+
+  // vite-plugin-purge-icons
+  vitePlugins.push(purgeIcons())
 
   // vite-plugin-mock
-  vitePlugins.push(ConfigMockPlugin(isBuild))
+  VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild))
 
   // rollup-plugin-visualizer
-  vitePlugins.push(ConfigVisualizerConfig())
+  vitePlugins.push(configVisualizerConfig())
+
+  // vite-plugin-style-import
+  vitePlugins.push(configStyleImportPlugin())
+
+  if (isBuild) {
+    // 开启.gz压缩  rollup-plugin-gzip
+    configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
+
+    // vite-plugin-pwa
+    vitePlugins.push(configPwaConfig(viteEnv))
+  }
 
   return vitePlugins
 }

@@ -1,6 +1,5 @@
 /**
- * @name Config
- * @description 项目配置
+ * 在生产环境中输入的配置文件的名称
  */
 
 // 应用名
@@ -34,3 +33,7 @@ export const COMPRESSION = true
 
 // 删除 console
 export const VITE_DROP_CONSOLE = true
+
+export const GLOB_CONFIG_FILE_NAME = '_app.config.js'
+
+export const OUTPUT_DIR = 'dist'

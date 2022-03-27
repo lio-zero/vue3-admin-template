@@ -13,11 +13,7 @@ export default defineComponent({
   setup(props) {
     const VNodes: any = []
     if (props.icon) {
-      VNodes.push(
-        h(resolveComponent('el-icon'), null, () =>
-          h(resolveComponent(props.icon))
-        )
-      )
+      VNodes.push(h(resolveComponent('el-icon'), null, () => h(resolveComponent(props.icon))))
     }
 
     if (props.title) {

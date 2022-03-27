@@ -16,24 +16,18 @@ function svgFind(e: any): any {
       const svg = readFileSync(e + dirent.name)
         .toString()
         .replace(clearReturn, '')
-        .replace(svgTitle, ($1, $2) => {
+        .replace(svgTitle, (_$1, $2) => {
           let width = 0
           let height = 0
-          let content = $2.replace(
-            clearHeightWidth,
-            (s1: any, s2: any, s3: any) => {
-              if (s2 === 'width') width = s3
-              else if (s2 === 'height') height = s3
-              return ''
-            }
-          )
+          let content = $2.replace(clearHeightWidth, (_s1: any, s2: any, s3: any) => {
+            if (s2 === 'width') width = s3
+            else if (s2 === 'height') height = s3
+            return ''
+          })
           if (!hasViewBox.test($2)) {
             content += `viewBox="0 0 ${width} ${height}"`
           }
-          return `<symbol id="${idPerfix}-${dirent.name.replace(
-            '.svg',
-            ''
-          )}" ${content}>`
+          return `<symbol id="${idPerfix}-${dirent.name.replace('.svg', '')}" ${content}>`
         })
         .replace('</svg>', '</symbol>')
       arr.push(svg)

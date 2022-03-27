@@ -1,11 +1,11 @@
 /**
- * @name  AutoRegistryComponents
- * @description 按需加载，自动引入组件
+ * Vue 的按需组件自动导入
+ * https://github.com/antfu/unplugin-vue-components
  */
 import Components from 'unplugin-vue-components/vite'
-import IconsResolver from 'unplugin-icons/resolver'
+// import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
-export const AutoRegistryComponents = () => {
+export function autoRegistryComponents() {
   return Components({
     // dirs: ['src/components'],
     extensions: ['vue'],

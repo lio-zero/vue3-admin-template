@@ -1,9 +1,10 @@
 /**
- * @name ConfigCreateStyleImportPlugin
- * @description 监听配置文件修改自动重启Vite
+ * 按需引入组件库样式。
+ * https://github.com/anncwb/vite-plugin-style-import
  */
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
-export const ConfigCreateStyleImportPlugin = () => {
+
+export function configStyleImportPlugin() {
   return createStyleImportPlugin({
     resolves: [ElementPlusResolve()]
   })

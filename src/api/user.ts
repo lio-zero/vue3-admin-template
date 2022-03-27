@@ -1,4 +1,4 @@
-import http from '@/utils/request.ts'
+import http from '@/utils/request'
 
 export function addUser(data: any) {
   return http({

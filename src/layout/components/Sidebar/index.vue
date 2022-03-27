@@ -17,8 +17,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-// @ts-ignore
-import { routes } from '@/router/index.ts'
+import { routes } from '@/router/index'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/variables.module.scss'
 import { useStore } from 'vuex'

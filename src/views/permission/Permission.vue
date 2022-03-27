@@ -1,39 +1,20 @@
 <template>
   <el-button type="primary" @click="handleAddPermission">新增权限</el-button>
-  <el-table
-    :data="permissionList"
-    style="width: 100%; margin-top: 30px"
-    row-key="id"
-    border
-  >
+  <el-table :data="permissionList" style="width: 100%; margin-top: 30px" row-key="id" border>
     <template #empty>
-      <el-empty description="暂无数据"></el-empty>
+      <el-empty description="暂无数据" />
     </template>
-    <el-table-column align="left" prop="id" label="id" width="220">
-    </el-table-column>
+    <el-table-column align="left" prop="id" label="id" width="220" />
     <!-- <el-table-column align="center" prop="permission" label="权限" width="220"> </el-table-column> -->
-    <el-table-column align="center" prop="name" label="名称" width="220">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      prop="redirect_url"
-      label="跳转地址"
-      width="220"
-    >
-    </el-table-column>
-    <el-table-column align="center" prop="description" label="描述">
-    </el-table-column>
-    <el-table-column align="center" prop="display_icon" label="ICON">
-    </el-table-column>
+    <el-table-column align="center" prop="name" label="名称" width="220" />
+    <el-table-column align="center" prop="redirect_url" label="跳转地址" width="220" />
+    <el-table-column align="center" prop="description" label="描述" />
+    <el-table-column align="center" prop="display_icon" label="ICON" />
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
-        <el-button size="small" @click="handleAddPermission(scope)"
-          >新增</el-button
-        >
+        <el-button size="small" @click="handleAddPermission(scope)">新增</el-button>
         <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
-        <el-button size="small" type="danger" @click="handleDelete(scope)"
-          >删除</el-button
-        >
+        <el-button size="small" type="danger" @click="handleDelete(scope)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -46,8 +27,7 @@
       :total="permissionList.length"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    >
-    </el-pagination>
+    />
   </div>
 
   <el-dialog
@@ -119,7 +99,7 @@ const buildTree = (data: object[], pid: number): object[] => {
 }
 
 onMounted(async () => {
-  const data = await getAllPermission()
+  const data: any = await getAllPermission()
   permissionList.value = buildTree(data, 0)
 })
 

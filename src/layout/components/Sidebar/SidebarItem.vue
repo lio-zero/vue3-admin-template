@@ -40,10 +40,8 @@
 
 <script setup lang="ts">
 import AppLink from './Link.vue'
-// @ts-ignore
-import Item from './Item.tsx'
-// @ts-ignore
-import ElIcon from './ElIcon.tsx'
+import Item from './Item'
+import ElIcon from './ElIcon'
 import { isExternal } from '@/utils/validate'
 import { resolve } from 'path-browserify'
 

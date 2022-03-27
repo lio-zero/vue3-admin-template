@@ -1,17 +1,35 @@
 /**
- * @name ConfigCompressPlugin
- * @description 开启.gz压缩
+ * 用于打包和输出 gzip。请注意，这在 Vite 中无法正常工作，具体原因仍在调查中
+ * https://github.com/anncwb/vite-plugin-compression
  */
-import viteCompression from 'vite-plugin-compression'
-import { COMPRESSION } from '../../constant'
+import type { PluginOption } from 'vite'
+import compressPlugin from 'vite-plugin-compression'
 
-export const ConfigCompressPlugin = () => {
-  if (COMPRESSION) {
-    return viteCompression({
-      ext: '.gz',
-      verbose: true,
-      deleteOriginFile: false
-    })
+export function configCompressPlugin(
+  compress: 'gzip' | 'brotli' | 'none',
+  deleteOriginFile = false
+): PluginOption | PluginOption[] {
+  const compressList = compress.split(',')
+
+  const plugins: PluginOption[] = []
+
+  if (compressList.includes('gzip')) {
+    plugins.push(
+      compressPlugin({
+        ext: '.gz',
+        deleteOriginFile
+      })
+    )
   }
-  return []
+
+  if (compressList.includes('brotli')) {
+    plugins.push(
+      compressPlugin({
+        ext: '.br',
+        algorithm: 'brotliCompress',
+        deleteOriginFile
+      })
+    )
+  }
+  return plugins
 }

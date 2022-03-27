@@ -34,7 +34,7 @@
       <hr />
       <div class="btm-links">
         <div id="forgot-password">
-          <router-link to="/login" @click="forgetPass = false">忘记密码了？</router-link>
+          <router-link to="/login">忘记密码了？</router-link>
         </div>
         <div id="create-account">
           <router-link to="/signup">创建一个帐户</router-link>
@@ -45,21 +45,19 @@
 </template>
 <script setup lang="ts" name="Login">
 import { Ref } from 'vue'
-import { validUsername } from '@/utils/validate.ts'
+import { validUsername } from '@/utils/validate'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
-// @ts-ignore
-import { User } from '@/types/Login.ts'
 
-const validateUsername = (rule: any, value: string, callback: any) => {
+const validateUsername = (_rule: any, value: string, callback: any) => {
   if (!validUsername(value)) {
     callback(new Error('请输入正确的用户名'))
   } else {
     callback()
   }
 }
-const validatePassword = (rule: any, value: string, callback: any) => {
+const validatePassword = (_rule: any, value: string, callback: any) => {
   if (value.length < 6) {
     callback(new Error('密码不能少于6位'))
   } else {
@@ -67,14 +65,19 @@ const validatePassword = (rule: any, value: string, callback: any) => {
   }
 }
 
+type User = {
+  username: string
+  password: number
+  rememberMe?: boolean
+}
 const model: User = reactive({
-  username: 'lio',
-  password: '123456'
+  username: 'admin',
+  password: 123456
 })
 
 const store = useStore()
 const loading: Ref<boolean> = ref(false)
-const forgetPass: Ref<boolean> = ref(true)
+// const forgetPass: Ref<boolean> = ref(true)
 const loginForm: any = ref(null)
 const router = useRouter()
 

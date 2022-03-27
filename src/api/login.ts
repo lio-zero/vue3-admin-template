@@ -1,4 +1,4 @@
-import http from '@/utils/request.ts'
+import http from '@/utils/request'
 
 export function login(data: any) {
   return http({
@@ -8,9 +8,22 @@ export function login(data: any) {
   })
 }
 
-export function getUserInfo(id: number) {
+export function doLogout() {
   return http({
-    url: `/api/user/getUserDetail/${id}`
+    url: '/logout',
+    method: 'get'
+  })
+}
+
+// export function getUserInfo(id?: number) {
+//   return http({
+//     url: `/api/user/getUserDetail/${id}`
+//   })
+// }
+
+export function getUserInfo() {
+  return http({
+    url: `/api/user/getUserDetail`
   })
 }
 
