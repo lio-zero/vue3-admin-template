@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-import { getRequestToken, resultError, resultSuccess, requestParams } from './utils'
+import { getRequestToken, resultError, resultSuccess, requestParams } from '../_utils'
 
 export function fakeUser() {
   return [
@@ -19,7 +19,7 @@ export function fakeUser() {
 
 export default [
   {
-    url: '/login',
+    url: '/api/login',
     timeout: 200,
     method: 'post',
     response({ body }) {

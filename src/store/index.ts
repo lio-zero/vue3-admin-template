@@ -1,3 +1,4 @@
+import type { ProjectConfig } from '#/config'
 import { createStore } from 'vuex'
 import getters from './getters'
 import Cookies from 'js-cookie'
@@ -14,31 +15,13 @@ import { PageEnum } from '@/enums/pageEnum'
 import { login, getUserInfo, doLogout } from '@/api/login'
 // import { isArray } from '@/utils/is'
 // import jwtDecode from 'jwt-decode'
-import { routes, router } from '@/router'
+import { router } from '@/router'
+import { Persistent } from '@/utils/cache/persistent'
+import { PROJ_CFG_KEY } from '@/enums/cacheEnum'
+import { deepMerge } from '@/utils'
 
-function hasPermission(roles: any, route: any) {
-  if (route.meta && route.meta.roles) {
-    return roles.some((role: any) => route.meta.roles.includes(role))
-  } else {
-    return true
-  }
-}
+let timeId: TimeoutHandle
 
-function filterAsyncRoutes(routes: any, roles: any) {
-  const res: any = []
-
-  routes.forEach((route: any) => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
-      }
-      res.push(tmp)
-    }
-  })
-
-  return res
-}
 export default createStore({
   state: {
     sidebar: {
@@ -53,10 +36,11 @@ export default createStore({
     lastUpdateTime: 0,
     // 登录是否过期
     sessionTimeout: false,
-    routes: filterAsyncRoutes(routes, ['admin']),
     addRoutes: [],
     token: null,
-    roles: ''
+    roles: '',
+    pageLoading: false,
+    projectConfig: Persistent.getLocal(PROJ_CFG_KEY)
   },
   getters,
   mutations: {
@@ -165,6 +149,25 @@ export default createStore({
     },
     setSize({ commit }: any, size: any) {
       commit('SET_SIZE', size)
+    },
+    setPageLoading({ state }, loading: boolean): void {
+      state.pageLoading = loading
+    },
+    async setPageLoadingAction({ dispatch }, loading: boolean): Promise<void> {
+      if (loading) {
+        clearTimeout(timeId)
+        // 防止闪烁
+        timeId = setTimeout(() => {
+          dispatch('setPageLoading', loading)
+        }, 50)
+      } else {
+        dispatch('setPageLoading', loading)
+        clearTimeout(timeId)
+      }
+    },
+    setProjectConfig({ state }, config: DeepPartial<ProjectConfig>): void {
+      state.projectConfig = deepMerge(state.projectConfig || {}, config)
+      Persistent.setLocal(PROJ_CFG_KEY, state.projectConfig)
     }
   },
   modules: {}

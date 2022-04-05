@@ -15,15 +15,16 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
   const getAppConfigSrc = () => {
     return `${path || '/'}${GLOB_CONFIG_FILE_NAME}?v=${pkg.version}-${new Date().getTime()}`
   }
+  console.log(VITE_GLOB_APP_TITLE)
 
   const htmlPlugin: PluginOption[] = createHtmlPlugin({
     minify: isBuild,
     inject: {
-      // Inject data into ejs template
+      // 将数据注入 ejs 模板
       data: {
         title: VITE_GLOB_APP_TITLE
       },
-      // Embed the generated app.config.js file
+      // 嵌入生成的 app.config.js 文件
       tags: isBuild
         ? [
             {

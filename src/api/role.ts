@@ -1,31 +1,35 @@
-import http from '@/utils/request'
+import { http } from '@/utils/http'
 
-export function addRole(data: any) {
-  return http({
-    url: `/api/role/addRole`,
-    method: 'post',
-    data
-  })
+enum Api {
+  GetRole = '/role/getRole',
+  AddRole = '/role/addRole',
+  DelRole = '/role/delRole',
+  UpdateRole = '/role/updateRole'
 }
 
 export function getAllRole() {
-  return http({
-    url: `/api/role/getRole`
+  return http.get({
+    url: Api.GetRole
   })
 }
 
-export function deleteRole(data: any) {
-  return http({
-    url: `/api/role/delRole`,
-    method: 'post',
-    data
+export function addRole(params: any) {
+  return http.post({
+    url: Api.AddRole,
+    params
   })
 }
 
-export function updateRole(data: any) {
-  return http({
-    url: `/api/role/updateRole`,
-    method: 'post',
-    data
+export function deleteRole(params: any) {
+  return http.post({
+    url: Api.DelRole,
+    params
+  })
+}
+
+export function updateRole(params: any) {
+  return http.post({
+    url: Api.UpdateRole,
+    params
   })
 }

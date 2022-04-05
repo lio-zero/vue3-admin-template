@@ -71,5 +71,6 @@
     "brotli",
     "tailwindcss",
     "pnpm"
-  ]
+  ],
+  "liveServer.settings.multiRootWorkspaceName": "vue3-admin-template"
 }

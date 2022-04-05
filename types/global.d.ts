@@ -2,6 +2,12 @@ declare global {
   declare type Nullable<T> = T | null
   declare type Recordable<T = any> = Record<string, T>
 
+  declare type TimeoutHandle = ReturnType<typeof setTimeout>
+
+  declare type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>
+  }
+
   interface ImportMetaEnv extends ViteEnv {
     __: unknown
   }

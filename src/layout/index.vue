@@ -1,5 +1,10 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
+  <div
+    :class="classObj"
+    class="app-wrapper"
+    v-loading.fullscreen.lock="store.state.pageLoading"
+    element-loading-text="Vue3 Admin Template"
+  >
     <div
       v-if="device === 'mobile' && sidebar.opened"
       class="drawer-bg"

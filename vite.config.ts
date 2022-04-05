@@ -1,8 +1,8 @@
 import { defineConfig, UserConfig, ConfigEnv, loadEnv } from 'vite'
 import { resolve } from 'path'
-import { createVitePlugins } from './config/vite/plugins'
-import { VITE_DROP_CONSOLE, VITE_PORT } from './config/constant'
-import { wrapperEnv } from './config/utils'
+import { createVitePlugins } from './build/vite/plugins'
+import { wrapperEnv } from './build/utils'
+import { createProxy } from './build/vite/proxy'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
@@ -10,6 +10,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
   const viteEnv = wrapperEnv(env)
+  const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv
   return {
     base: './',
     plugins: createVitePlugins(viteEnv, isBuild),
@@ -31,8 +32,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       port: VITE_PORT,
       open: true,
       https: false,
-      cors: false,
-      host: '0.0.0.0'
+      cors: true,
+      host: '0.0.0.0',
+      proxy: createProxy(VITE_PROXY)
     },
     build: {
       target: 'es2015',

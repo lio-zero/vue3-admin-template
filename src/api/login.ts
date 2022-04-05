@@ -1,36 +1,41 @@
-import http from '@/utils/request'
+import { http } from '@/utils/http'
 
-export function login(data: any) {
-  return http({
+enum Api {
+  Login = '/login',
+  Logout = '/logout',
+  GetUserDetail = '/user/getUserDetail',
+  RefreshToken = '/refreshToken'
+}
+
+export function login(params: any) {
+  console.log(Api.Login)
+  return http.post({
     url: '/login',
-    method: 'post',
-    data
+    params
   })
 }
 
 export function doLogout() {
-  return http({
-    url: '/logout',
-    method: 'get'
+  return http.get({
+    url: Api.Logout
   })
 }
 
 // export function getUserInfo(id?: number) {
 //   return http({
-//     url: `/api/user/getUserDetail/${id}`
+//     url: `/user/getUserDetail/${id}`
 //   })
 // }
 
 export function getUserInfo() {
-  return http({
-    url: `/api/user/getUserDetail`
+  return http.get({
+    url: Api.GetUserDetail
   })
 }
 
-export function getNewToken(data: any) {
-  return http({
-    url: `/refreshToken`,
-    method: 'post',
-    data
+export function getNewToken(params: any) {
+  return http.post({
+    url: Api.RefreshToken,
+    params
   })
 }

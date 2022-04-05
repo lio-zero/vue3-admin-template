@@ -39,6 +39,7 @@ const ls = createLocalStorage()
 const ss = createSessionStorage()
 
 const localMemory = new Memory(DEFAULT_CACHE_TIME)
+
 const sessionMemory = new Memory(DEFAULT_CACHE_TIME)
 
 function initPersistentMemory() {

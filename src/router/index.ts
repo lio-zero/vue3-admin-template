@@ -41,7 +41,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/NotFount.vue')
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: '/:catchAll(.*)',
     redirect: '/404'
   }
 ]

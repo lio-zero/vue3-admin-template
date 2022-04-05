@@ -1,31 +1,35 @@
-import http from '@/utils/request'
+import { http } from '@/utils/http'
 
-export function addUser(data: any) {
-  return http({
-    url: `/api/user/addUser`,
-    method: 'post',
-    data
+enum Api {
+  GetUser = '/user/getUser',
+  AddUser = '/user/addUser',
+  DelUser = '/user/delUser',
+  UpdateUser = '/user/updateUser'
+}
+
+export function addUser(params: any) {
+  return http.post({
+    url: Api.AddUser,
+    params
   })
 }
 
 export function getAllUser() {
-  return http({
-    url: `/api/user/getUser`
+  return http.get({
+    url: Api.GetUser
   })
 }
 
-export function deleteUser(data: any) {
-  return http({
-    url: `/api/user/delUser`,
-    method: 'post',
-    data
+export function deleteUser(params: any) {
+  return http.post({
+    url: Api.DelUser,
+    params
   })
 }
 
-export function updateUser(data: any) {
-  return http({
-    url: `/api/user/updateUser`,
-    method: 'post',
-    data
+export function updateUser(params: any) {
+  return http.post({
+    url: Api.UpdateUser,
+    params
   })
 }

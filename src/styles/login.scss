@@ -30,6 +30,10 @@ h6 {
 	login window
 */
 .login-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  margin: auto;
   width: 380px;
 }
 .login-container .btn {
@@ -129,13 +133,9 @@ h6 {
 .modal .modal-footer button {
   width: 80px;
 }
+
 .center-vertical {
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  margin: auto;
 }
 
 .el-checkbox {
