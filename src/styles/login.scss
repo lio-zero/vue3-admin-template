@@ -39,7 +39,7 @@ h6 {
 .login-container .btn {
   float: left;
   width: 48%;
-  font-size: 0.8rem;
+  // font-size: 0.8rem;
 }
 .login-container .btn-btm {
   padding: 0;
@@ -58,10 +58,10 @@ h6 {
 .login-container #btn_remember:hover {
   background: #f8f9fa;
 }
-.login-container h6,
-.login-container label {
-  font-size: 0.8rem;
-}
+// .login-container h6,
+// .login-container label {
+//   font-size: 0.8rem;
+// }
 .login-container h6,
 .login-container label,
 .login-container #btn_remember {

@@ -40,6 +40,9 @@ export default createStore({
     token: null,
     roles: '',
     pageLoading: false,
+    setting: {
+      showLogo: false
+    },
     projectConfig: Persistent.getLocal(PROJ_CFG_KEY)
   },
   getters,

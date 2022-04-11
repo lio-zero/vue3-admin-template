@@ -22,7 +22,6 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Hamburger: typeof import('./components/Hamburger/index.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
-    LoginPopup: typeof import('./components/LoginPopup.vue')['default']
     SvgIcon: typeof import('./components/SvgIcon/index.vue')['default']
   }
 }

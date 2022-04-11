@@ -1,24 +1,28 @@
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu
-      :default-active="activeMenu"
-      :collapse="isCollapse"
-      :unique-opened="false"
-      :collapse-transition="false"
-      :background-color="variables.menuBg"
-      :active-text-color="variables.menuActiveText"
-      :text-color="variables.menuText"
-      mode="vertical"
-    >
-      <sidebar-item v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
-    </el-menu>
-  </el-scrollbar>
+  <div :class="{ 'has-logo': showLogo }">
+    <logo v-if="true" :collapse="isCollapse" />
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="activeMenu"
+        :collapse="isCollapse"
+        :unique-opened="false"
+        :collapse-transition="false"
+        :background-color="variables.menuBg"
+        :active-text-color="variables.menuActiveText"
+        :text-color="variables.menuText"
+        mode="vertical"
+      >
+        <sidebar-item v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
+      </el-menu>
+    </el-scrollbar>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { routes } from '@/router/index'
 import SidebarItem from './SidebarItem.vue'
+import Logo from './Logo.vue'
 import variables from '@/styles/variables.module.scss'
 import { useStore } from 'vuex'
 
@@ -37,6 +41,7 @@ const activeMenu: any = computed(() => {
 })
 
 const isCollapse = computed(() => !store.state.sidebar.opened)
+const showLogo = computed(() => !store.state.setting.showLogo)
 </script>
 
 <style lang="scss" scoped>
