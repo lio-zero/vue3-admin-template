@@ -10,7 +10,8 @@ import { ElMessage, ElNotification } from 'element-plus'
 import { setObjToUrlParams, deepMerge } from '@/utils'
 import { getToken } from '../auth'
 import { useGlobSetting } from '@/hooks/setting'
-import store from '@/store'
+// import store from '@/store'
+import { useUserStoreWithOut } from '@/store/modules/user'
 // import router from '@/router'
 
 const globSetting = useGlobSetting()
@@ -54,11 +55,12 @@ const transform: AxiosTransform = {
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
     // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = ''
+    const userStore = useUserStoreWithOut()
     switch (code) {
       case ResultEnum.TIMEOUT:
         timeoutMsg = '登录超时,请重新登录!'
-        store.dispatch('setToken', undefined)
-        store.dispatch('logout', true)
+        userStore.setToken(undefined)
+        userStore.logout(true)
         break
       default:
         if (message) {

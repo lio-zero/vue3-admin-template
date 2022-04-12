@@ -1,10 +1,13 @@
+import 'virtual:svg-icons-register'
+import App from './App.vue'
 import { createApp } from 'vue'
+
 import ElementPlus from 'element-plus'
 import * as EleIcon from '@element-plus/icons'
-import App from './App.vue'
-import store from './store'
-import router from './router'
 import svgIcon from './icons/index.vue'
+
+import { setupStore } from '@/store'
+import router from './router'
 import 'normalize.css/normalize.css'
 import 'nprogress/nprogress.css'
 import '@/styles/index.scss'
@@ -17,6 +20,13 @@ for (const key in eleIcon) {
   app.component(key, eleIcon[key])
 }
 
-initAppConfigStore()
+function bootstrap() {
+  // 配置 store
+  setupStore(app)
+  // 初始化内部系统配置
+  initAppConfigStore()
+}
 
-app.use(ElementPlus).use(store).use(router).component('svg-icon', svgIcon).mount('#app')
+bootstrap()
+
+app.use(ElementPlus).use(router).component('svg-icon', svgIcon).mount('#app')

@@ -1,10 +1,23 @@
 import { RouterTransitionEnum } from '@/enums/appEnum'
 
 export interface ProjectConfig {
+  // 侧边栏设置
+  sidebar: Sidebar
   // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum
-  // Animation configuration
+  // 过渡设置
   transitionSetting: TransitionSetting
+  // 侧边栏 Logo
+  showLogo: boolean
+  // 是否显示设置按钮
+  openSetting: boolean
+  // 是否显示全屏按钮
+  showFullScreen: boolean
+}
+
+export interface Sidebar {
+  opened: boolean
+  withoutAnimation: boolean
 }
 
 export interface TransitionSetting {

@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 'has-logo': showLogo }">
-    <logo v-if="true" :collapse="isCollapse" />
+    <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -24,12 +24,11 @@ import { routes } from '@/router/index'
 import SidebarItem from './SidebarItem.vue'
 import Logo from './Logo.vue'
 import variables from '@/styles/variables.module.scss'
-import { useStore } from 'vuex'
+import { useAppStore } from '@/store/modules/app'
 
 const route = useRoute()
-const store = useStore()
+const appStore = useAppStore()
 
-// const routes = store.state.routes
 const activeMenu: any = computed(() => {
   const { meta, path } = route
 
@@ -40,8 +39,8 @@ const activeMenu: any = computed(() => {
   return path
 })
 
-const isCollapse = computed(() => !store.state.sidebar.opened)
-const showLogo = computed(() => !store.state.setting.showLogo)
+const isCollapse = computed(() => !appStore.getProjectConfig.sidebar.opened)
+const showLogo = computed(() => appStore.getProjectConfig.showLogo)
 </script>
 
 <style lang="scss" scoped>

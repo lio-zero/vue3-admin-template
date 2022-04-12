@@ -9,14 +9,22 @@
     <breadcrumb class="breadcrumb-container flex-1" />
 
     <div class="right-menu">
+      <el-tooltip v-if="showFullScreen" effect="dark" :content="getTitle" placement="bottom">
+        <div class="right-menu-item cursor-pointer" @click="toggle">
+          <SvgIcon v-if="!isFullscreen" size="18" name="maximize" />
+          <SvgIcon v-else size="18" name="minimize" />
+        </div>
+      </el-tooltip>
+
       <el-tooltip effect="dark" content="消息" placement="bottom">
         <el-badge class="right-menu-item cursor-pointer" is-dot>
-          <el-icon size="20"><bell /></el-icon>
+          <SvgIcon size="18" name="bell" />
         </el-badge>
       </el-tooltip>
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper cursor-pointer">
-          <el-avatar shape="square" :src="store.state.userInfo && store.state.userInfo.avatar" />
+          <el-avatar shape="square" :src="userStore.userInfo.avatar" />
           <i class="el-icon-caret-bottom"></i>
         </div>
         <template #dropdown>
@@ -31,22 +39,81 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+
+      <el-tooltip effect="dark" content="设置" placement="bottom">
+        <div class="right-menu-item cursor-pointer" @click="toggleSetting">
+          <SvgIcon size="18" name="settings" />
+        </div>
+      </el-tooltip>
     </div>
   </div>
+
+  <el-drawer v-model="openSetting" title="项目配置" @close="toggleSetting" size="330px">
+    <div class="v-drawer-body">
+      <el-divider> 界面显示 </el-divider>
+      <div class="v-setting-switch-item">
+        <span>全屏内容</span>
+        <el-switch v-model="showFullScreen" inline-prompt active-text="是" inactive-text="否" />
+      </div>
+      <div class="v-setting-switch-item">
+        <span>Logo</span>
+        <el-switch v-model="showLogo" inline-prompt active-text="是" inactive-text="否" />
+      </div>
+    </div>
+  </el-drawer>
 </template>
 <script setup lang="ts">
 import Breadcrumb from './Breadcrumb.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
-import { useStore } from 'vuex'
+import { useAppStore } from '@/store/modules/app'
+import { useUserStore } from '@/store/modules/user'
 
-const store = useStore()
-const opened = computed(() => store.state.sidebar.opened)
-const toggleSideBar = () => store.dispatch('toggleSideBar')
+const { toggle, isFullscreen } = useFullscreen()
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+const opened = computed(() => appStore.getProjectConfig.sidebar.opened)
+const toggleSideBar = () =>
+  appStore.setProjectConfig({
+    sidebar: {
+      opened: !appStore.getProjectConfig.sidebar.opened
+    }
+  })
 
 const layout = async () => {
-  await store.dispatch('logout')
+  await userStore.logout()
   history.back()
 }
+
+const getTitle = computed(() => (unref(isFullscreen) ? '退出全屏' : '全屏'))
+const showFullScreen = computed({
+  get() {
+    return appStore.getProjectConfig.showFullScreen
+  },
+  set(value: boolean) {
+    appStore.setProjectConfig({ showFullScreen: value })
+  }
+})
+const showLogo = computed({
+  get() {
+    return appStore.getProjectConfig.showLogo
+  },
+  set(value: boolean) {
+    appStore.setProjectConfig({ showLogo: value })
+  }
+})
+
+const openSetting = computed({
+  get() {
+    return appStore.getProjectConfig.openSetting
+  },
+  set() {}
+})
+
+const toggleSetting = () =>
+  appStore.setProjectConfig({
+    openSetting: !unref(openSetting)
+  })
 </script>
 <style lang="scss" scoped>
 .navbar {
@@ -54,7 +121,8 @@ const layout = async () => {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  border-bottom: 1px solid #eee;
   padding: 0;
 
   .hamburger-container {
@@ -66,12 +134,15 @@ const layout = async () => {
     float: right;
     height: 100%;
     line-height: 50px;
+    div:hover {
+      background-color: #f6f6f6;
+    }
     &:focus {
       outline: none;
     }
     .right-menu-item {
       display: inline-block;
-      padding: 0 16px;
+      padding: 0 10px;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
@@ -85,7 +156,7 @@ const layout = async () => {
       }
     }
     .avatar-container {
-      margin-right: 30px;
+      padding-left: 10px;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
@@ -110,5 +181,16 @@ const layout = async () => {
 :v-deep(.el-badge__content) {
   top: 16px;
   right: 10px;
+}
+
+.v-drawer-body {
+  font-size: 14px;
+  word-wrap: break-word;
+
+  .v-setting-switch-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0;
+  }
 }
 </style>

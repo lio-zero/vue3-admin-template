@@ -22,7 +22,18 @@
 
 .navbar {
   .el-badge__content {
-    top: 12px;
-    left: 24px;
+    top: 14px;
+    left: 20px;
+  }
+}
+
+.el-drawer__header {
+  border-bottom: 1px solid #f0f0f0;
+  margin: 0;
+  padding: 16px 24px;
+}
+.v-drawer-body {
+  .el-switch {
+    height: 100%;
   }
 }
