@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-import { getRequestToken, resultError, resultSuccess, requestParams } from '../_utils'
+import { getRequestToken, resultError, resultSuccess, requestParams } from '../_util'
 
 export function fakeUser() {
   return [
@@ -12,7 +12,13 @@ export function fakeUser() {
       avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
       desc: '我是超级管理员',
       token: 'token',
-      roles: []
+      homePath: '/dashboard',
+      roles: [
+        {
+          roleName: 'Super Admin',
+          value: 'super'
+        }
+      ]
     }
   ]
 }

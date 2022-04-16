@@ -1,5 +1,8 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import type { RouteRecordRaw } from 'vue-router'
+import type { App } from 'vue'
+
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Layout from '@/layout/default/index.vue'
 import permission from './modules/permission'
 import middleware from '../middleware'
 
@@ -7,7 +10,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/LoginPage.vue')
+    component: () => import('@/views/login/Login.vue')
   },
   {
     path: '/',
@@ -30,18 +33,18 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: 'index',
         name: 'Setting',
-        component: () => import('@/views/Setting.vue'),
+        component: () => import('@/views/setting/index.vue'),
         meta: { title: '个人设置', icon: 'Tools' }
       }
     ]
   },
   {
     path: '/404',
-    name: 'NotFount',
-    component: () => import('@/views/NotFount.vue')
+    name: 'NotFound',
+    component: () => import('@/views/error-page/NotFound.vue')
   },
   {
-    path: '/:catchAll(.*)',
+    path: '/:path(.*)',
     redirect: '/404'
   }
 ]
@@ -53,4 +56,6 @@ export const router = createRouter({
 
 middleware(router)
 
-export default router
+export function setupRouter(app: App<Element>) {
+  app.use(router)
+}

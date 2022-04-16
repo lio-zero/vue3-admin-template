@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       }
     },
     server: {
-      hmr: { overlay: false }, // 禁用或配置 HMR 连接 设置 server.hmr.overlay 为 false 可以禁用服务器错误遮罩层
+      hmr: { overlay: false },
       port: VITE_PORT,
       open: true,
       https: false,
@@ -52,7 +52,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       watch: {
         // https://rollupjs.org/guide/en/#watch-options
       },
-      // Turning off brotliSize display can slightly reduce packaging time
+      // 关闭 brotliSize 显示屏可以稍微缩短包装时间
       brotliSize: false,
       chunkSizeWarningLimit: 2000,
       outDir: 'dist', // 指定输出路径

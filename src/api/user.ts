@@ -4,7 +4,8 @@ enum Api {
   GetUser = '/user/getUser',
   AddUser = '/user/addUser',
   DelUser = '/user/delUser',
-  UpdateUser = '/user/updateUser'
+  UpdateUser = '/user/updateUser',
+  GetPermCode = '/getPermCode'
 }
 
 export function addUser(params: any) {
@@ -32,4 +33,8 @@ export function updateUser(params: any) {
     url: Api.UpdateUser,
     params
   })
+}
+
+export function getPermCode() {
+  return http.get<string[]>({ url: Api.GetPermCode })
 }

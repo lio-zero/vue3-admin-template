@@ -64,13 +64,15 @@
     "iconify",
     "commitlint",
     "vditor",
+    "unref",
     "echarts",
     "cropperjs",
     "logicflow",
     "vueuse",
     "brotli",
     "tailwindcss",
-    "pnpm"
+    "pnpm",
+    "path-browserify"
   ],
   "liveServer.settings.multiRootWorkspaceName": "vue3-admin-template"
 }

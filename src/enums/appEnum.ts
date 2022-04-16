@@ -2,13 +2,13 @@ export const SIDE_BAR_MINI_WIDTH = 48
 export const SIDE_BAR_SHOW_TIT_MINI_WIDTH = 80
 
 export enum ContentEnum {
-  // auto width
+  // 自动宽度
   FULL = 'full',
-  // fixed width
+  // 固定宽度
   FIXED = 'fixed'
 }
 
-// menu theme enum
+// 菜单主题
 export enum ThemeEnum {
   DARK = 'dark',
   LIGHT = 'light'
@@ -29,15 +29,12 @@ export enum SessionTimeoutProcessingEnum {
  * 权限模式
  */
 export enum PermissionModeEnum {
-  // role
   ROLE = 'ROLE',
-  // black
   BACK = 'BACK',
-  // route mapping
   ROUTE_MAPPING = 'ROUTE_MAPPING'
 }
 
-//  Route switching animation
+// 路由切换动画
 export enum RouterTransitionEnum {
   ZOOM_FADE = 'zoom-fade',
   ZOOM_OUT = 'zoom-out',

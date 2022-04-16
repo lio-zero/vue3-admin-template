@@ -3,13 +3,15 @@ export {}
 declare module 'vue-router' {
   interface RouteMeta extends Record<string | number | symbol, unknown> {
     orderNo?: number
-    title: string
+    title?: string
     // 动态路由器级别。
     dynamicLevel?: number
     // 动态路由真实路由路径（性能）。
     realPath?: string
     // 是否忽略权限
     ignoreAuth?: boolean
+    // 角色权限
+    roles?: RoleEnum[]
     // 是否不缓存
     ignoreKeepAlive?: boolean
     // 是否固定 tab

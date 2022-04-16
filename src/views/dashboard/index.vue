@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <el-icon>
+      <i-ep-add-location />
+    </el-icon>
   </div>
 </template>
 

@@ -114,7 +114,7 @@ const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecor
   return false
 }
 
-const generateRoutes = (routes: any = [], basePath = '/') => {
+const generateRoutes = (_routes: any = [], basePath = '/') => {
   const res: RouteRecordRaw[] = []
   for (let route of routes) {
     if (route.hidden) {

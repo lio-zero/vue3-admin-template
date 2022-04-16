@@ -74,9 +74,9 @@ import {
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-const dialogType: Ref<string> = ref('new')
-const currentPage: Ref<number> = ref(5)
-const dialogVisible: Ref<boolean> = ref(false)
+const dialogType = ref('new')
+const currentPage = ref(5)
+const dialogVisible = ref(false)
 const permission: Ref<any> = ref({})
 const permissionList: Ref<object[]> = ref([])
 

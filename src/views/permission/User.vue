@@ -79,8 +79,8 @@ interface userGroup {
 }
 
 const user: Ref<any> = ref({})
-const dialogType: Ref<string> = ref('new')
-const dialogVisible: Ref<boolean> = ref(false)
+const dialogType = ref('new')
+const dialogVisible = ref(false)
 const options: userGroup[] = reactive([
   {
     value: '选项1',

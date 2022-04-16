@@ -1,4 +1,4 @@
-import Layout from '@/layout/index.vue'
+import Layout from '@/layout/default/index.vue'
 
 export default {
   path: '/permission',

@@ -1,19 +1,13 @@
-// vuex common.js
-const common = {
-  state: {
-    isCollapse: false
-  },
-  mutations: {
-    // 折叠侧边栏
-    TOGGLE_SIDEBAR(state: { isCollapse: boolean }) {
-      state.isCollapse = !state.isCollapse
-    }
-  },
-  actions: {
-    toggleSidebar({ commit }: any) {
-      commit('TOGGLE_SIDEBAR')
-    }
-  }
-}
+import { store } from '@/store'
+import { defineStore } from 'pinia'
 
-export default common //eslint disable next line
+export const useCommonStore = defineStore({
+  id: 'Common',
+  state: () => ({}),
+  getters: {},
+  actions: {}
+})
+
+export function useCommonStoreWithOut() {
+  return useCommonStore(store)
+}

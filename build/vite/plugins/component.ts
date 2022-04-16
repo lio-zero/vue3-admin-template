@@ -3,11 +3,11 @@
  * https://github.com/antfu/unplugin-vue-components
  */
 import Components from 'unplugin-vue-components/vite'
-// import IconsResolver from 'unplugin-icons/resolver'
+import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
+
 export function autoRegistryComponents() {
   return Components({
-    // dirs: ['src/components'],
     extensions: ['vue'],
     deep: true,
     dts: 'src/components.d.ts',
@@ -15,6 +15,13 @@ export function autoRegistryComponents() {
     globalNamespaces: [],
     directives: true,
     include: [/\.vue$/, /\.vue\?vue/],
-    resolvers: [ElementPlusResolver(), VueUseComponentsResolver()]
+    resolvers: [
+      ElementPlusResolver(),
+      // 自动注册图标组件
+      IconsResolver({
+        enabledCollections: ['ep']
+      }),
+      VueUseComponentsResolver()
+    ]
   })
 }

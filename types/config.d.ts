@@ -1,4 +1,4 @@
-import { RouterTransitionEnum } from '@/enums/appEnum'
+import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 export interface ProjectConfig {
   // 侧边栏设置
@@ -7,6 +7,8 @@ export interface ProjectConfig {
   permissionCacheType: CacheTypeEnum
   // 过渡设置
   transitionSetting: TransitionSetting
+  // 权限模式
+  permissionMode: PermissionModeEnum
   // 侧边栏 Logo
   showLogo: boolean
   // 是否显示设置按钮

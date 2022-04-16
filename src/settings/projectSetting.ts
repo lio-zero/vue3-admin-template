@@ -1,12 +1,12 @@
 import type { ProjectConfig } from '#/config'
 import { CacheTypeEnum } from '@/enums/cacheEnum'
-import { RouterTransitionEnum } from '@/enums/appEnum'
+import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 const setting: ProjectConfig = {
   permissionCacheType: CacheTypeEnum.LOCAL,
   // 侧边栏
   sidebar: {
-    opened: false,
+    opened: true,
     withoutAnimation: false
   },
   // 过渡设置
@@ -20,6 +20,8 @@ const setting: ProjectConfig = {
     // 是否打开顶部进度条
     openNProgress: false
   },
+  // Permission mode
+  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
   // 是否显示侧边栏 Logo,
   showLogo: false,
   openSetting: false,

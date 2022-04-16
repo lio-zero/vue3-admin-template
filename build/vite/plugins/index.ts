@@ -8,6 +8,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import purgeIcons from 'vite-plugin-purge-icons'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import Icons from 'unplugin-icons/vite'
 import { autoRegistryComponents } from './component'
 import { autoImportDeps } from './autoImport'
 import { configMockPlugin } from './mock'
@@ -42,7 +43,11 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // setup name 属性
     vueSetupExtend(),
     // 监听配置文件改动重启
-    configRestartPlugin()
+    configRestartPlugin(),
+    Icons({
+      autoInstall: true,
+      compiler: 'vue3'
+    })
   ]
 
   // @vitejs/plugin-legacy

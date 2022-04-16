@@ -22,7 +22,7 @@
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "unplugin-icons/types/vue"],
     "removeComments": true,
     "paths": {
       "@/*": ["src/*"],

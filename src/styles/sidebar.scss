@@ -6,7 +6,7 @@
     position: relative;
   }
 
-  .sidebar-container {
+  .vzr-sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
     background-color: $menuBg;
@@ -86,7 +86,7 @@
   }
 
   .hideSidebar {
-    .sidebar-container {
+    .vzr-sidebar-container {
       width: 54px !important;
     }
 
@@ -160,13 +160,13 @@
       margin-left: 0px;
     }
 
-    .sidebar-container {
+    .vzr-sidebar-container {
       transition: transform 0.28s;
       width: $sideBarWidth !important;
     }
 
     &.hideSidebar {
-      .sidebar-container {
+      .vzr-sidebar-container {
         pointer-events: none;
         transition-duration: 0.3s;
         transform: translate3d(-$sideBarWidth, 0, 0);
@@ -176,7 +176,7 @@
 
   .withoutAnimation {
     .main-container,
-    .sidebar-container {
+    .vzr-sidebar-container {
       transition: none;
     }
   }
