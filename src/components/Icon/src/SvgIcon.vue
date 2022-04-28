@@ -38,7 +38,7 @@ const getStyle = computed((): CSSProperties => {
   }
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scoped name="SvgIcon">
 .svg-icon-spin {
   display: inline-block;
   overflow: hidden;

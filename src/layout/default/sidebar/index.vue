@@ -42,11 +42,9 @@ const showLogo = computed(() => appStore.getProjectConfig.showLogo)
 </script>
 
 <style lang="scss" scoped>
-:v-deep(.el-sub-menu),
-:v-deep(.el-menu-item) {
+::v-deep(.el-sub-menu),
+::v-deep(.el-menu-item) {
   .el-icon {
-    font-size: 20px;
-    margin-right: 10px;
     vertical-align: -0.25em;
     transition: all 0.3s;
   }

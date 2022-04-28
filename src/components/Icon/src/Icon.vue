@@ -1,17 +1,8 @@
 <template>
-  <SvgIcon
-    :size="size"
-    :name="getSvgIcon"
-    v-if="isSvgIcon"
-    :class="[$attrs.class, 'anticon']"
-    :spin="spin"
-  />
-  <span
-    v-else
-    ref="elRef"
-    :class="[$attrs.class, 'app-iconify anticon', spin && 'app-iconify-spin']"
-    :style="getWrapStyle"
-  ></span>
+  <SvgIcon :size="size" :name="getSvgIcon" v-if="isSvgIcon" />
+  <el-icon v-else>
+    <span ref="elRef" class="app-iconify" :style="getWrapStyle"></span>
+  </el-icon>
 </template>
 <script lang="ts" setup name="Icon">
 import type { PropType } from 'vue'
@@ -52,6 +43,7 @@ const update = async () => {
   if (!icon) return
 
   const svg = Iconify.renderSVG(icon, {})
+
   if (svg) {
     el.textContent = ''
     el.appendChild(svg)
@@ -86,7 +78,6 @@ onMounted(update)
 <style lang="scss">
 .app-iconify {
   display: inline-block;
-  // vertical-align: middle;
 
   &-spin {
     svg {
@@ -99,7 +90,6 @@ span.iconify {
   display: block;
   min-width: 1em;
   min-height: 1em;
-  // background-color: @iconify-bg-color;
   border-radius: 100%;
 }
 </style>

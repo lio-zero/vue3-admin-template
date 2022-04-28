@@ -22,7 +22,7 @@
         </el-badge>
       </el-tooltip>
 
-      <el-dropdown class="avatar-container" trigger="click">
+      <el-dropdown class="avatar-container">
         <div class="avatar-wrapper cursor-pointer">
           <el-avatar shape="square" :src="userStore.userInfo.avatar" />
           <i class="el-icon-caret-bottom"></i>
@@ -47,6 +47,7 @@
       </el-tooltip>
     </div>
   </header>
+  <Tabs name="O.O" />
 
   <el-drawer v-model="openSetting" title="项目配置" @close="toggleSetting" size="330px">
     <div class="v-drawer-body">
@@ -67,6 +68,7 @@ import Breadcrumb from './components/Breadcrumb.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
+import Tabs from '../tabs/index.vue'
 
 const { toggle, isFullscreen } = useFullscreen()
 const appStore = useAppStore()

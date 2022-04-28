@@ -44,7 +44,6 @@ const logo = ref(img)
   line-height: 50px;
   background: #2b2f3a;
   overflow: hidden;
-  // text-align: center;
 
   & .sidebar-logo-link {
     height: 100%;

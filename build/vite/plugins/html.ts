@@ -15,7 +15,6 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
   const getAppConfigSrc = () => {
     return `${path || '/'}${GLOB_CONFIG_FILE_NAME}?v=${pkg.version}-${new Date().getTime()}`
   }
-  console.log(VITE_GLOB_APP_TITLE)
 
   const htmlPlugin: PluginOption[] = createHtmlPlugin({
     minify: isBuild,
@@ -37,5 +36,6 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
         : []
     }
   })
+
   return htmlPlugin
 }

@@ -21,7 +21,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'HomeFilled', badge: 'new' }
+        meta: { title: '首页', icon: 'dashicons:dashboard', badge: 'new' }
       }
     ]
   },
@@ -34,7 +34,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'index',
         name: 'Setting',
         component: () => import('@/views/setting/index.vue'),
-        meta: { title: '个人设置', icon: 'Tools' }
+        meta: { title: '个人设置', icon: 'ci:settings-filled' }
       }
     ]
   },

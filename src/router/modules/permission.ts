@@ -7,7 +7,7 @@ export default {
   redirect: '/permission/user',
   meta: {
     title: '后台权限管理',
-    icon: 'Operation',
+    icon: 'bxs:lock-alt',
     roles: ['admin', 'editor']
   },
   children: [

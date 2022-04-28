@@ -1,4 +1,3 @@
-import { h, resolveComponent } from 'vue'
 export default defineComponent({
   props: {
     title: {
