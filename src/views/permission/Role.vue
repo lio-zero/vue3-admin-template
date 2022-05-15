@@ -4,21 +4,20 @@
     <template #empty>
       <el-empty description="暂无数据" />
     </template>
-    <el-table-column align="center" prop="id" label="id" width="80" />
-    <el-table-column align="center" prop="name" label="姓名" width="220" />
-    <el-table-column align="center" prop="email" label="邮箱" width="220" />
-    <el-table-column align="center" prop="phone" label="手机" />
-    <el-table-column align="center" prop="userGroup" label="用户组" />
+    <el-table-column align="center" prop="id" label="ID" width="80" />
+    <el-table-column align="center" prop="name" label="用户组" />
+    <el-table-column align="center" prop="display_name" label="名称" />
+    <el-table-column align="center" prop="description" label="描述" />
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
         <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
-          <circle-check-filled v-if="scope.row.status" />
-          <circle-close-filled v-else />
+          <CircleCheckFilled size="20" v-if="scope.row.status" />
+          <CircleCloseFilled size="20" v-else />
         </el-icon>
         <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="操作" width="220">
+    <el-table-column align="center" label="操作">
       <template #default="scope">
         <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
         <el-button size="small" type="danger" @click="handleDelete(scope)">删除</el-button>
@@ -74,6 +73,7 @@ import { resolve } from 'path-browserify'
 import { RouteRecordRaw } from 'vue-router'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 type RoleType = {
   name?: string
@@ -82,9 +82,10 @@ type RoleType = {
   routes?: string
 }
 
+const router = useRouter()
+const tree = ref()
 const dialogType = ref('new')
 const dialogVisible = ref(false)
-const tree = ref()
 const checkStrictly = ref(false)
 const role: Ref<RoleType> = ref({})
 const tableData: any = ref(null)
@@ -100,6 +101,7 @@ onMounted(async () => {
 const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecordRaw) => {
   let onlyOneChild: any = null
   const showingChildren = children.filter((item: any) => !item.hidden)
+
   // 当只有一个路由时，默认情况下会显示该子路由
   if (showingChildren.length === 1) {
     onlyOneChild = showingChildren[0]
@@ -114,12 +116,10 @@ const onlyOneShowingChild = (children: RouteRecordRaw[] = [], parent: RouteRecor
   return false
 }
 
-const generateRoutes = (_routes: any = [], basePath = '/') => {
+const generateRoutes = (routes: any, basePath = '/') => {
   const res: RouteRecordRaw[] = []
   for (let route of routes) {
-    if (route.hidden) {
-      continue
-    }
+    if (route.hidden) continue
     const onlyOneShowingChild2 = onlyOneShowingChild(route.children, route)
 
     if (route.children && onlyOneShowingChild2 && !route.alwaysShow) {
@@ -131,6 +131,7 @@ const generateRoutes = (_routes: any = [], basePath = '/') => {
       title: route.meta && route.meta.title
     } as any as RouteRecordRaw
     // 递归子路由
+
     if (route.children) {
       data.children = generateRoutes(route.children, data.path)
     }
@@ -189,19 +190,10 @@ const handleDelete = (score: any) => {
     })
 }
 
-const handleClose = (done: any) => {
-  ElMessageBox.confirm('您确定要关闭此对话框吗？', '', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    center: true
-  })
-    .then(() => {
-      done()
-    })
-    .catch(() => {})
-}
+const handleClose = (done: any) => done()
 
 const handleAddRole = () => {
+  role.value = {}
   if (tree.value) {
     tree.value.setCheckedNodes([])
   }
@@ -211,9 +203,6 @@ const handleAddRole = () => {
 }
 
 const save = async () => {
-  // console.log(role.value)
-  // console.log(pageList)
-  // return
   if (dialogType.value === 'new') {
     const data = await addRole(role.value)
 
@@ -226,6 +215,7 @@ const save = async () => {
     type: 'success',
     message: '保存成功'
   })
+  router.go(0)
   dialogVisible.value = false
 }
 </script>

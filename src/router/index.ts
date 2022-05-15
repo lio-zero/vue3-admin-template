@@ -1,15 +1,16 @@
-import type { RouteRecordRaw } from 'vue-router'
 import type { App } from 'vue'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/default/index.vue'
 import permission from './modules/permission'
 import middleware from '../middleware'
+import { ReRoute } from './types'
 
-export const routes: Array<RouteRecordRaw> = [
+export const routes: Array<ReRoute> = [
   {
     path: '/login',
     name: 'Login',
+    hidden: true,
     component: () => import('@/views/login/Login.vue')
   },
   {
@@ -41,10 +42,12 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     name: 'NotFound',
+    hidden: true,
     component: () => import('@/views/error-page/NotFound.vue')
   },
   {
     path: '/:path(.*)',
+    hidden: true,
     redirect: '/404'
   }
 ]

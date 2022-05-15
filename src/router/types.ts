@@ -18,6 +18,14 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   fullPath?: string
 }
 
+// @ts-ignore
+export interface ReRoute extends Omit<RouteRecordRaw, 'meta'> {
+  name?: string
+  meta?: RouteMeta
+  component?: Component | string
+  children?: ReRoute[]
+}
+
 export interface MenuTag {
   type?: 'primary' | 'error' | 'warn' | 'success'
   content?: string

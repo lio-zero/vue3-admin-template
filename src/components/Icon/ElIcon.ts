@@ -1,6 +1,8 @@
-import { Tools, Eleme } from '@element-plus/icons'
+import { Tools, Eleme, CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons'
 
 export default {
   Tools,
-  Eleme
+  Eleme,
+  CircleCheckFilled,
+  CircleCloseFilled
 }

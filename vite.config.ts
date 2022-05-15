@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import { createVitePlugins } from './build/vite/plugins'
 import { wrapperEnv } from './build/utils'
 import { createProxy } from './build/vite/proxy'
+import { OUTPUT_DIR } from './build/constant'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
@@ -13,31 +14,21 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv
   return {
     base: './',
-    plugins: createVitePlugins(viteEnv, isBuild),
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
         '#': resolve(__dirname, 'types')
       }
     },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          charset: false
-        }
-      }
-    },
     server: {
-      hmr: { overlay: false },
       port: VITE_PORT,
       open: true,
-      https: false,
-      cors: true,
-      host: '0.0.0.0',
+      host: true,
       proxy: createProxy(VITE_PROXY)
     },
     build: {
       target: 'es2015',
+      outDir: OUTPUT_DIR,
       terserOptions: {
         compress: {
           keep_infinity: true,
@@ -54,9 +45,20 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       },
       // 关闭 brotliSize 显示屏可以稍微缩短包装时间
       brotliSize: false,
-      chunkSizeWarningLimit: 2000,
-      outDir: 'dist', // 指定输出路径
-      assetsDir: 'assets' // 指定生成静态资源的存放路径
+      chunkSizeWarningLimit: 2000
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          charset: false
+        }
+      }
+    },
+    plugins: createVitePlugins(viteEnv, isBuild),
+    optimizeDeps: {
+      // @iconify/iconify: 依赖项是由 @purge-icons/generated 动态和虚拟加载的，因此需要显式指定
+      include: ['@iconify/iconify'],
+      exclude: []
     }
   }
 })

@@ -4,20 +4,21 @@
     <template #empty>
       <el-empty description="暂无数据" />
     </template>
-    <el-table-column align="center" prop="id" label="id" width="80" />
-    <el-table-column align="center" prop="name" label="姓名" width="220" />
-    <el-table-column align="center" prop="email" label="邮箱" width="220" />
-    <el-table-column align="center" prop="phone" label="手机" />
-    <el-table-column align="center" prop="userGroup" label="用户组" />
+    <el-table-column align="center" prop="id" label="ID" width="80" />
+    <el-table-column align="center" prop="name" label="用户名" width="120" />
+    <el-table-column align="center" prop="email" label="邮箱" width="200" />
+    <el-table-column align="center" prop="phone" label="手机号" />
+    <el-table-column align="center" prop="group" label="组" />
     <el-table-column align="center" prop="status" label="状态">
       <template #default="scope">
         <el-icon class="align-middle mr-2" :color="scope.row.status ? '#67C23A' : '#F56C6C'">
-          <circle-check-filled v-if="scope.row.status" />
-          <circle-close-filled v-else />
+          <CircleCheckFilled v-if="scope.row.status" />
+          <CircleCloseFilled v-else />
         </el-icon>
         <span class="align-middle">{{ scope.row.status ? '正常' : '禁用' }}</span>
       </template>
     </el-table-column>
+    <el-table-column align="center" prop="created_at" label="创建时间" />
     <el-table-column align="center" label="操作" width="220">
       <template #default="scope">
         <el-button size="small" @click="handleEdit(scope)">编辑</el-button>
@@ -42,10 +43,10 @@
         <el-input v-model="user.phone" placeholder="11位手机号码" />
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="user.password" placeholder="请输入密码" />
+        <el-input v-model="user.password" placeholder="请输入密码" type="password" />
       </el-form-item>
       <el-form-item label="用户组">
-        <el-select v-model="user.userGroup" placeholder="请选择用户组">
+        <el-select v-model="user.group" placeholder="请选择用户组">
           <template #empty>
             <el-empty description="暂无数据" :image-size="40" />
           </template>
@@ -72,25 +73,30 @@ import { Ref } from 'vue'
 import { addUser, getAllUser, deleteUser, updateUser } from '@/api/user'
 import { deepClone } from '@/utils'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { getAllRole } from '@/api/role'
 
 interface userGroup {
-  value: string
-  label: string
+  value?: string
+  label?: string
 }
 
-const user: Ref<any> = ref({})
+const router = useRouter()
+let user: Ref<any> = ref({})
 const dialogType = ref('new')
 const dialogVisible = ref(false)
-const options: userGroup[] = reactive([
-  {
-    value: '选项1',
-    label: '黄金糕'
-  }
-])
+const options: userGroup[] = []
 const tableData: any = ref(null)
 
 onMounted(async () => {
   tableData.value = await getAllUser()
+  const data = await getAllRole()
+  data.forEach(item => {
+    options.push({
+      value: item.display_name,
+      label: item.display_name
+    })
+  })
 })
 
 const handleEdit = (score: any) => {
@@ -120,19 +126,10 @@ const handleDelete = (score: any) => {
     })
 }
 
-const handleClose = (done: any) => {
-  ElMessageBox.confirm('您确定要关闭此对话框吗？', '', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    center: true
-  })
-    .then(() => {
-      done()
-    })
-    .catch(() => {})
-}
+const handleClose = (done: any) => done()
 
 const handleAddUser = () => {
+  user.value = {}
   dialogType.value = 'new'
   dialogVisible.value = true
 }
@@ -149,6 +146,7 @@ const save = async () => {
     type: 'success',
     message: '保存成功'
   })
+  router.go(0)
   dialogVisible.value = false
 }
 </script>

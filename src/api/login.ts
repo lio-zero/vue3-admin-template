@@ -8,7 +8,6 @@ enum Api {
 }
 
 export function login(params: any) {
-  console.log(Api.Login)
   return http.post({
     url: '/login',
     params
@@ -21,15 +20,9 @@ export function doLogout() {
   })
 }
 
-// export function getUserInfo(id?: number) {
-//   return http({
-//     url: `/user/getUserDetail/${id}`
-//   })
-// }
-
-export function getUserInfo() {
+export function getUserInfo(id?: number) {
   return http.get({
-    url: Api.GetUserDetail
+    url: Api.GetUserDetail + (id ? `/${id}` : '')
   })
 }
 
