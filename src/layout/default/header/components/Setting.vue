@@ -7,9 +7,15 @@
     </el-tooltip>
   </div>
 
-  <el-drawer v-model="openSetting" title="项目配置" @close="toggleSetting" size="330px">
+  <el-drawer
+    v-model="openSetting"
+    title="项目配置"
+    @close="toggleSetting"
+    size="330px"
+    custom-class="dark:bg-[#111]"
+  >
     <div class="v-drawer-body">
-      <el-divider> 界面显示 </el-divider>
+      <el-divider class="dark:bg-[#111]"> 界面显示 </el-divider>
       <div class="v-setting-switch-item">
         <span>全屏内容</span>
         <el-switch v-model="showFullScreen" inline-prompt active-text="是" inactive-text="否" />

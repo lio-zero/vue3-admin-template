@@ -54,6 +54,7 @@ const logo = ref(img)
       height: 32px;
       vertical-align: middle;
       margin: 0 11px;
+      display: inline-block;
     }
 
     & .sidebar-title {

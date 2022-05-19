@@ -10,18 +10,8 @@
 @import './layout.scss';
 @import './vars.scss';
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: #e5e7eb;
-}
-
 body {
+  margin: 0;
   @include bodyScrollBar;
   width: 100%;
   min-width: 320px;
@@ -69,34 +59,6 @@ a:hover {
 // 进度条颜色
 #nprogress .bar {
   background-color: plum !important;
-}
-
-.flex {
-  display: flex;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.mr-6 {
-  margin-right: 24px;
-}
-
-.mt-2 {
-  margin-top: 6px;
-}
-
-img {
-  max-width: 100%;
 }
 
 button:focus {

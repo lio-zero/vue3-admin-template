@@ -76,12 +76,41 @@
   }
 }
 
-.dark .vzr-sidebar-container {
-  border-right: 1px solid var(--c-divider);
-}
-.dark #app .vzr-sidebar-container .el-menu-item {
-  background-color: $menuDarkBg !important;
-}
-.dark :is(.vzr-sidebar-container, .el-menu, .el-sub-menu__title) {
-  background-color: $menuDarkBg !important;
+// Dark Mode
+.dark {
+  // sidebar
+  .vzr-sidebar-container {
+    border-right: 1px solid var(--c-divider);
+  }
+
+  .sidebar-logo-container {
+    background: var(--c-bg) !important;
+  }
+
+  #app .vzr-sidebar-container .el-menu-item {
+    background-color: var(--c-bg) !important;
+  }
+
+  :is(.vzr-sidebar-container, .el-menu, .el-sub-menu__title) {
+    background-color: var(--c-bg) !important;
+  }
+
+  // setting dark
+  .el-drawer__header {
+    color: var(--c-text) !important;
+  }
+
+  .el-drawer__header {
+    border-bottom: 1px solid var(--c-divider);
+    border-bottom: 1px solid var(--c-divider);
+  }
+
+  .el-divider--horizontal {
+    border-top: 1px solid var(--c-divider);
+  }
+
+  .el-divider__text {
+    background: var(--c-bg);
+    color: var(--c-text);
+  }
 }
