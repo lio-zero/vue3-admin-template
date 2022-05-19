@@ -1,7 +1,6 @@
 import 'virtual:svg-icons-register'
 import App from './App.vue'
 import { createApp } from 'vue'
-
 import { setupStore } from '@/store'
 import { setupRouter } from '@/router'
 import 'normalize.css/normalize.css'

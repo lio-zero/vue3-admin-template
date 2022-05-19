@@ -1,5 +1,5 @@
 <template>
-  <div class="setting-container">
+  <div class="setting-container dark:bg-[#111]">
     <div class="center-vertical" id="account-form-container">
       <el-form
         ref="FormData"

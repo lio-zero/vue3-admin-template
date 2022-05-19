@@ -26,7 +26,6 @@ const { body } = document
 const WIDTH = 992
 const device = computed(() => appStore.getDevice)
 const sidebar = computed(() => appStore.getProjectConfig.sidebar)
-
 const classObj = computed(() => {
   return {
     hideSidebar: !unref(sidebar).opened,

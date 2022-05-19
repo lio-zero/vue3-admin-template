@@ -1,8 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './variables.module.scss';
 @import './mixin.scss';
 @import './element-push.scss';
 @import './transition.scss';
 @import './sidebar.scss';
+@import './layout.scss';
+@import './vars.scss';
 
 *,
 *::before,
@@ -10,33 +16,34 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
 }
 
 body {
-  @include scrollBar;
+  @include bodyScrollBar;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  line-height: 1.4;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  direction: ltr;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 html,
 body,
 #app {
   height: 100%;
-}
-
-/* 滚动条宽度 */
-body::-webkit-scrollbar {
-  width: 8px;
-  background: transparent;
-}
-
-body::-webkit-scrollbar-track {
-  margin-top: 50px;
-  background: #e0e4f6;
-  border-radius: 12px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #666e8f;
-  border-radius: 12px;
 }
 
 ul {
@@ -46,16 +53,17 @@ ul {
 }
 
 a {
-  color: #999;
+  color: var(--c-brand);
   text-decoration: none;
+  touch-action: manipulation;
 }
 
 a,
 a:focus,
 a:hover {
-  cursor: pointer;
   color: #aaa;
   text-decoration: none;
+  cursor: pointer;
 }
 
 // 进度条颜色
