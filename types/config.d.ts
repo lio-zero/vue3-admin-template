@@ -23,35 +23,35 @@ export interface Sidebar {
 }
 
 export interface TransitionSetting {
-  //  Whether to open the page switching animation
+  // 是否打开页面切换动画
   enable: boolean
-  // Route basic switching animation
+  // 路由基本切换动画
   basicTransition: RouterTransitionEnum
-  // Whether to open page switching loading
+  // 是否打开页面切换加载
   openPageLoading: boolean
-  // Whether to open the top progress bar
+  // 是否打开顶部进度条
   openNProgress: boolean
 }
 
 export interface GlobEnvConfig {
-  // Site title
+  // 网站标题
   VITE_GLOB_APP_TITLE: string
-  // Service interface url
+  // 服务接口 URL
   VITE_GLOB_API_URL: string
-  // Service interface url prefix
+  // 服务接口 URL 前缀
   VITE_GLOB_API_URL_PREFIX?: string
-  // Project abbreviation
+  // 项目缩写
   VITE_GLOB_APP_SHORT_NAME: string
-  // Upload url
+  // 上传 URL
   VITE_GLOB_UPLOAD_URL?: string
 }
 
 export interface GlobConfig {
   // 网站名称
   title: string
-  // 服务接口url
+  // 服务接口 URL
   apiUrl: string
-  // Upload url
+  // 上传 URL
   uploadUrl?: string
   // 服务接口url前缀
   urlPrefix?: string

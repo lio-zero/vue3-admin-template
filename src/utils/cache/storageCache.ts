@@ -25,14 +25,14 @@ export const createStorage = ({
   hasEncrypt = true
 }: Partial<CreateStorageParams> = {}) => {
   if (hasEncrypt && [key.length, iv.length].some(item => item !== 16)) {
-    throw new Error('When hasEncrypt is true, the key or iv must be 16 bits!')
+    throw new Error('当 hasEncrypt 为 true 时，密钥或 iv 必须为 16 位！')
   }
 
   const encryption = new AesEncryption({ key, iv })
 
   /**
-   * Cache class
-   * Construction parameters can be passed into sessionStorage, localStorage,
+   * 缓存类
+   * 构造参数可以传递到 sessionStorage、localStorage
    * @class Cache
    * @example
    */
@@ -57,10 +57,10 @@ export const createStorage = ({
     }
 
     /**
-     * Set cache
+     * 设置缓存
      * @param {string} key
      * @param {*} value
-     * @param {*} expire Expiration time in seconds
+     * @param {*} expire 过期时间（秒）
      * @memberof Cache
      */
     set(key: string, value: any, expire: number | null = timeout) {
@@ -74,7 +74,7 @@ export const createStorage = ({
     }
 
     /**
-     * Read cache
+     * 读缓存
      * @param {string} key
      * @param {*} def
      * @memberof Cache
@@ -106,7 +106,7 @@ export const createStorage = ({
     }
 
     /**
-     * Delete all caches of this instance
+     * 删除此实例的所有缓存
      */
     clear(): void {
       this.storage.clear()

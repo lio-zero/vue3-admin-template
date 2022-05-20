@@ -33,12 +33,12 @@ declare global {
 export interface GlobEnvConfig {
   // 网站名称
   VITE_GLOB_APP_TITLE: string
-  // 服务接口 url
+  // 服务接口 URL
   VITE_GLOB_API_URL: string
-  // 服务接口 url 前缀
+  // 服务接口 URL 前缀
   VITE_GLOB_API_URL_PREFIX?: string
   // 项目缩写
   VITE_GLOB_APP_SHORT_NAME: string
-  // Upload url
+  // 上传 URL
   VITE_GLOB_UPLOAD_URL?: string
 }

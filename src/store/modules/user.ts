@@ -1,4 +1,3 @@
-// import type { ProjectConfig } from '#/config'
 import type { UserInfo } from '#/store'
 import { store } from '@/store'
 import { defineStore } from 'pinia'

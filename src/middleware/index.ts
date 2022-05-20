@@ -50,7 +50,6 @@ export default (router: any) => {
     const { getOpenPageLoading } = useTransitionSetting()
 
     if (unref(getOpenPageLoading)) {
-      // TODO 正在寻找更好的方法
       // 计时器模拟加载时间，以防止闪烁过快
       setTimeout(() => {
         appStore.setPageLoading(false)

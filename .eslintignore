@@ -1,3 +1,8 @@
-# eslint 忽略检查 (根据项目需要自行添加)
 node_modules
 dist
+*.md
+.vscode
+/public
+/docs
+.husky
+.local

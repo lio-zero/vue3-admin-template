@@ -6,7 +6,7 @@ export type Options = Partial<CreateStorageParams>
 
 const createOptions = (storage: Storage, options: Options = {}): Options => {
   return {
-    // No encryption in debug mode
+    // 调试模式下无加密
     hasEncrypt: enableStorageEncryption,
     storage,
     prefixKey: getStorageShortName(),

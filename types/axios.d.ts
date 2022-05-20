@@ -41,13 +41,13 @@ export interface Result<T = any> {
 
 // multipart/form-data: upload file
 export interface UploadFileParams {
-  // Other parameters
+  // 其他参数
   data?: Recordable
-  // File parameter interface field name
+  // 文件参数接口字段名称
   name?: string
-  // file name
+  // 文件
   file: File | Blob
-  // file name
+  // 文件名
   filename?: string
   [key: string]: any
 }

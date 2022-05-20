@@ -18,7 +18,6 @@ specifiers:
   autoprefixer: ^10.4.7
   axios: ^0.26.1
   babel-eslint: ^10.1.0
-  consola: ^2.15.3
   cross-env: ^7.0.3
   crypto-js: ^4.1.1
   dayjs: ^1.11.0
@@ -28,7 +27,7 @@ specifiers:
   eslint-config-prettier: ^8.5.0
   eslint-define-config: ^1.3.0
   eslint-plugin-import: ^2.25.4
-  eslint-plugin-jest: ^26.1.3
+  eslint-plugin-jest: ^26.2.2
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue: ^8.5.0
   fs: ^0.0.2
@@ -73,7 +72,6 @@ specifiers:
   vue-router: ^4.0.14
   vue-tsc: ^0.33.9
   vue-types: ^4.1.1
-  vuex: ^4.0.0-0
 
 dependencies:
   '@element-plus/icons': 0.0.11
@@ -99,7 +97,6 @@ dependencies:
   vue: 3.2.33
   vue-router: 4.0.14_vue@3.2.33
   vue-types: 4.1.1_vue@3.2.33
-  vuex: 4.0.2_vue@3.2.33
 
 devDependencies:
   '@babel/eslint-parser': 7.17.0_eslint@8.13.0
@@ -115,14 +112,13 @@ devDependencies:
   '@vue/compiler-sfc': 3.2.33
   autoprefixer: 10.4.7_postcss@8.4.14
   babel-eslint: 10.1.0_eslint@8.13.0
-  consola: 2.15.3
   cross-env: 7.0.3
   dotenv: 16.0.0
   eslint: 8.13.0
   eslint-config-prettier: 8.5.0_eslint@8.13.0
   eslint-define-config: 1.4.0
   eslint-plugin-import: 2.26.0_mwijbinc6ud6f2lruneo2edtnu
-  eslint-plugin-jest: 26.1.4_4bqydwecw4elidjgxdc642e2n4
+  eslint-plugin-jest: 26.2.2_4bqydwecw4elidjgxdc642e2n4
   eslint-plugin-prettier: 4.0.0_dak2zfnx7mtmcpd5jcuo55rnb4
   eslint-plugin-vue: 8.6.0_eslint@8.13.0
   fs-extra: 10.1.0
@@ -3470,8 +3466,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jest/26.1.4_4bqydwecw4elidjgxdc642e2n4:
-    resolution: {integrity: sha512-wgqxujmqc2qpvZqMFWCh6Cniqc8lWpapvXt9j/19DmBDqeDaYhJrSRezYR1SKyemvjx+9e9kny/dgRahraHImA==}
+  /eslint-plugin-jest/26.2.2_4bqydwecw4elidjgxdc642e2n4:
+    resolution: {integrity: sha512-etSFZ8VIFX470aA6kTqDPhIq7YWe0tjBcboFNV3WeiC18PJ/AVonGhuTwlmuz2fBkH8FJHA7JQ4k7GsQIj1Gew==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.0.0
@@ -6845,15 +6841,6 @@ packages:
       '@vue/runtime-dom': 3.2.33
       '@vue/server-renderer': 3.2.33_vue@3.2.33
       '@vue/shared': 3.2.33
-    dev: false
-
-  /vuex/4.0.2_vue@3.2.33:
-    resolution: {integrity: sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==}
-    peerDependencies:
-      vue: ^3.0.2
-    dependencies:
-      '@vue/devtools-api': 6.1.4
-      vue: 3.2.33
     dev: false
 
   /webidl-conversions/3.0.1:
