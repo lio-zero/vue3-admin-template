@@ -37,6 +37,8 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     build: {
       target: 'es2015',
       outDir: OUTPUT_DIR,
+      cssTarget: 'chrome80',
+      minify: 'terser',
       terserOptions: {
         compress: {
           keep_infinity: true,

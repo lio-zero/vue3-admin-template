@@ -13,7 +13,6 @@ module.exports = {
   jsxBracketSameLine: true,
   bracketSameLine: false,
   htmlWhitespaceSensitivity: 'strict',
-  vueIndentScriptAndStyle: true,
   proseWrap: 'never',
   overrides: [
     {

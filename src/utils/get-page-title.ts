@@ -1,5 +1,3 @@
-// import defaultSettings from '@/settings'
-
 const title = 'Vue Admin Template'
 
 export function getPageTitle(pageTitle: string) {

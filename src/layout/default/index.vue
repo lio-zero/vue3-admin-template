@@ -83,7 +83,7 @@ onMounted(() => {
 })
 
 onBeforeMount(() => {
-  window.removeEventListener('resize', resizeHandler)
+  window.addEventListener('resize', resizeHandler)
 })
 
 onBeforeUnmount(() => {

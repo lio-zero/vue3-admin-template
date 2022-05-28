@@ -10,9 +10,20 @@
 @import './layout.scss';
 @import './vars.scss';
 
+html.gray-mode {
+  &.color-weak {
+    filter: invert(80%);
+  }
+
+  &.gray-mode {
+    filter: grayscale(100%);
+    filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+  }
+}
+
 body {
-  margin: 0;
   @include bodyScrollBar;
+  margin: 0;
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
@@ -33,6 +44,7 @@ body {
 html,
 body,
 #app {
+  width: 100%;
   height: 100%;
 }
 

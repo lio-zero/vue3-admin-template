@@ -17,7 +17,7 @@
 
       <el-dropdown class="avatar-container">
         <div class="avatar-wrapper cursor-pointer">
-          <el-avatar shape="square" :src="userStore.userInfo.avatar" />
+          <el-avatar shape="square" :src="getUserInfo.avatar" />
           <i class="el-icon-caret-bottom"></i>
         </div>
         <template #dropdown>
@@ -47,9 +47,15 @@ import Dark from './components/Dark.vue'
 import Setting from './components/Setting.vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
+import headerImg from '@/assets/logo.png'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
+
+const getUserInfo = computed(() => {
+  const { avatar } = userStore.getUserInfo || {}
+  return { avatar: avatar || headerImg }
+})
 
 const opened = computed(() => appStore.getProjectConfig.sidebar.opened)
 const toggleSideBar = () =>

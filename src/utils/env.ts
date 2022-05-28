@@ -1,5 +1,4 @@
 import type { GlobEnvConfig } from '#/config'
-// import { getConfigFileName } from '../../build/getConfigFileName'
 import pkg from '../../package.json'
 import { warn } from '@/utils/log'
 

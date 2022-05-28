@@ -1,23 +1,9 @@
-.el-container {
-  height: 100vh;
-}
+// reset style
 
-.el-header {
-  background-color: #b3c0d1;
-  color: var(--el-text-color-primary);
-  line-height: 60px;
-}
-
-.el-aside {
-  color: var(--el-text-color-primary);
-}
-
-.el-menu-item-group__title {
-  padding: 0 !important;
-}
-
-.el-badge__content {
-  border: none;
+// sidebar icon
+.el-menu-item .el-icon:first-child,
+.el-sub-menu .el-icon:first-child {
+  width: 22px;
 }
 
 .vzr-header-container {
@@ -26,18 +12,15 @@
   }
 }
 
+// setting drawer
 .el-drawer__header {
   border-bottom: 1px solid #f0f0f0;
   margin: 0;
   padding: 16px 24px;
 }
+
 .v-drawer-body {
   .el-switch {
     height: 100%;
   }
-}
-
-.el-menu-item .el-icon:first-child,
-.el-sub-menu .el-icon:first-child {
-  width: 22px;
 }

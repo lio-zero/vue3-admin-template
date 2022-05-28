@@ -3,7 +3,6 @@ import type { App } from 'vue'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/default/index.vue'
-import permission from './modules/permission'
 import middleware from '../middleware'
 
 export const routes: Array<RouteRecordRaw> = [
@@ -25,7 +24,6 @@ export const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
-  permission,
   {
     path: '/setting',
     component: Layout,
