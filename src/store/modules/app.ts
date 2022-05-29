@@ -1,4 +1,4 @@
-import type { ProjectConfig, TransitionSetting } from '#/config'
+import type { ProjectConfig, TransitionSetting, HeaderSetting } from '#/config'
 import { store } from '@/store'
 import { defineStore } from 'pinia'
 
@@ -30,6 +30,9 @@ export const useAppStore = defineStore({
     },
     getDevice(): string {
       return this.device
+    },
+    getHeaderSetting(): HeaderSetting {
+      return this.getProjectConfig.headerSetting
     }
   },
   actions: {

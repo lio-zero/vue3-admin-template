@@ -1,6 +1,40 @@
 <template>
   <div>
     <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
+    <h3>Mouse: {{ x }} x {{ y }}</h3>
   </div>
 </template>
 

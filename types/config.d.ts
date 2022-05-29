@@ -15,11 +15,22 @@ export interface ProjectConfig {
   openSetting: boolean
   // 是否显示全屏按钮
   showFullScreen: boolean
+  // 是否显示灰色模式按钮
+  grayMode: boolean
+  // 是否显示色弱模式按钮
+  colorWeak: boolean
+  headerSetting: {
+    fixed: boolean
+  }
 }
 
 export interface Sidebar {
   opened: boolean
   withoutAnimation: boolean
+}
+
+export interface HeaderSetting {
+  fixed: boolean
 }
 
 export interface TransitionSetting {

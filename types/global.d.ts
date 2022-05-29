@@ -8,6 +8,10 @@ declare global {
     [P in keyof T]?: DeepPartial<T[P]>
   }
 
+  declare interface ChangeEvent extends Event {
+    target: HTMLInputElement
+  }
+
   interface ImportMetaEnv extends ViteEnv {
     __: unknown
   }

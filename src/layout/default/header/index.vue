@@ -1,5 +1,5 @@
 <template>
-  <header class="vzr-header-container">
+  <header class="vzr-header-container" :class="{ 'vzr-header-container--fixed': isFixed }">
     <hamburger
       id="hamburger-container"
       :is-active="opened"
@@ -26,7 +26,7 @@
               <el-dropdown-item>首页</el-dropdown-item>
             </router-link>
             <a target="_blank" href="https://github.com/lio-zero/vite-wj">
-              <el-dropdown-item>我的Github</el-dropdown-item>
+              <el-dropdown-item>我的 Github</el-dropdown-item>
             </a>
             <el-dropdown-item @click="layout">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -58,6 +58,8 @@ const getUserInfo = computed(() => {
 })
 
 const opened = computed(() => appStore.getProjectConfig.sidebar.opened)
+const isFixed = computed(() => appStore.getHeaderSetting.fixed)
+
 const toggleSideBar = () =>
   appStore.setProjectConfig({
     sidebar: {

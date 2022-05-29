@@ -3,6 +3,7 @@ import { CacheTypeEnum } from '@/enums/cacheEnum'
 import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 const setting: ProjectConfig = {
+  // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum.LOCAL,
   // 侧边栏
   sidebar: {
@@ -26,7 +27,14 @@ const setting: ProjectConfig = {
   showLogo: false,
   openSetting: false,
   // 是否显示全屏按钮
-  showFullScreen: false
+  showFullScreen: false,
+  // 灰色模式
+  grayMode: false,
+  // 色弱模式
+  colorWeak: false,
+  headerSetting: {
+    fixed: true
+  }
 }
 
 export default setting

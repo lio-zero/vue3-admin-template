@@ -1,4 +1,8 @@
 // header style
+.vzr-header-container--fixed + .vzr-main-container {
+  padding-top: 70px;
+}
+
 .vzr-header-container {
   position: relative;
   height: 50px;
@@ -8,6 +12,14 @@
   border-bottom: 1px solid var(--c-divider);
   background: var(--tw-bg-opacity);
   overflow: hidden;
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    z-index: 888;
+    transition: width 0.28s;
+    width: calc(100% - 54px);
+  }
 
   .right-menu {
     display: flex;

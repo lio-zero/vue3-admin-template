@@ -111,6 +111,7 @@ onBeforeUnmount(() => {
     min-height: 100%;
     margin-left: 210px;
     transition: margin-left 0.28s;
+
     .vzr-footer-container {
       margin-top: auto;
     }

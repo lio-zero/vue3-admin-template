@@ -10,47 +10,34 @@
   <el-drawer
     v-model="openSetting"
     title="项目配置"
-    @close="toggleSetting"
     size="330px"
     custom-class="dark:bg-[#111]"
+    @close="toggleSetting"
   >
     <div class="v-drawer-body">
+      <el-divider class="dark:bg-[#111]"> 界面功能 </el-divider>
+      <switch-item title="固定 header" :event="HandlerEnum.HEADER_FIXED" :def="getHeaderFixed" />
+
       <el-divider class="dark:bg-[#111]"> 界面显示 </el-divider>
-      <div class="v-setting-switch-item">
-        <span>全屏内容</span>
-        <el-switch v-model="showFullScreen" inline-prompt active-text="是" inactive-text="否" />
-      </div>
-      <div class="v-setting-switch-item">
-        <span>Logo</span>
-        <el-switch v-model="showLogo" inline-prompt active-text="是" inactive-text="否" />
-      </div>
+      <switch-item title="全屏内容" :event="HandlerEnum.FULL_CONTENT" :def="getShowFullScreen" />
+      <switch-item title="Logo" :event="HandlerEnum.SHOW_LOGO" :def="getShowLogo" />
+      <switch-item title="灰色模式" :event="HandlerEnum.GRAY_MODE" :def="getGrayMode" />
+      <switch-item title="色弱模式" :event="HandlerEnum.COLOR_WEAK" :def="getColorWeak" />
     </div>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app'
+import { HandlerEnum } from './enum'
+import SwitchItem from './SwitchItem.vue'
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
 
 const appStore = useAppStore()
+const { getHeaderFixed } = useHeaderSetting()
+const { getShowLogo, getShowFullScreen, getColorWeak, getGrayMode } = useRootSetting()
 const openSetting = computed(() => appStore.getProjectConfig.openSetting)
-
-const showLogo = computed({
-  get() {
-    return appStore.getProjectConfig.showLogo
-  },
-  set(value: boolean) {
-    appStore.setProjectConfig({ showLogo: value })
-  }
-})
-
-const showFullScreen = computed({
-  get() {
-    return appStore.getProjectConfig.showFullScreen
-  },
-  set(value: boolean) {
-    appStore.setProjectConfig({ showFullScreen: value })
-  }
-})
 
 const toggleSetting = () =>
   appStore.setProjectConfig({

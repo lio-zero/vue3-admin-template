@@ -10,7 +10,7 @@
 @import './layout.scss';
 @import './vars.scss';
 
-html.gray-mode {
+html {
   &.color-weak {
     filter: invert(80%);
   }
