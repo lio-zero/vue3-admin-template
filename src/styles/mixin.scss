@@ -15,12 +15,13 @@
 
 @mixin bodyScrollBar {
   &::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
+    background: var(--c-gray-bg);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar {
-    width: 8px;
-    background: transparent;
+    width: 6px;
+    background: var(--c-gray-bg);
   }
 
   &::-webkit-scrollbar-track {
@@ -30,8 +31,12 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #666e8f;
-    border-radius: 12px;
+    background: var(--c-scrollbar);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--c-scrollbar-hover);
   }
 }
 

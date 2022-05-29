@@ -1,5 +1,5 @@
 <template>
-  <main class="vzr-main-container">
+  <main class="vzr-main-container dark:bg-[#111]">
     <router-view v-slot="{ Component }">
       <transition :name="fade" mode="out-in">
         <keep-alive>

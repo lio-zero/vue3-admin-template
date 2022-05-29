@@ -1,41 +1,43 @@
 <template>
-  <header class="vzr-header-container" :class="{ 'vzr-header-container--fixed': isFixed }">
-    <hamburger
-      id="hamburger-container"
-      :is-active="opened"
-      class="hamburger-container cursor-pointer"
-      @toggle-click="toggleSideBar"
-    />
-    <breadcrumb class="breadcrumb-container flex-1" />
+  <div :class="['vzr-layout-multiple-header', { 'vzr-header-container--fixed': isFixed }]">
+    <header class="vzr-header-container dark:bg-[#111]">
+      <hamburger
+        id="hamburger-container"
+        :is-active="opened"
+        class="hamburger-container cursor-pointer"
+        @toggle-click="toggleSideBar"
+      />
+      <breadcrumb class="breadcrumb-container flex-1" />
 
-    <div class="right-menu">
-      <Fullscreen v-if="showFullScreen" />
+      <div class="right-menu">
+        <Fullscreen v-if="showFullScreen" />
 
-      <Dark />
+        <Dark />
 
-      <MessageBox />
+        <MessageBox />
 
-      <el-dropdown class="avatar-container">
-        <div class="avatar-wrapper cursor-pointer">
-          <el-avatar shape="square" :src="getUserInfo.avatar" />
-          <i class="el-icon-caret-bottom"></i>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu class="user-dropdown">
-            <router-link to="/">
-              <el-dropdown-item>首页</el-dropdown-item>
-            </router-link>
-            <a target="_blank" href="https://github.com/lio-zero/vite-wj">
-              <el-dropdown-item>我的 Github</el-dropdown-item>
-            </a>
-            <el-dropdown-item @click="layout">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+        <el-dropdown class="avatar-container">
+          <div class="avatar-wrapper cursor-pointer">
+            <el-avatar shape="square" :src="getUserInfo.avatar" />
+            <i class="el-icon-caret-bottom"></i>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu class="user-dropdown">
+              <router-link to="/">
+                <el-dropdown-item>首页</el-dropdown-item>
+              </router-link>
+              <a target="_blank" href="https://github.com/lio-zero/vite-wj">
+                <el-dropdown-item>我的 Github</el-dropdown-item>
+              </a>
+              <el-dropdown-item @click="layout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
 
-      <Setting />
-    </div>
-  </header>
+        <Setting />
+      </div>
+    </header>
+  </div>
   <!-- <Tabs name="O.O" /> -->
 </template>
 <script setup lang="ts">

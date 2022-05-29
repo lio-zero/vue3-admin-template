@@ -52,16 +52,13 @@ h6 {
 }
 
 .login-container #btn_remember {
-  background: #fff;
+  background: var(--c-bg);
   border: 1px solid #ced4da;
 }
 .login-container #btn_remember:hover {
   background: #f8f9fa;
 }
-// .login-container h6,
-// .login-container label {
-//   font-size: 0.8rem;
-// }
+
 .login-container h6,
 .login-container label,
 .login-container #btn_remember {

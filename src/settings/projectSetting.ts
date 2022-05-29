@@ -28,11 +28,12 @@ const setting: ProjectConfig = {
   openSetting: false,
   // 是否显示全屏按钮
   showFullScreen: false,
-  // 灰色模式
+  // 是否开启灰色模式
   grayMode: false,
-  // 色弱模式
+  // 是否开启色弱模式
   colorWeak: false,
   headerSetting: {
+    // 是否固定头部
     fixed: true
   }
 }
