@@ -1,5 +1,5 @@
 {
-  "name": "vue3-typescript-admin-template",
+  "name": "vue-vzr-admin-template",
   "version": "1.0.0",
   "description": "使用 Vue 技术栈搭建的后台模板",
   "author": {
@@ -109,13 +109,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lio-zero/vue3-typescript-admin-template"
+    "url": "git+https://github.com/lio-zero/vue-vzr-admin-template"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lio-zero/vue3-typescript-admin-template/issues"
+    "url": "https://github.com/lio-zero/vue-vzr-admin-template/issues"
   },
-  "homepage": "https://github.com/lio-zero/vue3-typescript-admin-template",
+  "homepage": "https://github.com/lio-zero/vue-vzr-admin-template",
   "engines": {
     "node": ">= 16.13.1",
     "npm": ">= 8.5.3"
