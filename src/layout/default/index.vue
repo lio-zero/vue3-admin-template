@@ -7,6 +7,7 @@
     ></div>
     <LayoutSidebar class="vzr-sidebar-container" />
     <div class="main-container">
+      <div v-if="getHeaderFixed" style="height: 50px"></div>
       <LayoutHeader />
       <LayoutMain />
       <LayoutFooter />
@@ -20,13 +21,15 @@ import LayoutHeader from './header/index.vue'
 import LayoutMain from './content/index.vue'
 import LayoutFooter from './footer/index.vue'
 import { useAppStore } from '@/store/modules/app'
+import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+
+const { getHeaderFixed } = useHeaderSetting()
 
 const appStore = useAppStore()
 const { body } = document
 const WIDTH = 992
 const device = computed(() => appStore.getDevice)
 const sidebar = computed(() => appStore.getProjectConfig.sidebar)
-
 const classObj = computed(() => {
   return {
     hideSidebar: !unref(sidebar).opened,
@@ -84,7 +87,7 @@ onMounted(() => {
 })
 
 onBeforeMount(() => {
-  window.removeEventListener('resize', resizeHandler)
+  window.addEventListener('resize', resizeHandler)
 })
 
 onBeforeUnmount(() => {
@@ -112,6 +115,8 @@ onBeforeUnmount(() => {
     min-height: 100%;
     margin-left: 210px;
     transition: margin-left 0.28s;
+    background: var(--c-gray-bg);
+
     .vzr-footer-container {
       margin-top: auto;
     }

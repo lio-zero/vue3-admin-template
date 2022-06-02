@@ -1,5 +1,6 @@
 const { defineConfig } = require('eslint-define-config')
 
+// https://eslint.org/docs/user-guide/configuring/
 module.exports = defineConfig({
   root: true,
   parserOptions: {

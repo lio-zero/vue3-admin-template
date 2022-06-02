@@ -54,12 +54,13 @@ const logo = ref(img)
       height: 32px;
       vertical-align: middle;
       margin: 0 11px;
+      display: inline-block;
     }
 
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
+      color: var(--c-bg);
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;

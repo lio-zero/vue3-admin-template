@@ -1,5 +1,5 @@
 <template>
-  <div class="setting-container">
+  <div class="setting-container dark:bg-[#111]">
     <div class="center-vertical" id="account-form-container">
       <el-form
         ref="FormData"
@@ -57,22 +57,18 @@
 import type { UserInfo } from '#/store'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
-// import { validatePass, validateComfirmPass } from '@/utils/validate'
+import { isPhone, isEmail } from '@/utils/is'
 
 const userStore = useUserStore()
 
 const labelPosition = ref('right')
 const FormData = ref()
 const ruleForm: UserInfo = reactive(userStore.getUserInfo)
-// const emailReg = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/
-const emailReg =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/
 
 const validEmail = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入邮箱'))
-  } else if (!emailReg.test(value)) {
+  } else if (!isEmail(value)) {
     callback(new Error('请输入正确的邮箱'))
   } else {
     callback()
@@ -84,7 +80,7 @@ const validPhone = (_rule: any, value: string, callback: any) => {
     callback(new Error('请输入手机号'))
   } else if (value.toString().length < 10) {
     callback(new Error('手机号需要11位'))
-  } else if (!phoneReg.test(value)) {
+  } else if (!isPhone(value)) {
     callback(new Error('请输入正确的手机号'))
   } else {
     callback()

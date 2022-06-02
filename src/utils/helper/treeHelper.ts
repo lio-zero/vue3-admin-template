@@ -11,7 +11,7 @@ const DEFAULT_CONFIG: TreeHelperConfig = {
 
 const getConfig = (config: Partial<TreeHelperConfig>) => Object.assign({}, DEFAULT_CONFIG, config)
 
-// tree from list
+// 列表中的树
 export function listToTree<T = any>(list: any[], config: Partial<TreeHelperConfig> = {}): T[] {
   const conf = getConfig(config) as TreeHelperConfig
   const nodeMap = new Map()
@@ -156,14 +156,14 @@ export function forEach<T = any>(
 }
 
 /**
- * @description: Extract tree specified structure
+ * @description: 提取树指定的结构
  */
 export function treeMap<T = any>(treeData: T[], opt: { children?: string; conversion: Fn }): T[] {
   return treeData.map(item => treeMapEach(item, opt))
 }
 
 /**
- * @description: Extract tree specified structure
+ * @description: 提取树指定的结构
  */
 export function treeMapEach(
   data: any,

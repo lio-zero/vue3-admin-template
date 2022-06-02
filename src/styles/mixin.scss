@@ -13,6 +13,33 @@
   }
 }
 
+@mixin bodyScrollBar {
+  &::-webkit-scrollbar-track-piece {
+    background: var(--c-gray-bg);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: var(--c-gray-bg);
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: 50px;
+    background: #e0e4f6;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--c-scrollbar);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--c-scrollbar-hover);
+  }
+}
+
 @mixin clearfix {
   &:after {
     content: '';

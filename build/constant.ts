@@ -3,7 +3,7 @@
  */
 
 // 应用名
-export const APP_TITLE = 'Vue3-TypeScript-Admin-Template'
+export const APP_TITLE = 'Vue-Vzr-Admin-Template'
 
 // 本地服务端口
 export const VITE_PORT = 8088

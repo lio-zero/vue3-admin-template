@@ -12,7 +12,7 @@ export class Memory<T = any, V = any> {
   private alive: number
 
   constructor(alive = NOT_ALIVE) {
-    // Unit second
+    // 单位秒
     this.alive = alive * 1000
   }
 

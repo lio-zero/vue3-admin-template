@@ -1,10 +1,7 @@
-import type { ProjectConfig, TransitionSetting } from '#/config'
+import type { ProjectConfig, TransitionSetting, HeaderSetting } from '#/config'
 import { store } from '@/store'
 import { defineStore } from 'pinia'
-// import Cookies from 'js-cookie'
 
-// import { USER_INFO_KEY, TOKEN_KEY } from '@/enums/cacheEnum'
-// import { router } from '@/router'
 import { Persistent } from '@/utils/cache/persistent'
 import { PROJ_CFG_KEY } from '@/enums/cacheEnum'
 import { deepMerge } from '@/utils'
@@ -33,6 +30,9 @@ export const useAppStore = defineStore({
     },
     getDevice(): string {
       return this.device
+    },
+    getHeaderSetting(): HeaderSetting {
+      return this.getProjectConfig.headerSetting
     }
   },
   actions: {
