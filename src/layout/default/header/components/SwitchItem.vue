@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { HandlerEnum } from './enum'
-import { baseHandler } from './handler'
+import { HandlerEnum } from '../enum'
+import { baseHandler } from '../handler'
 
 const props = defineProps({
   event: {

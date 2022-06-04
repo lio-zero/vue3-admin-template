@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app'
-import { HandlerEnum } from './enum'
+import { HandlerEnum } from '../enum'
 import SwitchItem from './SwitchItem.vue'
 import { useRootSetting } from '@/hooks/setting/useRootSetting'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
@@ -37,7 +37,12 @@ import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
 const appStore = useAppStore()
 const { getHeaderFixed } = useHeaderSetting()
 const { getShowLogo, getShowFullScreen, getColorWeak, getGrayMode } = useRootSetting()
-const openSetting = computed(() => appStore.getProjectConfig.openSetting)
+const openSetting = computed({
+  get() {
+    return appStore.getProjectConfig.openSetting
+  },
+  set() {}
+})
 
 const toggleSetting = () =>
   appStore.setProjectConfig({
