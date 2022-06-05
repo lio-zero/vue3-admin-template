@@ -38,12 +38,14 @@
       </div>
     </header>
   </div>
+  <multiple-tabs />
 </template>
 <script setup lang="ts">
 import Breadcrumb from './components/Breadcrumb.vue'
 import Hamburger from './components/Hamburger.vue'
 import Fullscreen from './components/Fullscreen.vue'
 import MessageBox from './components/MessageBox.vue'
+import MultipleTabs from '../tabs/index.vue'
 import Setting from './components/Setting.vue'
 import { Dark } from '@/components/Dark'
 import { useAppStore } from '@/store/modules/app'
@@ -52,7 +54,6 @@ import headerImg from '@/assets/logo.png'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
-
 const getUserInfo = computed(() => {
   const { avatar } = userStore.getUserInfo || {}
   return { avatar: avatar || headerImg }
