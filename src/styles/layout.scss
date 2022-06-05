@@ -122,23 +122,4 @@
   :is(.vzr-sidebar-container, .el-menu, .el-sub-menu__title) {
     background-color: var(--c-bg) !important;
   }
-
-  // setting dark
-  .el-drawer__header {
-    color: var(--c-text) !important;
-  }
-
-  .el-drawer__header {
-    border-bottom: 1px solid var(--c-divider);
-    border-bottom: 1px solid var(--c-divider);
-  }
-
-  .el-divider--horizontal {
-    border-top: 1px solid var(--c-divider);
-  }
-
-  .el-divider__text {
-    background: var(--c-bg);
-    color: var(--c-text);
-  }
 }

@@ -150,5 +150,3 @@ const save = async () => {
   dialogVisible.value = false
 }
 </script>
-
-<style scoped></style>

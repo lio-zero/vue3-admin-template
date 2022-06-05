@@ -9,6 +9,7 @@ import legacy from '@vitejs/plugin-legacy'
 import purgeIcons from 'vite-plugin-purge-icons'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import Icons from 'unplugin-icons/vite'
+import windiCSS from 'vite-plugin-windicss'
 import { autoRegistryComponents } from './component'
 import { autoImportDeps } from './autoImport'
 import { configMockPlugin } from './mock'
@@ -49,6 +50,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
       compiler: 'vue3'
     })
   ]
+
+  // vite-plugin-windicss
+  vitePlugins.push(windiCSS())
 
   // @vitejs/plugin-legacy
   VITE_LEGACY && isBuild && vitePlugins.push(legacy())

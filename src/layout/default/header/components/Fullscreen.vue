@@ -14,5 +14,3 @@ const { toggle, isFullscreen } = useFullscreen()
 
 const getTitle = computed(() => (unref(isFullscreen) ? '退出全屏' : '全屏'))
 </script>
-
-<style scoped></style>

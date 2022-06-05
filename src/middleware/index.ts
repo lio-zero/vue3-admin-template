@@ -28,7 +28,7 @@ export default (router: any) => {
           return next()
         }
       }
-      // store.dispatch('getUserInfo')
+
       next()
     } else {
       if (to.path === '/login') next()

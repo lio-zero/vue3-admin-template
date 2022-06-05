@@ -26,6 +26,10 @@ export function isString(val: unknown): val is string {
   return is(val, 'String')
 }
 
+export function isNumber(val: unknown): val is null {
+  return is(val, 'Number')
+}
+
 export function isObject(val: any): val is Record<any, any> {
   return val !== null && is(val, 'Object')
 }

@@ -1,6 +1,6 @@
 <template>
   <div :class="['vzr-layout-multiple-header', { 'vzr-header-container--fixed': isFixed }]">
-    <header class="vzr-header-container dark:bg-[#111]">
+    <header class="vzr-header-container">
       <hamburger
         id="hamburger-container"
         :is-active="opened"

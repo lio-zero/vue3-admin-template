@@ -90,8 +90,6 @@ const getChildren = (data: any, result: object[], pid: number): void => {
   }
 }
 
-// https://blog.csdn.net/qq_37746973/article/details/78662177
-
 const buildTree = (data: object[], pid: number): object[] => {
   const result: object[] = []
   getChildren(data, result, pid)

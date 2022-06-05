@@ -1,55 +1,34 @@
 <template>
-  <div class="setting-container dark:bg-[#111]">
-    <div class="center-vertical" id="account-form-container">
+  <div class="center-vertical" id="account-form-container">
+    <el-card>
+      <template #header>
+        <p>个人信息</p>
+      </template>
       <el-form
-        ref="FormData"
-        status-icon
-        class="demo-ruleForm card card-body bg-light"
-        id="account-form"
-        label-width="120px"
+        :label-position="labelPosition"
+        label-width="100px"
         :model="ruleForm"
         :rules="rules"
-        :label-position="labelPosition"
+        style="max-width: 460px"
       >
-        <h6>个人信息</h6>
-        <hr />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label col-form-label-sm">姓名</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text" name="name" v-model="ruleForm.name" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label col-form-label-sm">邮箱</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="email" name="email" v-model="ruleForm.email" />
-          </div>
-        </div>
-        <hr />
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label col-form-label-sm">用户名</label>
-          <div class="col-sm-9">
-            <input
-              class="form-control disabled"
-              type="text"
-              name="user"
-              v-model="ruleForm.username"
-            />
-          </div>
-        </div>
-        <div class="form-group row margin-zero">
-          <label class="col-sm-3 col-form-label col-form-label-sm">密码</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="password" name="pass" v-model="ruleForm.password" />
-          </div>
-        </div>
-        <hr />
-        <div class="form-buttons">
-          <div class="btn btn-outline-dark" id="account-form-btn1">删除</div>
-          <div class="btn btn-primary" id="account-form-btn2" @click="saveForm">更新</div>
-        </div>
+        <el-form-item label="姓名">
+          <el-input v-model="ruleForm.name" />
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="ruleForm.email" />
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="ruleForm.username" />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="ruleForm.password" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="deleteHandler">删除</el-button>
+          <el-button @click="saveForm">更新</el-button>
+        </el-form-item>
       </el-form>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -114,6 +93,10 @@ const rules: object = reactive({
   password: [{ validator: validPass, trigger: 'blur' }],
   confirmPwd: [{ validator: validConfirmPwd, trigger: 'blur' }]
 })
+
+const deleteHandler = () => {
+  console.log(111)
+}
 
 const saveForm = () => {
   FormData.value.validate((valid: boolean) => {

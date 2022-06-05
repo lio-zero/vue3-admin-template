@@ -1,12 +1,17 @@
 import 'virtual:svg-icons-register'
+import 'virtual:windi-base.css'
+import 'virtual:windi-components.css'
+import 'virtual:windi-utilities.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
+import 'nprogress/nprogress.css'
+
 import App from './App.vue'
 import { createApp } from 'vue'
 import { setupStore } from '@/store'
 import { setupRouter } from '@/router'
-import 'nprogress/nprogress.css'
-import '@/styles/index.scss'
 import { initAppConfigStore } from '@/logics/initAppConfig'
 import { setupElIcon } from '@/components/Icon'
+import '@/styles/index.scss'
 
 const app = createApp(App)
 
