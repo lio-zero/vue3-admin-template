@@ -2,8 +2,12 @@
   <el-card>
     <el-tabs v-model="activeKey">
       <el-tab-pane v-for="tab in tabListTitle" :key="tab.key" :label="tab.tab" :name="tab.key">
-        <VisitAnalysis v-if="activeKey === 'tab1'" />
-        <VisitAnalysisBar v-if="activeKey === 'tab2'" />
+        <el-skeleton v-bind="$attrs" :rows="5" animated>
+          <template #default>
+            <VisitAnalysis v-if="activeKey === 'tab1'" />
+            <VisitAnalysisBar v-if="activeKey === 'tab2'" />
+          </template>
+        </el-skeleton>
       </el-tab-pane>
     </el-tabs>
   </el-card>

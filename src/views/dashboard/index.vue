@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <grow-card :loading="loading" class="enter-y" />
-    <site-analysis class="!my-4 enter-y" />
+    <site-analysis class="!my-4 enter-y" :loading="loading" />
     <div class="md:flex enter-y">
       <sales-product-pie class="md:w-1/3 w-full" :loading="loading" />
       <visit-radar class="md:w-1/3 !md:mx-4 !md:my-0 !my-4 w-full" :loading="loading" />

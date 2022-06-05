@@ -1,12 +1,12 @@
 <template>
-  <div class="center-vertical" id="account-form-container">
-    <el-card>
+  <div class="flex justify-center mt-20">
+    <el-card class="w-380px">
       <template #header>
         <p>个人信息</p>
       </template>
       <el-form
         :label-position="labelPosition"
-        label-width="100px"
+        label-width="60px"
         :model="ruleForm"
         :rules="rules"
         style="max-width: 460px"
@@ -37,13 +37,10 @@ import type { UserInfo } from '#/store'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { isPhone, isEmail } from '@/utils/is'
-
 const userStore = useUserStore()
-
 const labelPosition = ref('right')
 const FormData = ref()
 const ruleForm: UserInfo = reactive(userStore.getUserInfo)
-
 const validEmail = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入邮箱'))
@@ -53,7 +50,6 @@ const validEmail = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
-
 const validPhone = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请输入手机号'))
@@ -65,7 +61,6 @@ const validPhone = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
-
 const validPass = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
@@ -76,7 +71,6 @@ const validPass = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
-
 const validConfirmPwd = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
@@ -86,18 +80,15 @@ const validConfirmPwd = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
-
 const rules: object = reactive({
   email: [{ validator: validEmail, trigger: 'blur' }],
   phone: [{ validator: validPhone, trigger: 'blur' }],
   password: [{ validator: validPass, trigger: 'blur' }],
   confirmPwd: [{ validator: validConfirmPwd, trigger: 'blur' }]
 })
-
 const deleteHandler = () => {
   console.log(111)
 }
-
 const saveForm = () => {
   FormData.value.validate((valid: boolean) => {
     if (valid) {
@@ -111,10 +102,3 @@ const saveForm = () => {
   })
 }
 </script>
-
-<style scoped lang="scss">
-@import '@/styles/login.scss';
-.center-vertical {
-  width: 440px;
-}
-</style>

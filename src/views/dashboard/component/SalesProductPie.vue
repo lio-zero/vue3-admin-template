@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-skeleton :loading="loading" :rows="4" animated>
-      <template #default>
-        <el-card class="w-full">
-          <template #header>
-            <span>成交占比</span>
-          </template>
-          <div ref="chartRef" :style="{ width, height }"></div>
-        </el-card>
+    <el-card class="w-full">
+      <template #header>
+        <span>成交占比</span>
       </template>
-    </el-skeleton>
+      <el-skeleton :loading="loading" :rows="4" animated>
+        <template #default>
+          <div ref="chartRef" :style="{ width, height }"></div>
+        </template>
+      </el-skeleton>
+    </el-card>
   </div>
 </template>
 <script lang="ts" setup>

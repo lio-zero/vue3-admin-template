@@ -1,4 +1,4 @@
-import { Tools, Eleme, BellFilled, Expand, Fold, Back } from '@element-plus/icons'
+import { Tools, Eleme, BellFilled, Expand, Fold, Back, Lock } from '@element-plus/icons'
 
 export default {
   Tools,
@@ -6,5 +6,6 @@ export default {
   BellFilled,
   Expand,
   Fold,
-  Back
+  Back,
+  Lock
 }

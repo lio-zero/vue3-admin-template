@@ -2,7 +2,7 @@ import 'virtual:svg-icons-register'
 import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
 import 'virtual:windi-utilities.css'
-import 'element-plus/theme-chalk/dark/css-vars.css'
+import 'element-plus/theme-chalk/src/dark/css-vars.scss'
 import 'nprogress/nprogress.css'
 
 import App from './App.vue'

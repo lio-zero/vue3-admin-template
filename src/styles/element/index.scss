@@ -29,3 +29,14 @@
 .el-drawer__body {
   @include scrollBar;
 }
+
+// login
+.login {
+  .el-form-item__content label {
+    margin-bottom: 0;
+  }
+
+  .el-divider--horizontal {
+    margin: 14px 0;
+  }
+}
