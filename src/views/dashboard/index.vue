@@ -7,5 +7,3 @@
 <script setup lang="ts" name="Dashboard">
 const { x, y } = useMouse()
 </script>
-
-<style scoped></style>

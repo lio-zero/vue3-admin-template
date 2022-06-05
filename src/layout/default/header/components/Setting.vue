@@ -7,18 +7,12 @@
     </el-tooltip>
   </div>
 
-  <el-drawer
-    v-model="openSetting"
-    title="项目配置"
-    size="330px"
-    custom-class="dark:bg-[#111]"
-    @close="toggleSetting"
-  >
+  <el-drawer v-model="openSetting" title="项目配置" size="330px" @close="toggleSetting">
     <div class="v-drawer-body">
-      <el-divider class="dark:bg-[#111]"> 界面功能 </el-divider>
+      <el-divider> 界面功能 </el-divider>
       <switch-item title="固定 header" :event="HandlerEnum.HEADER_FIXED" :def="getHeaderFixed" />
 
-      <el-divider class="dark:bg-[#111]"> 界面显示 </el-divider>
+      <el-divider> 界面显示 </el-divider>
       <switch-item title="全屏内容" :event="HandlerEnum.FULL_CONTENT" :def="getShowFullScreen" />
       <switch-item title="Logo" :event="HandlerEnum.SHOW_LOGO" :def="getShowLogo" />
       <switch-item title="灰色模式" :event="HandlerEnum.GRAY_MODE" :def="getGrayMode" />

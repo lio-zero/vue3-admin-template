@@ -38,5 +38,3 @@ function handleChange(val) {
   props.event && baseHandler(props.event, val)
 }
 </script>
-
-<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <div :class="['vzr-layout-multiple-header', { 'vzr-header-container--fixed': isFixed }]">
-    <header class="vzr-header-container dark:bg-[#111]">
+    <header class="vzr-header-container">
       <hamburger
         id="hamburger-container"
         :is-active="opened"
@@ -38,15 +38,14 @@
       </div>
     </header>
   </div>
-  <!-- <Tabs name="O.O" /> -->
 </template>
 <script setup lang="ts">
 import Breadcrumb from './components/Breadcrumb.vue'
 import Hamburger from './components/Hamburger.vue'
 import Fullscreen from './components/Fullscreen.vue'
 import MessageBox from './components/MessageBox.vue'
-import Dark from './components/Dark.vue'
 import Setting from './components/Setting.vue'
+import { Dark } from '@/components/Dark'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import headerImg from '@/assets/logo.png'
