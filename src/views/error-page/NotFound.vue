@@ -26,9 +26,9 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const randomNum = () => Math.floor(Math.random() * 9) + 1
-const thirdDigit = ref<Nullable<HTMLElement>>(null)
-const secondDigit = ref<Nullable<HTMLElement>>(null)
-const firstDigit = ref<Nullable<HTMLElement>>(null)
+const thirdDigit = ref<HTMLElement | null>(null)
+const secondDigit = ref<HTMLElement | null>(null)
+const firstDigit = ref<HTMLElement | null>(null)
 
 const reciprocal = () => {
   let loop1

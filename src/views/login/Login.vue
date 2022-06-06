@@ -72,7 +72,7 @@ const validatePassword = (_rule: any, value: string, callback: any) => {
 
 const loading = ref(false)
 // const forgetPass = ref(true)
-const loginForm = ref<Nullable<HTMLElement>>(null)
+const loginForm = ref<HTMLFormElement | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -82,7 +82,7 @@ const rules = reactive({
 })
 
 const loginBtn = () => {
-  loginForm.value.validate(async (valid: any) => {
+  loginForm?.value?.validate(async (valid: any) => {
     if (valid) {
       await userStore.login(model)
       ElMessage.success('登录成功')

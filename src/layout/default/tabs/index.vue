@@ -2,21 +2,17 @@
   <div ref="tagArea" id="tags-view-container" class="tags-view-container">
     <ScrollPane ref="scrollPane" class="tags-view-wrapper">
       <router-link
-        v-for="tagItem in visitedViews"
         ref="tag"
+        v-for="tagItem in visitedViews"
         :key="tagItem.path"
         :to="{ path: tagItem.path, query: tagItem.query, fullPath: tagItem.fullPath }"
         v-slot="{ navigate }"
+        class="tags-view-item"
+        :class="isActive(tagItem) ? 'active' : ''"
         @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem) : ''"
         @contextmenu.prevent="openMenu(tagItem, $event)"
       >
-        <span
-          class="tags-view-item"
-          :class="isActive(tagItem) ? 'active' : ''"
-          @click="navigate"
-          @keypress.enter="navigate"
-          role="link"
-        >
+        <span @click="navigate" @keypress.enter="navigate" role="link">
           {{ tagItem.title }}
           <el-icon v-if="!isAffix(tagItem)" class="align-sub">
             <Close class="el-icon-close" @click.prevent.stop="closeSelectedTag(tagItem)" />
@@ -25,11 +21,31 @@
       </router-link>
     </ScrollPane>
 
-    <ul v-show="visible" :style="{ left: menuLeft + 'px', top: top + 'px' }" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)"> 刷新 </li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"> 关闭 </li>
-      <li @click="closeOthersTags"> 关闭其他 </li>
-      <li @click="closeAllTags(selectedTag)"> 关闭所有 </li>
+    <ul v-show="visible" :style="{ left: `${menuLeft}px`, top: `${top}px` }" class="contextmenu">
+      <li @click="refreshSelectedTag(selectedTag)">
+        <el-icon :size="18" class="align-middle">
+          <RefreshRight />
+        </el-icon>
+        <span class="align-middle"> 重新加载 </span>
+      </li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
+        <el-icon :size="18" class="align-middle">
+          <Close />
+        </el-icon>
+        <span class="align-middle"> 关闭标签页 </span>
+      </li>
+      <li class="border-t-1" @click="closeOthersTags">
+        <el-icon :size="18" class="align-middle">
+          <Icon size="20" icon="dashicons:align-center" />
+        </el-icon>
+        <span class="align-middle"> 关闭其他标签页 </span>
+      </li>
+      <li @click="closeAllTags(selectedTag)">
+        <el-icon :size="18" class="align-middle">
+          <Icon size="20" icon="clarity:minus-line" />
+        </el-icon>
+        <span class="align-middle"> 关闭全部标签页 </span>
+      </li>
     </ul>
   </div>
 </template>
@@ -48,10 +64,10 @@ const tabStore = useTabStore()
 const visible = ref(false)
 const top = ref(0)
 const menuLeft = ref(0)
-let selectedTag = reactive({})
-const tag = ref<Nullable<HTMLElement>>(null)
-const scrollPane = ref(null)
-const tagArea = ref<Nullable<HTMLElement>>(null)
+let selectedTag = ref({})
+const tag = ref<HTMLElement | null>(null)
+const scrollPane = ref<HTMLElement | null>(null)
+const tagArea = ref<HTMLDivElement | null>(null)
 let affixTags = ref([])
 
 const visitedViews = computed(() => tabStore.getVisitedViews)
@@ -68,6 +84,8 @@ watch(visible, value => {
     document.body.removeEventListener('click', closeMenu)
   }
 })
+
+provide('data', tag)
 
 onMounted(() => {
   initTags()
@@ -121,9 +139,9 @@ const moveToCurrentTag = () => {
   nextTick(() => {
     for (const item of unref(tag)) {
       if (item.to.path === route.path) {
-        unref(scrollPane).moveToTarget(item)
+        unref(scrollPane)?.moveToTarget(item.$el)
         // 当查询不同时，则更新
-        if (tag.to.fullPath !== route.fullPath) {
+        if (item.to.fullPath !== route.fullPath) {
           tabStore.updateVisitedView(route)
         }
         break
@@ -152,8 +170,8 @@ const closeSelectedTag = view => {
 }
 
 const closeOthersTags = () => {
-  router.push(selectedTag)
-  tabStore.delOthersViews(selectedTag).then(() => {
+  router.push(unref(selectedTag))
+  tabStore.delOthersViews(unref(selectedTag)).then(() => {
     moveToCurrentTag()
   })
 }
@@ -189,7 +207,6 @@ const openMenu = (tag, e) => {
   const offsetWidth = unref(tagArea)!.offsetWidth // container 宽度
   const maxLeft = offsetWidth - menuMinWidth // 左边界
   const left = e.clientX - offsetLeft + 15 // 15: margin right
-  console.log(offsetLeft, offsetWidth, maxLeft, left)
 
   if (left > maxLeft) {
     menuLeft.value = maxLeft
@@ -199,7 +216,7 @@ const openMenu = (tag, e) => {
 
   top.value = e.clientY
   visible.value = true
-  selectedTag = tag
+  selectedTag.value = tag
 }
 
 const closeMenu = () => {
@@ -211,8 +228,8 @@ const closeMenu = () => {
 .tags-view-container {
   height: 34px;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #e8eaec;
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-divider);
   // box-shadow: 0 3px 5px 1px rgba(0, 32, 128, 0.07);
   .tags-view-wrapper {
     .tags-view-item {
@@ -253,14 +270,14 @@ const closeMenu = () => {
   }
   .contextmenu {
     margin: 0;
-    width: 200px;
+    width: 160px;
     background: #fff;
     z-index: 3000;
     position: absolute;
     list-style-type: none;
     padding: 5px 0;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);

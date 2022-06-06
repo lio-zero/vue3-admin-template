@@ -8,7 +8,6 @@ enum Api {
 }
 
 export function login(params: any) {
-  console.log(Api.Login)
   return http.post({
     url: '/login',
     params

@@ -10,10 +10,9 @@
 </template>
 
 <script setup lang="ts" name="ScrollPane">
-// const tagAndTagSpacing = 4 // tagAndTagSpacing
-// const left = ref(0)
-const scrollContainer = ref(null)
-const scrollWrapper = computed(() => unref(scrollContainer).wrap$)
+const tagAndTagSpacing = 4
+const scrollContainer = ref<HTMLElement | null>(null)
+const scrollWrapper = computed(() => unref(scrollContainer)?.wrap$)
 const emit = defineEmits(['scroll'])
 
 const emitScroll = () => {
@@ -34,39 +33,47 @@ const handleScroll = e => {
   $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
 }
 
-// const moveToTarget = currentTag => {
-//   const $container = scrollContainer.$el
-//   const $containerWidth = $container.offsetWidth
-//   const $scrollWrapper = unref(scrollWrapper)
-//   const tagList = $parent.$refs.tag
-//   let firstTag = null
-//   let lastTag = null
-//   // 查找第一个标记和最后一个标记
-//   if (tagList.length > 0) {
-//     firstTag = tagList[0]
-//     lastTag = tagList[tagList.length - 1]
-//   }
-//   if (firstTag === currentTag) {
-//     $scrollWrapper.scrollLeft = 0
-//   } else if (lastTag === currentTag) {
-//     $scrollWrapper.scrollLeft = $scrollWrapper.scrollWidth - $containerWidth
-//   } else {
-//     // 找到 preTag 和 nextTag
-//     const currentIndex = tagList.findIndex(item => item === currentTag)
-//     const prevTag = tagList[currentIndex - 1]
-//     const nextTag = tagList[currentIndex + 1]
-//     // 标记在 nextTag 之后的 offsetLeft
-//     const afterNextTagOffsetLeft =
-//       nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
-//     // 标记在 prevTag 之前的 offsetLeft
-//     const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
-//     if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
-//       $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth
-//     } else if (beforePrevTagOffsetLeft < $scrollWrapper.scrollLeft) {
-//       $scrollWrapper.scrollLeft = beforePrevTagOffsetLeft
-//     }
-//   }
-// }
+const tags: any = inject('data')
+
+const moveToTarget = currentTag => {
+  const $container = unref(scrollContainer)?.wrap$.parentElement
+  const $containerWidth = $container.offsetWidth
+  const $scrollWrapper = unref(scrollWrapper)
+  const tagList = tags.value
+
+  let firstTag = null
+  let lastTag = null
+  // 查找第一个标记和最后一个标记
+  if (tagList.length > 0) {
+    firstTag = tagList[0].$el
+    lastTag = tagList[tagList.length - 1].$el
+  }
+  if (firstTag === currentTag) {
+    $scrollWrapper.scrollLeft = 0
+  } else if (lastTag === currentTag) {
+    $scrollWrapper.scrollLeft = $scrollWrapper.scrollWidth - $containerWidth
+  } else {
+    // 找到 preTag 和 nextTag
+    const currentIndex = tagList.findIndex(item => item === currentTag)
+    const prevTag = tagList[currentIndex - 1]
+    const nextTag = tagList[currentIndex + 1]
+    // 标记在 nextTag 之后的 offsetLeft
+
+    const afterNextTagOffsetLeft =
+      nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
+    // 标记在 prevTag 之前的 offsetLeft
+    const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
+    if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
+      $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth
+    } else if (beforePrevTagOffsetLeft < $scrollWrapper.scrollLeft) {
+      $scrollWrapper.scrollLeft = beforePrevTagOffsetLeft
+    }
+  }
+}
+
+defineExpose({
+  moveToTarget
+})
 </script>
 
 <style lang="scss" scoped>

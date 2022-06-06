@@ -7,6 +7,16 @@ import middleware from '../middleware'
 
 export const routes: Array<RouteRecordRaw> = [
   {
+    path: '/redirect',
+    component: Layout,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/Login.vue')
