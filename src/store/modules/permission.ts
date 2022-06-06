@@ -17,13 +17,13 @@ import { getPermCode } from '@/api/user'
 import { getMenuList } from '@/api/menu'
 
 interface PermissionState {
-  // Permission code list
+  // 权限代码列表
   permCodeList: string[] | number[]
-  // Whether the route has been dynamically added
+  // 是否已动态添加路由
   isDynamicAddedRoute: boolean
-  // To trigger a menu update
+  // 触发菜单更新
   lastBuildMenuTime: number
-  // Backstage menu list
+  // 后台菜单列表
   backMenuList: Menu[]
   frontMenuList: Menu[]
 }
@@ -95,7 +95,7 @@ export const usePermissionStore = defineStore({
       }
 
       /**
-       * @description 根据设置的首页path，修正routes中的affix标记（固定首页）
+       * @description 根据设置的首页 path，修正 routes 中的 affix 标记（固定首页）
        * */
       const patchHomeAffix = (routes: AppRouteRecordRaw[]) => {
         if (!routes || routes.length === 0) return
@@ -128,7 +128,7 @@ export const usePermissionStore = defineStore({
         case PermissionModeEnum.ROLE:
           routes = filter(asyncRoutes, routeFilter)
           routes = routes.filter(routeFilter)
-          // Convert multi-level routing to level 2 routing
+          // 将多级路由转换为二级路由
           routes = flatMultiLevelRoutes(routes)
           break
 
@@ -147,7 +147,7 @@ export const usePermissionStore = defineStore({
           routes = flatMultiLevelRoutes(routes)
           break
 
-        //  If you are sure that you do not need to do background dynamic permissions, please comment the entire judgment below
+        // 如果您确定不需要执行后台动态权限，请在下面对整个判断进行评论
         case PermissionModeEnum.BACK:
           console.log('菜单加载中...')
 
@@ -159,14 +159,14 @@ export const usePermissionStore = defineStore({
             console.error(error)
           }
 
-          // Dynamically introduce components
+          // 动态引入组件
           routeList = transformObjToRoute(routeList)
 
-          //  Background routing to menu structure
+          // 后台路由到菜单结构
           const backMenuList = transformRouteToMenu(routeList)
           this.setBackMenuList(backMenuList)
 
-          // remove meta.ignoreRoute item
+          // 删除 meta.ignoreRoute 项
           routeList = filter(routeList, routeRemoveIgnoreFilter)
           routeList = routeList.filter(routeRemoveIgnoreFilter)
 

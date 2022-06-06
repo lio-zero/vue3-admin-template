@@ -49,7 +49,7 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info) {
       this.userInfo = info
-      this.lastUpdateTime = new Date().getTime()
+      this.lastUpdateTime = Date.now()
       setAuthCache(USER_INFO_KEY, info)
     },
     setSessionTimeout(flag) {
@@ -70,8 +70,8 @@ export const useUserStore = defineStore({
       }
     },
     async afterLoginAction() {
-      if (!getToken) return null
-      const userInfo = await this.getUserInfoAction
+      if (!getToken()) return null
+      const userInfo = await this.getUserInfoAction()
       const sessionTimeout = this.sessionTimeout
       if (sessionTimeout) {
         this.setSessionTimeout(false)
@@ -80,7 +80,7 @@ export const useUserStore = defineStore({
       return userInfo
     },
     async getUserInfoAction() {
-      if (!getToken) return null
+      if (!getToken()) return null
       const userInfo = await getUserInfo()
       this.setUserInfo(userInfo)
       return userInfo

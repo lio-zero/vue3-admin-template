@@ -73,7 +73,7 @@ const toggleSideBar = () =>
 const showFullScreen = computed(() => appStore.getProjectConfig.showFullScreen)
 
 const layout = async () => {
-  await userStore.logout()
+  await userStore.logout(true)
   history.back()
 }
 </script>

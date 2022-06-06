@@ -64,10 +64,10 @@ const tabStore = useTabStore()
 const visible = ref(false)
 const top = ref(0)
 const menuLeft = ref(0)
-let selectedTag = ref({})
-const tag = ref<HTMLElement | null>(null)
+const tag: any = ref<HTMLElement | null>(null)
 const scrollPane = ref<HTMLElement | null>(null)
 const tagArea = ref<HTMLDivElement | null>(null)
+let selectedTag = ref({})
 let affixTags = ref([])
 
 const visitedViews = computed(() => tabStore.getVisitedViews)
@@ -189,8 +189,7 @@ const toLastView = (visitedViews, view) => {
   if (latestView) {
     router.push(latestView.fullPath)
   } else {
-    // 如果没有标记视图，默认情况下会重定向到主页，
-    // 你可以根据需要调整。
+    // 如果没有标记视图，默认情况下会重定向到主页，你可以根据需要调整。
     if (view.name === 'Dashboard') {
       // 重新加载主页
       router.replace({ path: '/redirect' + view.fullPath })
@@ -230,7 +229,6 @@ const closeMenu = () => {
   width: 100%;
   background: var(--c-bg);
   border-bottom: 1px solid var(--c-divider);
-  // box-shadow: 0 3px 5px 1px rgba(0, 32, 128, 0.07);
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -255,16 +253,6 @@ const closeMenu = () => {
         background-color: #1890ff;
         color: #fff;
         border-color: #1890ff;
-        // &::before {
-        //   content: '';
-        //   background: #fff;
-        //   display: inline-block;
-        //   width: 8px;
-        //   height: 8px;
-        //   border-radius: 50%;
-        //   position: relative;
-        //   margin-right: 2px;
-        // }
       }
     }
   }

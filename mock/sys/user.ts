@@ -49,7 +49,7 @@ export default [
     }
   },
   {
-    url: '/logout',
+    url: '/api/logout',
     timeout: 200,
     method: 'get',
     response(request: requestParams) {
