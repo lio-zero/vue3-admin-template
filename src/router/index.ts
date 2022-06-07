@@ -3,7 +3,6 @@ import type { App } from 'vue'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/default/index.vue'
-import middleware from '../middleware'
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -59,10 +58,10 @@ export const routes: Array<RouteRecordRaw> = [
 
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  strict: true,
+  scrollBehavior: () => ({ left: 0, top: 0 })
 })
-
-middleware(router)
 
 export function setupRouter(app: App<Element>) {
   app.use(router)

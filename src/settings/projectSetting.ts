@@ -35,7 +35,8 @@ const setting: ProjectConfig = {
   headerSetting: {
     // 是否固定头部
     fixed: true
-  }
+  },
+  removeAllHttpPending: false
 }
 
 export default setting

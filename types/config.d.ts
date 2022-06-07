@@ -22,6 +22,7 @@ export interface ProjectConfig {
   headerSetting: {
     fixed: boolean
   }
+  removeAllHttpPending: boolean
 }
 
 export interface Sidebar {
@@ -43,7 +44,6 @@ export interface TransitionSetting {
   // 是否打开顶部进度条
   openNProgress: boolean
 }
-
 export interface GlobEnvConfig {
   // 网站标题
   VITE_GLOB_APP_TITLE: string
@@ -68,15 +68,4 @@ export interface GlobConfig {
   urlPrefix?: string
   // 项目缩写
   shortName: string
-}
-
-export interface TransitionSetting {
-  // 是否打开页面切换动画
-  enable: boolean
-  // 路由基本切换动画
-  basicTransition: RouterTransitionEnum
-  // 是否打开页面切换加载
-  openPageLoading: boolean
-  // 是否打开顶部进度条
-  openNProgress: boolean
 }

@@ -17,6 +17,9 @@
       <switch-item title="Logo" :event="HandlerEnum.SHOW_LOGO" :def="getShowLogo" />
       <switch-item title="灰色模式" :event="HandlerEnum.GRAY_MODE" :def="getGrayMode" />
       <switch-item title="色弱模式" :event="HandlerEnum.COLOR_WEAK" :def="getColorWeak" />
+
+      <el-divider> 动画 </el-divider>
+      <switch-item title="顶部进度条" :event="HandlerEnum.OPEN_PROGRESS" :def="getOpenNProgress" />
     </div>
   </el-drawer>
 </template>
@@ -27,10 +30,13 @@ import { HandlerEnum } from '../enum'
 import SwitchItem from './SwitchItem.vue'
 import { useRootSetting } from '@/hooks/setting/useRootSetting'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting'
 
 const appStore = useAppStore()
 const { getHeaderFixed } = useHeaderSetting()
 const { getShowLogo, getShowFullScreen, getColorWeak, getGrayMode } = useRootSetting()
+const { getOpenNProgress } = useTransitionSetting()
+
 const openSetting = computed({
   get() {
     return appStore.getProjectConfig.openSetting

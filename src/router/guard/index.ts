@@ -1,61 +1,60 @@
-import type { Router } from 'vue-router'
+import type { Router, RouteLocationNormalized } from 'vue-router'
 
-import { isNavigationFailure, NavigationFailureType } from 'vue-router'
 import NProgress from 'nprogress'
-import { getToken } from '@/utils/auth'
-import { useAppStore } from '@/store/modules/app'
-import { useUserStore } from '@/store/modules/user'
+import { useAppStoreWithOut } from '@/store/modules/app'
+import { useUserStoreWithOut } from '@/store/modules/user'
+import { setRouteChange } from '@/logics/mitt/routeChange'
+import { AxiosCanceler } from '@/utils/http/axiosCancel'
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting'
-import { getPageTitle } from '@/utils/get-page-title'
 import { createPermissionGuard } from './permissionGuard'
-NProgress.configure({ showSpinner: false })
+import projectSetting from '@/settings/projectSetting'
 
 export function setupRouterGuard(router: Router) {
+  createPageGuard(router)
+  createPageLoadingGuard(router)
+  createHttpGuard(router)
+  createScrollGuard(router)
+  createProgressGuard(router)
   createPermissionGuard(router)
 }
 
-export default (router: any) => {
-  router.beforeEach(async (to: any, _from: any, next: any) => {
-    NProgress.start()
-    const appStore = useAppStore()
-    const userStore = useUserStore()
-    const { getOpenPageLoading } = useTransitionSetting()
+/**
+ * 用于处理页面状态的 hooks
+ */
+function createPageGuard(router: Router) {
+  const loadedPageMap = new Map<string, boolean>()
+
+  router.beforeEach(async to => {
+    // 页面已经加载，再次打开会更快，无需进行加载和其他处理
+    to.meta.loaded = !!loadedPageMap.get(to.path)
+    // 通知路由更改
+    setRouteChange(to)
+
+    return true
+  })
+
+  router.afterEach(to => {
+    loadedPageMap.set(to.path, true)
+  })
+}
+
+function createPageLoadingGuard(router: Router) {
+  const userStore = useUserStoreWithOut()
+  const appStore = useAppStoreWithOut()
+  const { getOpenPageLoading } = useTransitionSetting()
+
+  router.beforeEach(async to => {
+    if (!userStore.getToken) return true
+    if (to.meta.loaded) return true
+
     if (unref(getOpenPageLoading)) {
       appStore.setPageLoadingAction(true)
+      return true
     }
 
-    document.title = getPageTitle(to.meta.title)
-
-    // 在上次获取时间为空时获取用户信息
-    if (getToken()) {
-      if (userStore.getLastUpdateTime === 0) {
-        try {
-          await userStore.getUserInfoAction()
-        } catch (err) {
-          return next()
-        }
-      }
-      // store.dispatch('getUserInfo')
-      next()
-    } else {
-      if (to.path === '/login') next()
-      else next({ path: '/login' })
-    }
+    return true
   })
-
-  router.beforeResolve(async (_to: any, _from: any, next: any) => {
-    next()
-  })
-
-  // https://next.router.vuejs.org/api/#navigationfailuretype
-  router.afterEach((_to: any, _from: any, failure: any) => {
-    if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-      console.log(failure.type)
-    }
-
-    const appStore = useAppStore()
-    const { getOpenPageLoading } = useTransitionSetting()
-
+  router.afterEach(async () => {
     if (unref(getOpenPageLoading)) {
       // TODO 正在寻找更好的方法
       // 计时器模拟加载时间，以防止闪烁过快
@@ -64,7 +63,54 @@ export default (router: any) => {
       }, 220)
     }
 
-    NProgress.done()
+    return true
+  })
+}
+
+/**
+ * 用于在切换路由时关闭当前页面以完成请求的接口
+ * @param router
+ */
+function createHttpGuard(router: Router) {
+  const { removeAllHttpPending } = projectSetting
+  let axiosCanceler: Nullable<AxiosCanceler>
+  if (removeAllHttpPending) {
+    axiosCanceler = new AxiosCanceler()
+  }
+  router.beforeEach(async () => {
+    // 切换路由将删除以前的请求
+    axiosCanceler?.removeAllPending()
+    return true
+  })
+}
+
+// 路由切换滚动至顶部
+function createScrollGuard(router: Router) {
+  const isHash = (href: string) => /^#/.test(href)
+
+  const body = document.body
+
+  router.afterEach(async to => {
+    // 滚动至顶部
+    isHash((to as RouteLocationNormalized & { href: string })?.href) && body.scrollTo(0, 0)
+    return true
+  })
+}
+
+export function createProgressGuard(router: Router) {
+  NProgress.configure({ showSpinner: false })
+  const { getOpenNProgress } = useTransitionSetting()
+  router.beforeEach(async to => {
+    if (to.meta.loaded) {
+      return true
+    }
+
+    unref(getOpenNProgress) && NProgress.start()
+    return true
+  })
+
+  router.afterEach(async () => {
+    unref(getOpenNProgress) && NProgress.done()
     return true
   })
 }
