@@ -1,8 +1,8 @@
 import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 export interface ProjectConfig {
-  // 侧边栏设置
-  sidebar: Sidebar
+  // 菜单设置
+  menuSetting: MenuSetting
   // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum
   // 过渡设置
@@ -25,8 +25,8 @@ export interface ProjectConfig {
   removeAllHttpPending: boolean
 }
 
-export interface Sidebar {
-  opened: boolean
+export interface MenuSetting {
+  collapsed: boolean
   withoutAnimation: boolean
 }
 

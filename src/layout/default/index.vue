@@ -1,7 +1,7 @@
 <template>
   <div :class="classObj" class="default-layout">
     <div
-      v-if="device === 'mobile' && sidebar.opened"
+      v-if="device === 'mobile' && getCollapsed"
       class="drawer-bg"
       @click="handleClickOutside"
     ></div>
@@ -22,19 +22,21 @@ import LayoutMain from './content/index.vue'
 import LayoutFooter from './footer/index.vue'
 import { useAppStore } from '@/store/modules/app'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
 
 const { getHeaderFixed } = useHeaderSetting()
+const { getCollapsed, getWithoutAnimation, setMenuSetting } = useMenuSetting()
 
 const appStore = useAppStore()
 const { body } = document
 const WIDTH = 992
 const device = computed(() => appStore.getDevice)
-const sidebar = computed(() => appStore.getProjectConfig.sidebar)
+
 const classObj = computed(() => {
   return {
-    hideSidebar: !unref(sidebar).opened,
-    openSidebar: unref(sidebar).opened,
-    withoutAnimation: unref(sidebar).withoutAnimation,
+    hideSidebar: unref(getCollapsed),
+    openSidebar: !unref(getCollapsed),
+    withoutAnimation: unref(getWithoutAnimation),
     mobile: unref(device) === 'mobile'
   }
 })
@@ -46,11 +48,9 @@ const handleFullWidthSizing = () => {
 }
 
 const handleClickOutside = () =>
-  appStore.setProjectConfig({
-    sidebar: {
-      opened: false,
-      withoutAnimation: false
-    }
+  setMenuSetting({
+    collapsed: false,
+    withoutAnimation: false
   })
 
 const isMobile = () => {
@@ -63,11 +63,9 @@ const resizeHandler = () => {
     appStore.toggleDevice(isMobile() ? 'mobile' : 'desktop')
 
     if (isMobile()) {
-      appStore.setProjectConfig({
-        sidebar: {
-          opened: false,
-          withoutAnimation: true
-        }
+      setMenuSetting({
+        collapsed: false,
+        withoutAnimation: true
       })
     }
   }
@@ -77,11 +75,9 @@ onMounted(() => {
   handleFullWidthSizing()
   if (isMobile()) {
     appStore.toggleDevice('mobile')
-    appStore.setProjectConfig({
-      sidebar: {
-        opened: false,
-        withoutAnimation: true
-      }
+    setMenuSetting({
+      collapsed: false,
+      withoutAnimation: true
     })
   }
 })

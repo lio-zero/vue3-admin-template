@@ -6,8 +6,8 @@ const setting: ProjectConfig = {
   // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum.LOCAL,
   // 侧边栏
-  sidebar: {
-    opened: true,
+  menuSetting: {
+    collapsed: true,
     withoutAnimation: false
   },
   // 过渡设置

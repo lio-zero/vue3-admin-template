@@ -3,14 +3,14 @@
     <header class="vzr-header-container">
       <hamburger
         id="hamburger-container"
-        :is-active="opened"
+        :is-active="getCollapsed"
         class="hamburger-container cursor-pointer"
-        @toggle-click="toggleSideBar"
+        @toggle-click="toggleCollapsed"
       />
       <breadcrumb class="breadcrumb-container flex-1" />
 
       <div class="right-menu">
-        <Fullscreen v-if="showFullScreen" />
+        <Fullscreen v-if="getShowFullScreen" />
 
         <Dark />
 
@@ -50,6 +50,8 @@ import Setting from './components/Setting.vue'
 import { Dark } from '@/components/Dark'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
 import headerImg from '@/assets/logo.png'
 
 const appStore = useAppStore()
@@ -59,18 +61,9 @@ const getUserInfo = computed(() => {
   return { avatar: avatar || headerImg }
 })
 
-const opened = computed(() => appStore.getProjectConfig.sidebar.opened)
+const { getShowFullScreen } = useRootSetting()
+const { getCollapsed, toggleCollapsed } = useMenuSetting()
 const isFixed = computed(() => appStore.getHeaderSetting.fixed)
-
-const toggleSideBar = () =>
-  appStore.setProjectConfig({
-    sidebar: {
-      opened: !unref(opened),
-      withoutAnimation: false
-    }
-  })
-
-const showFullScreen = computed(() => appStore.getProjectConfig.showFullScreen)
 
 const layout = async () => {
   await userStore.logout(true)
