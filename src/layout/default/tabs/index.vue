@@ -15,13 +15,21 @@
         <span @click="navigate" @keypress.enter="navigate" role="link">
           {{ tagItem.title }}
           <el-icon v-if="!isAffix(tagItem)" class="align-sub">
-            <Close class="el-icon-close" @click.prevent.stop="closeSelectedTag(tagItem)" />
+            <Close
+              v-show="isActive(tagItem)"
+              class="el-icon-close"
+              @click.prevent.stop="closeSelectedTag(tagItem)"
+            />
           </el-icon>
         </span>
       </router-link>
     </ScrollPane>
 
-    <ul v-show="visible" :style="{ left: `${menuLeft}px`, top: `${top}px` }" class="contextmenu">
+    <ul
+      v-show="visible"
+      :style="{ left: `${menuLeft}px`, top: `${top}px` }"
+      class="el-dropdown-link contextmenu"
+    >
       <li @click="refreshSelectedTag(selectedTag)">
         <el-icon :size="18" class="align-middle">
           <RefreshRight />
@@ -52,7 +60,7 @@
 
 <script lang="ts" setup name="Tab">
 import ScrollPane from './ScrollPane.vue'
-import path from 'path'
+import { resolve } from 'path-browserify'
 import { useRoute, useRouter } from 'vue-router'
 import { routes } from '@/router/index'
 import { useTabStore } from '@/store/modules/tab'
@@ -71,6 +79,7 @@ let selectedTag = ref({})
 let affixTags = ref([])
 
 const visitedViews = computed(() => tabStore.getVisitedViews)
+console.log(visitedViews.value)
 
 watch(route, () => {
   addTags()
@@ -98,8 +107,8 @@ const filterAffixTags = (routes, basePath = '/') => {
   let tags: any = []
 
   routes.forEach(route => {
-    if (route.meta && route.meta.fixed) {
-      const tagPath = path.resolve(basePath, route.path)
+    if (route.meta && route.meta.affix) {
+      const tagPath = resolve(basePath, route.path)
       tags.push({
         fullPath: tagPath,
         path: tagPath,
@@ -117,8 +126,10 @@ const filterAffixTags = (routes, basePath = '/') => {
   return tags
 }
 
+// 初始化标签
 const initTags = () => {
   const _affixTags = (affixTags.value = filterAffixTags(unref(routes)))
+
   for (const tag of _affixTags) {
     // 必须有标记名
     if (tag.name) {
@@ -151,6 +162,8 @@ const moveToCurrentTag = () => {
 }
 
 const refreshSelectedTag = view => {
+  console.log(view)
+
   tabStore.delCachedView(view).then(() => {
     const { fullPath } = view
     nextTick(() => {
@@ -300,6 +313,9 @@ const closeMenu = () => {
       &:hover {
         transform: scale(1.2);
       }
+    }
+    &:hover .el-icon-close {
+      display: inline-block !important;
     }
   }
 }

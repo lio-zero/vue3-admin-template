@@ -3,6 +3,7 @@ import type { App } from 'vue'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/default/index.vue'
+import { basicRoutes } from './routes'
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/setting',
     component: Layout,
+    redirect: '/setting/index',
     children: [
       {
         path: 'index',
@@ -55,6 +57,25 @@ export const routes: Array<RouteRecordRaw> = [
     redirect: '/404'
   }
 ]
+
+// 白名单应该包含基本静态路由
+const WHITE_NAME_LIST: string[] = []
+const getRouteNames = (array: any[]) =>
+  array.forEach(item => {
+    WHITE_NAME_LIST.push(item.name)
+    getRouteNames(item.children || [])
+  })
+getRouteNames(basicRoutes)
+
+// 重置路由
+export function resetRouter() {
+  router.getRoutes().forEach(route => {
+    const { name } = route
+    if (name && !WHITE_NAME_LIST.includes(name as string)) {
+      router.hasRoute(name) && router.removeRoute(name)
+    }
+  })
+}
 
 export const router = createRouter({
   history: createWebHashHistory(),

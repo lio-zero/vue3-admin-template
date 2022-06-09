@@ -2,17 +2,15 @@ import type { AppRouteModule } from '@/router/types'
 import Layout from '@/layout/default/index.vue'
 
 const dashboard: AppRouteModule = {
-  path: '/dashboard',
-  name: 'Dashboard',
+  path: '/',
   component: Layout,
-  redirect: '/dashboard/index',
-  meta: { title: '首页', icon: 'HomeFilled', badge: 'new' },
+  redirect: '/dashboard',
   children: [
     {
-      path: 'index',
-      name: 'DashboardPage',
+      path: 'dashboard',
+      name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
-      meta: { title: '首页', icon: 'HomeFilled', badge: 'new' }
+      meta: { title: '首页', icon: 'HomeFilled', affix: true }
     }
   ]
 }

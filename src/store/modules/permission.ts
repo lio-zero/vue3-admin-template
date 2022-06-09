@@ -32,13 +32,9 @@ export const usePermissionStore = defineStore({
   id: 'Permission',
   state: (): PermissionState => ({
     permCodeList: [],
-    // Whether the route has been dynamically added
     isDynamicAddedRoute: false,
-    // To trigger a menu update
     lastBuildMenuTime: 0,
-    // Backstage menu list
     backMenuList: [],
-    // menu List
     frontMenuList: []
   }),
   getters: {
@@ -68,6 +64,12 @@ export const usePermissionStore = defineStore({
     },
     setDynamicAddedRoute(added: boolean) {
       this.isDynamicAddedRoute = added
+    },
+    resetState(): void {
+      this.isDynamicAddedRoute = false
+      this.permCodeList = []
+      this.backMenuList = []
+      this.lastBuildMenuTime = 0
     },
     async changePermissionCode() {
       const codeList = await getPermCode()

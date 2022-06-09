@@ -1,37 +1,108 @@
-import type { Router } from 'vue-router'
-import { isNavigationFailure, NavigationFailureType } from 'vue-router'
-import { getToken } from '@/utils/auth'
-import { useUserStore } from '@/store/modules/user'
+import type { Router, RouteRecordRaw } from 'vue-router'
 import { getPageTitle } from '@/utils/get-page-title'
+import { usePermissionStoreWithOut } from '@/store/modules/permission'
+import { useUserStoreWithOut } from '@/store/modules/user'
+
+import { NotFound } from '@/router/routes/basic'
+import { PageEnum } from '@/enums/pageEnum'
+
+const LOGIN_PATH = PageEnum.BASE_LOGIN
+const whitePathList: PageEnum[] = [LOGIN_PATH]
 
 export function createPermissionGuard(router: Router) {
-  router.beforeEach(async (to: any, _from: any, next: any) => {
-    const userStore = useUserStore()
+  const userStore = useUserStoreWithOut()
+  const permissionStore = usePermissionStoreWithOut()
+
+  router.beforeEach(async (to: any, from: any, next) => {
     document.title = getPageTitle(to.meta.title)
 
-    // 在上次获取时间为空时获取用户信息
-    if (getToken()) {
-      if (userStore.getLastUpdateTime === 0) {
+    const token = userStore.getToken
+
+    // 白名单
+    if (whitePathList.includes(to.path as PageEnum)) {
+      // 是否是登录页，并且 token 是否存在
+      if (to.path === LOGIN_PATH && token) {
+        const isSessionTimeout = userStore.getSessionTimeout
         try {
-          await userStore.getUserInfoAction()
-        } catch (err) {
-          return next()
+          await userStore.afterLoginAction()
+          if (!isSessionTimeout) {
+            next((to.query?.redirect as string) || '/')
+            return
+          }
+        } catch {}
+      }
+      next()
+      return
+    }
+
+    // token 不存在
+    if (!token) {
+      // 您可以不经许可访问。您需要设置路由 meta.ignoreAuth 为 true
+      if (to.meta.ignoreAuth) {
+        next()
+        return
+      }
+
+      // 重定向登录页
+      const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
+        path: LOGIN_PATH,
+        replace: true
+      }
+
+      if (to.path) {
+        redirectData.query = {
+          ...redirectData.query,
+          redirect: to.path
         }
       }
 
+      next(redirectData)
+      return
+    }
+
+    // 处理登录后跳转到 404 页
+    if (
+      from.path === LOGIN_PATH &&
+      to.name === NotFound.name &&
+      to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
+    ) {
+      next(userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
+      return
+    }
+
+    // 在上次获取时间为空时获取 userinfo
+    if (userStore.getLastUpdateTime === 0) {
+      try {
+        await userStore.getUserInfoAction()
+      } catch (err) {
+        next()
+        return
+      }
+    }
+
+    if (permissionStore.getIsDynamicAddedRoute) {
       next()
+      return
+    }
+
+    const routes = await permissionStore.buildRoutesAction()
+
+    routes.forEach(route => {
+      router.addRoute(route as unknown as RouteRecordRaw)
+    })
+
+    router.addRoute(NotFound as unknown as RouteRecordRaw)
+
+    permissionStore.setDynamicAddedRoute(true)
+
+    if (to.name === NotFound.name) {
+      // 动态添加路由后，此处应当重定向到 fullPath，否则会加载 404 页面内容
+      next({ path: to.fullPath, replace: true, query: to.query })
     } else {
-      if (to.path === '/login') next()
-      else next({ path: '/login' })
+      const redirectPath = (from.query.redirect || to.path) as string
+      const redirect = decodeURIComponent(redirectPath)
+      const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
+      next(nextData)
     }
-  })
-
-  // https://next.router.vuejs.org/api/#navigationfailuretype
-  router.afterEach((_to: any, _from: any, failure: any) => {
-    if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-      console.log(failure.type)
-    }
-
-    return true
   })
 }

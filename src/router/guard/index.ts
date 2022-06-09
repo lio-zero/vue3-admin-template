@@ -7,6 +7,8 @@ import { setRouteChange } from '@/logics/mitt/routeChange'
 import { AxiosCanceler } from '@/utils/http/axiosCancel'
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting'
 import { createPermissionGuard } from './permissionGuard'
+import { createParamMenuGuard } from './paramMenuGuard'
+// import { createStateGuard } from './stateGuard'
 import projectSetting from '@/settings/projectSetting'
 
 export function setupRouterGuard(router: Router) {
@@ -16,6 +18,8 @@ export function setupRouterGuard(router: Router) {
   createScrollGuard(router)
   createProgressGuard(router)
   createPermissionGuard(router)
+  createParamMenuGuard(router) // 必须在 createPermissionGuard 之后（已生成菜单）
+  // createStateGuard(router)
 }
 
 /**
@@ -97,6 +101,7 @@ function createScrollGuard(router: Router) {
   })
 }
 
+// 进度条
 export function createProgressGuard(router: Router) {
   NProgress.configure({ showSpinner: false })
   const { getOpenNProgress } = useTransitionSetting()

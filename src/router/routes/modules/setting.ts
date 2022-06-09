@@ -3,9 +3,8 @@ import Layout from '@/layout/default/index.vue'
 
 const dashboard: AppRouteModule = {
   path: '/setting',
-  name: 'Setting',
   component: Layout,
-  meta: { title: '个人设置', icon: 'Tools' },
+  redirect: '/setting/index',
   children: [
     {
       path: 'index',
