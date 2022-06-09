@@ -50,7 +50,7 @@ module.exports = defineConfig({
     'no-var': 'error',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
-    'vue/name-property-casing': ['error', 'PascalCase'],
+    // 'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
     'vue/script-setup-uses-vars': 'error',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],

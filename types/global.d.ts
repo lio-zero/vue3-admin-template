@@ -1,3 +1,5 @@
+import type { ComponentPublicInstance, FunctionalComponent } from 'vue'
+
 declare global {
   declare type Nullable<T> = T | null
   declare type Recordable<T = any> = Record<string, T>
@@ -45,4 +47,10 @@ export interface GlobEnvConfig {
   VITE_GLOB_APP_SHORT_NAME: string
   // 上传 URL
   VITE_GLOB_UPLOAD_URL?: string
+}
+
+declare module 'vue' {
+  export type JSXComponent<Props = any> =
+    | { new (): ComponentPublicInstance<Props> }
+    | FunctionalComponent<Props>
 }

@@ -3,8 +3,6 @@ import { CacheTypeEnum } from '@/enums/cacheEnum'
 import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 const setting: ProjectConfig = {
-  // 权限相关信息的存储位置
-  permissionCacheType: CacheTypeEnum.LOCAL,
   // 侧边栏
   menuSetting: {
     collapsed: true,
@@ -21,7 +19,9 @@ const setting: ProjectConfig = {
     // 是否打开顶部进度条
     openNProgress: false
   },
-  // Permission mode
+  // 权限相关信息的存储位置
+  permissionCacheType: CacheTypeEnum.LOCAL,
+  // 权限模式
   permissionMode: PermissionModeEnum.ROUTE_MAPPING,
   // 是否显示侧边栏 Logo,
   showLogo: false,

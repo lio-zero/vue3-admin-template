@@ -27,7 +27,6 @@ export const useTabStore = defineStore({
     },
     addVisitedView(view) {
       if (this.visitedViews.some(v => v.path === view.path)) return
-      console.log(view)
 
       this.visitedViews.push(
         Object.assign({}, view, {

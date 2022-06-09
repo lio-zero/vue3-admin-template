@@ -79,7 +79,6 @@ let selectedTag = ref({})
 let affixTags = ref([])
 
 const visitedViews = computed(() => tabStore.getVisitedViews)
-console.log(visitedViews.value)
 
 watch(route, () => {
   addTags()
@@ -162,8 +161,6 @@ const moveToCurrentTag = () => {
 }
 
 const refreshSelectedTag = view => {
-  console.log(view)
-
   tabStore.delCachedView(view).then(() => {
     const { fullPath } = view
     nextTick(() => {

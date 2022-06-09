@@ -1,7 +1,7 @@
 import type { AppRouteModule, AppRouteRecordRaw } from '@/router/types'
 import type { Router, RouteRecordNormalized } from 'vue-router'
 
-import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '@/router/constant'
+import { getParentLayout, LAYOUT } from '@/router/constant'
 import { cloneDeep, omit } from 'lodash-es'
 import { warn } from '@/utils/log'
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -63,7 +63,7 @@ function dynamicImport(
     return
   } else {
     warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!')
-    return EXCEPTION_COMPONENT
+    // return EXCEPTION_COMPONENT
   }
 }
 

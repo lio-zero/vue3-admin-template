@@ -7,7 +7,7 @@
     ></div>
     <LayoutSidebar class="vzr-sidebar-container" />
     <div class="main-container">
-      <div v-if="getHeaderFixed" style="height: 50px"></div>
+      <div v-if="getHeaderFixed" style="height: 84px"></div>
       <LayoutHeader />
       <LayoutMain />
       <LayoutFooter />

@@ -37,8 +37,8 @@
         <Setting />
       </div>
     </header>
+    <multiple-tabs />
   </div>
-  <multiple-tabs />
 </template>
 <script setup lang="ts">
 import Breadcrumb from './components/Breadcrumb.vue'
