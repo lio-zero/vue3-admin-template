@@ -9,17 +9,18 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/redirect',
     component: Layout,
+    name: 'Redirect',
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index.vue')
+        component: () => import('@/views/sys/redirect/index.vue')
       }
     ]
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/Login.vue')
+    component: () => import('@/views/sys/login/Login.vue')
   },
   {
     path: '/',
@@ -42,7 +43,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: 'index',
         name: 'Setting',
-        component: () => import('@/views/setting/index.vue'),
+        component: () => import('@/views/sys/setting/index.vue'),
         meta: { title: '个人设置', icon: 'ci:settings-filled' }
       }
     ]
@@ -50,7 +51,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     name: 'NotFound',
-    component: () => import('@/views/error-page/NotFound.vue')
+    component: () => import('@/views/sys/exception/Exception.vue')
   },
   {
     path: '/:path(.*)',

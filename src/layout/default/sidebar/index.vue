@@ -1,10 +1,10 @@
 <template>
   <div :class="{ 'has-logo': getShowLogo }">
-    <logo v-if="getShowLogo" :collapse="getCollapsed" />
+    <logo v-if="getShowLogo" :collapse="!getCollapsed" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="getCollapsed"
+        :collapse="!getCollapsed"
         :unique-opened="false"
         :collapse-transition="false"
         :background-color="variables.menuBg"

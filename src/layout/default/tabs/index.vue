@@ -3,7 +3,7 @@
     <ScrollPane ref="scrollPane" class="tags-view-wrapper">
       <router-link
         ref="tag"
-        v-for="tagItem in visitedViews"
+        v-for="tagItem in getVisitedViews"
         :key="tagItem.path"
         :to="{ path: tagItem.path, query: tagItem.query, fullPath: tagItem.fullPath }"
         v-slot="{ navigate }"
@@ -31,28 +31,28 @@
       class="el-dropdown-link contextmenu"
     >
       <li @click="refreshSelectedTag(selectedTag)">
-        <el-icon :size="18" class="align-middle">
+        <el-icon :size="18" class="align-top">
           <RefreshRight />
         </el-icon>
-        <span class="align-middle"> 重新加载 </span>
+        <span class="align-top ml-1"> 重新加载 </span>
       </li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
-        <el-icon :size="18" class="align-middle">
+        <el-icon :size="18" class="align-top">
           <Close />
         </el-icon>
-        <span class="align-middle"> 关闭标签页 </span>
+        <span class="align-top ml-1"> 关闭标签页 </span>
       </li>
       <li class="border-t-1" @click="closeOthersTags">
-        <el-icon :size="18" class="align-middle">
+        <el-icon :size="18" class="align-top">
           <Icon size="20" icon="dashicons:align-center" />
         </el-icon>
-        <span class="align-middle"> 关闭其他标签页 </span>
+        <span class="align-top ml-1"> 关闭其他标签页 </span>
       </li>
-      <li @click="closeAllTags(selectedTag)">
-        <el-icon :size="18" class="align-middle">
+      <li @click="closeAllTags(selectedTag)" class="flex items-center">
+        <el-icon :size="18" class="">
           <Icon size="20" icon="clarity:minus-line" />
         </el-icon>
-        <span class="align-middle"> 关闭全部标签页 </span>
+        <span class="align-top ml-1"> 关闭全部标签页 </span>
       </li>
     </ul>
   </div>
@@ -64,6 +64,7 @@ import { resolve } from 'path-browserify'
 import { useRoute, useRouter } from 'vue-router'
 import { routes } from '@/router/index'
 import { useTabStore } from '@/store/modules/tab'
+import { useTabSetting } from '@/hooks/setting/useTabSetting'
 
 const route = useRoute()
 const router = useRouter()
@@ -78,7 +79,10 @@ const tagArea = ref<HTMLDivElement | null>(null)
 let selectedTag = ref({})
 let affixTags = ref([])
 
-const visitedViews = computed(() => tabStore.getVisitedViews)
+const { getVisitedViews } = useTabSetting()
+
+const isActive = routes => routes.path === route.path
+const isAffix = tag => tag.meta && tag.meta.affix
 
 watch(route, () => {
   addTags()
@@ -100,8 +104,6 @@ onMounted(() => {
   addTags()
 })
 
-const isActive = routes => routes.path === route.path
-const isAffix = tag => tag.meta && tag.meta.affix
 const filterAffixTags = (routes, basePath = '/') => {
   let tags: any = []
 
@@ -139,6 +141,7 @@ const initTags = () => {
 
 const addTags = () => {
   const { name } = route
+
   if (name) {
     tabStore.addView(route)
   }
@@ -163,9 +166,10 @@ const moveToCurrentTag = () => {
 const refreshSelectedTag = view => {
   tabStore.delCachedView(view).then(() => {
     const { fullPath } = view
+
     nextTick(() => {
       router.replace({
-        path: '/redirect' + fullPath
+        path: `/redirect${fullPath}`
       })
     })
   })
@@ -194,6 +198,7 @@ const closeAllTags = view => {
     toLastView(visitedViews, view)
   })
 }
+
 const toLastView = (visitedViews, view) => {
   const latestView = visitedViews.slice(-1)[0]
   if (latestView) {

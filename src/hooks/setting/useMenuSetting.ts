@@ -9,6 +9,8 @@ export function useMenuSetting() {
 
   const getWithoutAnimation = computed(() => appStore.getProjectConfig.menuSetting.withoutAnimation)
 
+  const getDevice = computed(() => appStore.getDevice)
+
   // 设置菜单配置
   function setMenuSetting(menuSetting: Partial<MenuSetting>): void {
     appStore.setProjectConfig({ menuSetting })
@@ -21,10 +23,18 @@ export function useMenuSetting() {
     })
   }
 
+  const handleClickOutside = () =>
+    setMenuSetting({
+      collapsed: false,
+      withoutAnimation: false
+    })
+
   return {
     setMenuSetting,
     toggleCollapsed,
+    handleClickOutside,
 
+    getDevice,
     getCollapsed,
     getWithoutAnimation
   }

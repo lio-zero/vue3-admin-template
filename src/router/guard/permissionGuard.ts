@@ -3,7 +3,7 @@ import { getPageTitle } from '@/utils/get-page-title'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
 
-import { NotFound } from '@/router/routes/basic'
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
 import { PageEnum } from '@/enums/pageEnum'
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN
@@ -63,7 +63,7 @@ export function createPermissionGuard(router: Router) {
     // 处理登录后跳转到 404 页
     if (
       from.path === LOGIN_PATH &&
-      to.name === NotFound.name &&
+      to.name === PAGE_NOT_FOUND_ROUTE.name &&
       to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
     ) {
       next(userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
@@ -91,11 +91,11 @@ export function createPermissionGuard(router: Router) {
       router.addRoute(route as unknown as RouteRecordRaw)
     })
 
-    router.addRoute(NotFound as unknown as RouteRecordRaw)
+    router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw)
 
     permissionStore.setDynamicAddedRoute(true)
 
-    if (to.name === NotFound.name) {
+    if (to.name === PAGE_NOT_FOUND_ROUTE.name) {
       // 动态添加路由后，此处应当重定向到 fullPath，否则会加载 404 页面内容
       next({ path: to.fullPath, replace: true, query: to.query })
     } else {

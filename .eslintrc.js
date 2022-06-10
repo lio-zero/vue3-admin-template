@@ -27,15 +27,13 @@ module.exports = defineConfig({
   extends: [
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'eslint:recommended',
     'vue-global-api',
     'plugin:prettier/recommended',
     'prettier' // eslint-config-prettier 的缩写
   ],
   // eslint-plugin-vue、@typescript-eslint/eslint-plugin、eslint-plugin-prettier 的缩写
   plugins: ['vue', '@typescript-eslint', 'prettier'],
-  // 在这里添加您的自定义规则
-  // 它是基于 https://github.com/vuejs/eslint-config-vue
+  // 自定义规则：https://github.com/vuejs/eslint-config-vue
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

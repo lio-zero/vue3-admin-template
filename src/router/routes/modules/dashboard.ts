@@ -1,9 +1,9 @@
 import type { AppRouteModule } from '@/router/types'
-import Layout from '@/layout/default/index.vue'
+import { LAYOUT } from '@/router/constant'
 
 const dashboard: AppRouteModule = {
   path: '/',
-  component: Layout,
+  component: LAYOUT,
   redirect: '/dashboard',
   children: [
     {

@@ -1,7 +1,7 @@
 <template>
   <div :class="classObj" class="default-layout">
     <div
-      v-if="device === 'mobile' && getCollapsed"
+      v-if="getDevice === 'mobile' && getCollapsed"
       class="drawer-bg"
       @click="handleClickOutside"
     ></div>
@@ -20,75 +20,23 @@ import LayoutSidebar from './sidebar/index.vue'
 import LayoutHeader from './header/index.vue'
 import LayoutMain from './content/index.vue'
 import LayoutFooter from './footer/index.vue'
-import { useAppStore } from '@/store/modules/app'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
 import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useResize } from './resize'
 
 const { getHeaderFixed } = useHeaderSetting()
-const { getCollapsed, getWithoutAnimation, setMenuSetting } = useMenuSetting()
-
-const appStore = useAppStore()
-const { body } = document
-const WIDTH = 992
-const device = computed(() => appStore.getDevice)
+const { getDevice, getCollapsed, getWithoutAnimation, handleClickOutside } = useMenuSetting()
 
 const classObj = computed(() => {
   return {
-    hideSidebar: unref(getCollapsed),
-    openSidebar: !unref(getCollapsed),
+    hideSidebar: !unref(getCollapsed),
+    openSidebar: unref(getCollapsed),
     withoutAnimation: unref(getWithoutAnimation),
-    mobile: unref(device) === 'mobile'
+    mobile: unref(getDevice) === 'mobile'
   }
 })
 
-const handleFullWidthSizing = () => {
-  const scrollbarWidth = window.innerWidth - document.body.clientWidth
-
-  document.querySelector('body')!.style.width = `calc(100vw - ${scrollbarWidth}px)`
-}
-
-const handleClickOutside = () =>
-  setMenuSetting({
-    collapsed: false,
-    withoutAnimation: false
-  })
-
-const isMobile = () => {
-  const rect = body.getBoundingClientRect()
-  return rect.width - 1 < WIDTH
-}
-
-const resizeHandler = () => {
-  if (!document.hidden) {
-    appStore.toggleDevice(isMobile() ? 'mobile' : 'desktop')
-
-    if (isMobile()) {
-      setMenuSetting({
-        collapsed: false,
-        withoutAnimation: true
-      })
-    }
-  }
-}
-
-onMounted(() => {
-  handleFullWidthSizing()
-  if (isMobile()) {
-    appStore.toggleDevice('mobile')
-    setMenuSetting({
-      collapsed: false,
-      withoutAnimation: true
-    })
-  }
-})
-
-onBeforeMount(() => {
-  window.addEventListener('resize', resizeHandler)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resizeHandler)
-})
+useResize()
 </script>
 
 <style lang="scss" scoped>

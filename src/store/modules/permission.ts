@@ -7,7 +7,7 @@ import { asyncRoutes } from '@/router/routes'
 import projectSetting from '@/settings/projectSetting'
 import { transformRouteToMenu } from '@/router/helper/menuHelper'
 import { transformObjToRoute, flatMultiLevelRoutes } from '@/router/helper/routeHelper'
-import { NotFound } from '@/router/routes/basic'
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
 import { filter } from '@/utils/helper/treeHelper'
 import { PermissionModeEnum } from '@/enums/appEnum'
 import { useUserStore } from './user'
@@ -173,7 +173,7 @@ export const usePermissionStore = defineStore({
           routeList = routeList.filter(routeRemoveIgnoreFilter)
 
           routeList = flatMultiLevelRoutes(routeList)
-          routes = [NotFound, ...routeList]
+          routes = [PAGE_NOT_FOUND_ROUTE, ...routeList]
           break
       }
 
