@@ -1,13 +1,13 @@
 <template>
   <div :class="['vzr-layout-multiple-header', { 'vzr-header-container--fixed': isFixed }]">
     <header class="vzr-header-container">
-      <hamburger
+      <Hamburger
         id="hamburger-container"
         :is-active="getCollapsed"
         class="hamburger-container cursor-pointer"
         @toggle-click="toggleCollapsed"
       />
-      <breadcrumb class="breadcrumb-container flex-1" />
+      <Breadcrumb class="breadcrumb-container flex-1" />
 
       <div class="right-menu">
         <Fullscreen v-if="getShowFullScreen" />
@@ -26,9 +26,6 @@
               <router-link to="/">
                 <el-dropdown-item>首页</el-dropdown-item>
               </router-link>
-              <a target="_blank" href="https://github.com/lio-zero/vite-wj">
-                <el-dropdown-item>我的 Github</el-dropdown-item>
-              </a>
               <el-dropdown-item @click="layout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -70,5 +67,3 @@ const layout = async () => {
   history.back()
 }
 </script>
-
-<style lang="scss" scoped></style>

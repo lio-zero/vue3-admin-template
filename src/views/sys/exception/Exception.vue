@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="ErrorPage404">
+<script setup lang="ts" name="ErrorPage">
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -29,11 +29,11 @@ const randomNum = () => Math.floor(Math.random() * 9) + 1
 const thirdDigit = ref<HTMLElement | null>(null)
 const secondDigit = ref<HTMLElement | null>(null)
 const firstDigit = ref<HTMLElement | null>(null)
+let loop1
+let loop2
+let loop3
 
 const reciprocal = () => {
-  let loop1
-  let loop2
-  let loop3
   const time = 30
   let i = 0
 
@@ -69,6 +69,9 @@ const reciprocal = () => {
 }
 
 const goBack = () => {
+  clearInterval(loop1)
+  clearInterval(loop2)
+  clearInterval(loop3)
   router.push('/')
 }
 

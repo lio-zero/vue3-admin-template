@@ -106,7 +106,7 @@ export const usePermissionStore = defineStore({
           if (parentPath) parentPath = parentPath + '/'
           routes.forEach((route: AppRouteRecordRaw) => {
             const { path, children, redirect } = route
-            const currentPath = path.startsWith('/') ? path : parentPath + path
+            const currentPath = path?.startsWith('/') ? path : parentPath + path
             if (currentPath === homePath) {
               if (redirect) {
                 homePath = route.redirect! as string
@@ -145,7 +145,7 @@ export const usePermissionStore = defineStore({
           })
 
           this.setFrontMenuList(menuList)
-          // Convert multi-level routing to level 2 routing
+          // 将多级路由转换为 2 级路由
           routes = flatMultiLevelRoutes(routes)
           break
 

@@ -3,7 +3,7 @@
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+        <h1 v-else class="sidebar-title text-white">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
@@ -60,7 +60,7 @@ const logo = ref(img)
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: var(--c-bg);
+      color: #fff;
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;

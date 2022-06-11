@@ -22,14 +22,21 @@
 import SidebarItem from './SidebarItem.vue'
 import Logo from './Logo.vue'
 import variables from '@/styles/variables.module.scss'
-import { routes } from '@/router/index'
+// import { routes } from '@/router/index'
 import { useRoute } from 'vue-router'
 import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
 import { useRootSetting } from '@/hooks/setting/useRootSetting'
+import { usePermissionStore } from '@/store/modules/permission'
 
+const routes = ref()
 const route = useRoute()
 const { getCollapsed } = useMenuSetting()
 const { getShowLogo } = useRootSetting()
+const { buildRoutesAction } = usePermissionStore()
+
+onBeforeMount(async () => {
+  routes.value = await buildRoutesAction()
+})
 
 const activeMenu: any = computed(() => {
   const { meta, path } = route

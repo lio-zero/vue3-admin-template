@@ -62,17 +62,19 @@
 import ScrollPane from './ScrollPane.vue'
 import { resolve } from 'path-browserify'
 import { useRoute, useRouter } from 'vue-router'
-import { routes } from '@/router/index'
 import { useTabStore } from '@/store/modules/tab'
 import { useTabSetting } from '@/hooks/setting/useTabSetting'
+import { usePermissionStore } from '@/store/modules/permission'
+import { WHITE_NAME_LIST } from '@/router'
 
 const route = useRoute()
 const router = useRouter()
 const tabStore = useTabStore()
 
-const visible = ref(false)
 const top = ref(0)
+const routes = ref()
 const menuLeft = ref(0)
+const visible = ref(false)
 const tag: any = ref<HTMLElement | null>(null)
 const scrollPane = ref<HTMLElement | null>(null)
 const tagArea = ref<HTMLDivElement | null>(null)
@@ -83,6 +85,15 @@ const { getVisitedViews } = useTabSetting()
 
 const isActive = routes => routes.path === route.path
 const isAffix = tag => tag.meta && tag.meta.affix
+
+provide('data', tag)
+
+const { buildRoutesAction } = usePermissionStore()
+onBeforeMount(async () => {
+  routes.value = await buildRoutesAction()
+  initTags()
+  addTags()
+})
 
 watch(route, () => {
   addTags()
@@ -97,19 +108,13 @@ watch(visible, value => {
   }
 })
 
-provide('data', tag)
-
-onMounted(() => {
-  initTags()
-  addTags()
-})
-
 const filterAffixTags = (routes, basePath = '/') => {
   let tags: any = []
 
   routes.forEach(route => {
     if (route.meta && route.meta.affix) {
       const tagPath = resolve(basePath, route.path)
+
       tags.push({
         fullPath: tagPath,
         path: tagPath,
@@ -140,11 +145,12 @@ const initTags = () => {
 }
 
 const addTags = () => {
-  const { name } = route
+  const { name }: any = route
 
-  if (name) {
+  if (name && !WHITE_NAME_LIST.includes(name)) {
     tabStore.addView(route)
   }
+
   return false
 }
 
