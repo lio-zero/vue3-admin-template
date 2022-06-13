@@ -15,10 +15,10 @@ function joinParentPath(menus: Menu[], parentPath = '') {
   for (let index = 0; index < menus.length; index++) {
     const menu = menus[index]
     // https://next.router.vuejs.org/guide/essentials/nested-routes.html
-    // Note that nested paths that start with / will be treated as a root path.
-    // This allows you to leverage the component nesting without having to use a nested URL.
+    // 注意，以 / 开头的嵌套路径将被视为根路径。
+    // 这允许您利用组件嵌套，而不必使用嵌套 URL。
     if (!(menu.path.startsWith('/') || isUrl(menu.path))) {
-      // path doesn't start with /, nor is it a url, join parent path
+      // 路径不是以 / 开头，也不是 url，请加入父路径
       menu.path = `${parentPath}/${menu.path}`
     }
     if (menu?.children?.length) {
@@ -27,7 +27,7 @@ function joinParentPath(menus: Menu[], parentPath = '') {
   }
 }
 
-// Parsing the menu module
+// 分析菜单模块
 export function transformMenuModule(menuModule: MenuModule): Menu {
   const { menu } = menuModule
 
@@ -71,7 +71,7 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
 }
 
 /**
- * config menu with given params
+ * 具有给定参数的配置菜单
  */
 const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g
 export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
@@ -85,7 +85,7 @@ export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
       realPath = realPath.replace(`:${realIt}`, params[realIt] as string)
     }
   })
-  // save original param path.
+  // 保存原始参数路径。
   if (!paramPath && matchArr && matchArr.length > 0) {
     menu.paramPath = path
   }

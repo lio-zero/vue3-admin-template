@@ -108,7 +108,6 @@ export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
 
 // 路由级别升级
 function promoteRouteLevel(routeModule: AppRouteModule) {
-  // Use vue-router to splice menus
   // 使用 vue-router 拼接菜单
   let router: Router | null = createRouter({
     routes: [routeModule as unknown as RouteRecordNormalized],

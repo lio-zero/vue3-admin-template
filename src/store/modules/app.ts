@@ -66,7 +66,6 @@ export const useAppStore = defineStore({
   }
 })
 
-// 需要在 setup 之外使用
 export function useAppStoreWithOut() {
   return useAppStore(store)
 }

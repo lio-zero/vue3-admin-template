@@ -68,7 +68,6 @@ export const useTabStore = defineStore({
         resolve([...this.cachedViews])
       })
     },
-
     delOthersViews(view) {
       return new Promise(resolve => {
         this.delOthersVisitedViews(view)

@@ -101,7 +101,6 @@ export const useUserStore = defineStore({
   }
 })
 
-// 需要在 setup 之外使用
 export function useUserStoreWithOut() {
   return useUserStore(store)
 }

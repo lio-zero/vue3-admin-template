@@ -9,7 +9,7 @@
         v-slot="{ navigate }"
         class="tags-view-item"
         :class="isActive(tagItem) ? 'active' : ''"
-        @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem) : ''"
+        @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem, selectedTag) : ''"
         @contextmenu.prevent="openMenu(tagItem, $event)"
       >
         <span @click="navigate" @keypress.enter="navigate" role="link">
@@ -18,7 +18,7 @@
             <Close
               v-show="isActive(tagItem)"
               class="el-icon-close"
-              @click.prevent.stop="closeSelectedTag(tagItem)"
+              @click.prevent.stop="closeSelectedTag(tagItem, selectedTag)"
             />
           </el-icon>
         </span>
@@ -30,29 +30,11 @@
       :style="{ left: `${menuLeft}px`, top: `${top}px` }"
       class="el-dropdown-link contextmenu"
     >
-      <li @click="refreshSelectedTag(selectedTag)">
+      <li v-for="item in dropMenuList" :key="item.icon" @click="handleClickMenu(item)">
         <el-icon :size="18" class="align-top">
-          <RefreshRight />
+          <Icon size="18" :icon="item.icon" />
         </el-icon>
-        <span class="align-top ml-1"> 重新加载 </span>
-      </li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
-        <el-icon :size="18" class="align-top">
-          <Close />
-        </el-icon>
-        <span class="align-top ml-1"> 关闭标签页 </span>
-      </li>
-      <li class="border-t-1" @click="closeOthersTags">
-        <el-icon :size="18" class="align-top">
-          <Icon size="20" icon="dashicons:align-center" />
-        </el-icon>
-        <span class="align-top ml-1"> 关闭其他标签页 </span>
-      </li>
-      <li @click="closeAllTags(selectedTag)" class="flex items-center">
-        <el-icon :size="18" class="">
-          <Icon size="20" icon="clarity:minus-line" />
-        </el-icon>
-        <span class="align-top ml-1"> 关闭全部标签页 </span>
+        <span class="ml-1 align-top"> {{ item.text }} </span>
       </li>
     </ul>
   </div>
@@ -60,40 +42,30 @@
 
 <script lang="ts" setup name="Tab">
 import ScrollPane from './ScrollPane.vue'
-import { resolve } from 'path-browserify'
-import { useRoute, useRouter } from 'vue-router'
-import { useTabStore } from '@/store/modules/tab'
+import { useRoute } from 'vue-router'
 import { useTabSetting } from '@/hooks/setting/useTabSetting'
-import { usePermissionStore } from '@/store/modules/permission'
-import { WHITE_NAME_LIST } from '@/router'
+
+import { useTabDropdown, dropMenuList } from './useTabDropdown'
 
 const route = useRoute()
-const router = useRouter()
-const tabStore = useTabStore()
 
 const top = ref(0)
-const routes = ref()
 const menuLeft = ref(0)
 const visible = ref(false)
-const tag: any = ref<HTMLElement | null>(null)
+const tag = ref<HTMLElement | null>(null)
 const scrollPane = ref<HTMLElement | null>(null)
 const tagArea = ref<HTMLDivElement | null>(null)
 let selectedTag = ref({})
-let affixTags = ref([])
 
 const { getVisitedViews } = useTabSetting()
+const { addTags, isActive, isAffix, moveToCurrentTag, closeSelectedTag, handleMenuEvent } =
+  useTabDropdown(tag, scrollPane)
 
-const isActive = routes => routes.path === route.path
-const isAffix = tag => tag.meta && tag.meta.affix
+const handleClickMenu = (item: any) => {
+  handleMenuEvent(item, unref(selectedTag))
+}
 
 provide('data', tag)
-
-const { buildRoutesAction } = usePermissionStore()
-onBeforeMount(async () => {
-  routes.value = await buildRoutesAction()
-  initTags()
-  addTags()
-})
 
 watch(route, () => {
   addTags()
@@ -107,118 +79,6 @@ watch(visible, value => {
     document.body.removeEventListener('click', closeMenu)
   }
 })
-
-const filterAffixTags = (routes, basePath = '/') => {
-  let tags: any = []
-
-  routes.forEach(route => {
-    if (route.meta && route.meta.affix) {
-      const tagPath = resolve(basePath, route.path)
-
-      tags.push({
-        fullPath: tagPath,
-        path: tagPath,
-        name: route.name,
-        meta: { ...route.meta }
-      })
-    }
-    if (route.children) {
-      const tempTags = filterAffixTags(route.children, route.path)
-      if (tempTags.length >= 1) {
-        tags = [...tags, ...tempTags]
-      }
-    }
-  })
-  return tags
-}
-
-// 初始化标签
-const initTags = () => {
-  const _affixTags = (affixTags.value = filterAffixTags(unref(routes)))
-
-  for (const tag of _affixTags) {
-    // 必须有标记名
-    if (tag.name) {
-      tabStore.addVisitedView(tag)
-    }
-  }
-}
-
-const addTags = () => {
-  const { name }: any = route
-
-  if (name && !WHITE_NAME_LIST.includes(name)) {
-    tabStore.addView(route)
-  }
-
-  return false
-}
-
-const moveToCurrentTag = () => {
-  nextTick(() => {
-    for (const item of unref(tag)) {
-      if (item.to.path === route.path) {
-        unref(scrollPane)?.moveToTarget(item.$el)
-        // 当查询不同时，则更新
-        if (item.to.fullPath !== route.fullPath) {
-          tabStore.updateVisitedView(route)
-        }
-        break
-      }
-    }
-  })
-}
-
-const refreshSelectedTag = view => {
-  tabStore.delCachedView(view).then(() => {
-    const { fullPath } = view
-
-    nextTick(() => {
-      router.replace({
-        path: `/redirect${fullPath}`
-      })
-    })
-  })
-}
-
-const closeSelectedTag = view => {
-  tabStore.delView(view).then(({ visitedViews }) => {
-    if (isActive(view)) {
-      toLastView(visitedViews, view)
-    }
-  })
-}
-
-const closeOthersTags = () => {
-  router.push(unref(selectedTag))
-  tabStore.delOthersViews(unref(selectedTag)).then(() => {
-    moveToCurrentTag()
-  })
-}
-
-const closeAllTags = view => {
-  tabStore.delAllViews().then(({ visitedViews }) => {
-    if (unref(affixTags).some((tag: any) => tag.path === view.path)) {
-      return
-    }
-    toLastView(visitedViews, view)
-  })
-}
-
-const toLastView = (visitedViews, view) => {
-  const latestView = visitedViews.slice(-1)[0]
-  if (latestView) {
-    router.push(latestView.fullPath)
-  } else {
-    // 如果没有标记视图，默认情况下会重定向到主页，你可以根据需要调整。
-    if (view.name === 'Dashboard') {
-      // 重新加载主页
-      router.replace({ path: '/redirect' + view.fullPath })
-    } else {
-      router.push('/')
-    }
-  }
-}
 
 const openMenu = (tag, e) => {
   const menuMinWidth = 205

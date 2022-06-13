@@ -13,7 +13,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
   children: [
     {
       path: '/redirect/:path(.*)',
-      name: 'RedirectTo',
+      name: 'Redirect',
       component: () => import('@/views/sys/redirect/index.vue')
     }
   ]
