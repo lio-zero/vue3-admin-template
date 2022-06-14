@@ -1,37 +1,42 @@
-<h1 align="center">Welcome to vue3-admin-template 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/node-%3E%3D%2016.13.1-blue.svg" />
-  <img src="https://img.shields.io/badge/npm-%3E%3D%208.5.3-blue.svg" />
-  <a href="https://github.com/lio-zero/vue3-admin-template#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="https://github.com/lio-zero/vue3-admin-template/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/lio-zero/vue3-admin-template/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/lio-zero/vue3-admin-template" />
-  </a>
-</p>
+<div align="center">
+  <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="http://img.test.liozhou.xyz/asset/pitao.png"> </a> <br /> <br />
 
-> 使用 Vue 技术栈搭建的后台模板
+  <p>
+    <a href="https://github.com/lio-zero/vue3-admin-template/blob/master/LICENSE" target="_blank">
+      <img alt="License: MIT" src="https://img.shields.io/github/license/lio-zero/vue3-admin-template" />
+    </a>
+  </p>
+  <h1 align="center">Vue3 Admin Template 👋</h1>
+</div>
 
-> 参考 [vue-vben-admin](https://github.com/vbenjs/vue-vben-admin) 搭建的简易版后台模板
+## 简介
 
-### 🏠 [Homepage](https://github.com/lio-zero/vue3-admin-template)
+参考 [vue-vben-admin](https://github.com/vbenjs/vue-vben-admin)，使用了最新的 Vue3 + Vite2 + Element-plus 技术栈搭建的简易版后台模板。
 
-## Prerequisites
+## 安装使用
 
-- node >= 16.13.1
-- npm >= 8.5.3
-
-## Install
+- 安装依赖
 
 ```sh
-cd vue-typescript-admin-template
-npm install
-npm run dev
+cd vue3-admin-template
+pnpm i
 ```
+
+- 运行
+
+```sh
+pnpm serve
+```
+
+- 打包
+
+```sh
+pnpm build
+```
+
+## 项目地址
+
+[vue3-admin-template](https://lio-zero.github.io/vue3-admin-template/)
 
 ## Author
 
@@ -50,7 +55,3 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2022 [lio](https://github.com/lio-zero).<br /> This project is [MIT](https://github.com/lio-zero/vue3-admin-template/blob/master/LICENSE) licensed.
-
----
-
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
