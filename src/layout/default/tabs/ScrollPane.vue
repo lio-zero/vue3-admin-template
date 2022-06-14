@@ -57,11 +57,11 @@ const moveToTarget = currentTag => {
     const currentIndex = tagList.findIndex(item => item === currentTag)
     const prevTag = tagList[currentIndex - 1]
     const nextTag = tagList[currentIndex + 1]
-    // 标记在 nextTag 之后的 offsetLeft
+    // 标签在 nextTag 之后的 offsetLeft
 
     const afterNextTagOffsetLeft =
       nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
-    // 标记在 prevTag 之前的 offsetLeft
+    // 标签在 prevTag 之前的 offsetLeft
     const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
     if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
       $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth

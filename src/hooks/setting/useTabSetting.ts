@@ -1,4 +1,4 @@
-import { useTabStore } from '@/store/modules/tab'
+import { useTabStore } from '@/store/modules/tabView'
 
 export function useTabSetting() {
   const tabStore = useTabStore()

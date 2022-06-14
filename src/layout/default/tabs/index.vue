@@ -9,7 +9,7 @@
         v-slot="{ navigate }"
         class="tags-view-item"
         :class="isActive(tagItem) ? 'active' : ''"
-        @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem, selectedTag) : ''"
+        @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem) : ''"
         @contextmenu.prevent="openMenu(tagItem, $event)"
       >
         <span @click="navigate" @keypress.enter="navigate" role="link">
@@ -18,7 +18,7 @@
             <Close
               v-show="isActive(tagItem)"
               class="el-icon-close"
-              @click.prevent.stop="closeSelectedTag(tagItem, selectedTag)"
+              @click.prevent.stop="closeSelectedTag(tagItem)"
             />
           </el-icon>
         </span>

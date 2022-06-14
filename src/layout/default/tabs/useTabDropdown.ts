@@ -1,5 +1,5 @@
 import { MenuEventEnum } from './types'
-import { useTabStore } from '@/store/modules/tab'
+import { useTabStore } from '@/store/modules/tabView'
 import { useRouter, useRoute } from 'vue-router'
 import { usePermissionStore } from '@/store/modules/permission'
 import { WHITE_NAME_LIST } from '@/router'
@@ -137,10 +137,10 @@ export function useTabDropdown(tag, scrollPane) {
     return false
   }
 
-  const closeSelectedTag = (menu, selectedTag) => {
-    tabStore.delView(selectedTag).then(({ visitedViews }) => {
-      if (isActive(selectedTag)) {
-        toLastView(visitedViews, menu)
+  const closeSelectedTag = view => {
+    tabStore.delView(view).then(({ visitedViews }) => {
+      if (isActive(view)) {
+        toLastView(visitedViews, view)
       }
     })
   }

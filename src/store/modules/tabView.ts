@@ -17,7 +17,7 @@ export const useTabStore = defineStore({
       return this.visitedViews
     },
     getCachedViews(): any {
-      return this.visitedViews
+      return this.cachedViews
     }
   },
   actions: {
@@ -92,7 +92,6 @@ export const useTabStore = defineStore({
         if (index > -1) {
           this.cachedViews = this.cachedViews.slice(index, index + 1)
         } else {
-          // if index = -1, there is no cached tags
           this.cachedViews = []
         }
         resolve([...this.cachedViews])
