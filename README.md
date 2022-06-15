@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="http://img.test.liozhou.xyz/asset/pitao.png"> </a> <br /> <br />
+  <a href="https://github.com/lio-zero/vue3-admin-template"> <img alt="Admin Logo" width="200" height="200" src="http://img.test.liozhou.xyz/asset/pitao.png"> </a> <br /> <br />
 
   <p>
     <a href="https://github.com/lio-zero/vue3-admin-template/blob/master/LICENSE" target="_blank">
