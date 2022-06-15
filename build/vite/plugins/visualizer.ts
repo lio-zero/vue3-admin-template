@@ -1,12 +1,13 @@
 /**
- * 包体积分析
- * https://github.com/btd/rollup-plugin-visualizer
+ * @description 包体积分析
+ * @link https://github.com/btd/rollup-plugin-visualizer
  */
 import visualizer from 'rollup-plugin-visualizer'
-import { ANALYSIS } from '../../constant'
+import { isReportMode } from '../../utils'
 
 export function configVisualizerConfig() {
-  if (ANALYSIS) {
+  if (isReportMode()) {
+    process.env.REPORT
     return visualizer({
       filename: './node_modules/.cache/visualizer/stats.html',
       open: true,

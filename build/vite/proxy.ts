@@ -12,7 +12,7 @@ type ProxyTargetList = Record<string, ProxyOptions>
 const httpsRE = /^https:\/\//
 
 /**
- * Generate proxy
+ * 生成代理
  * @param list
  */
 export function createProxy(list: ProxyList = []) {
@@ -26,7 +26,7 @@ export function createProxy(list: ProxyList = []) {
       changeOrigin: true,
       ws: true,
       rewrite: path => path.replace(new RegExp(`^${prefix}`), ''),
-      // https is require secure=false
+      // https 需要 secure=false
       ...(isHttps ? { secure: false } : {})
     }
   }

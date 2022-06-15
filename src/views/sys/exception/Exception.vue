@@ -1,6 +1,6 @@
 <template>
   <div class="error">
-    <div class="col-xs-12 ground-color text-center">
+    <div class="text-center col-xs-12 ground-color">
       <div class="container-error-404">
         <div class="clip">
           <div class="shadow"><span ref="thirdDigit" class="digit"></span></div>
@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts" name="ErrorPage">
-import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const randomNum = () => Math.floor(Math.random() * 9) + 1

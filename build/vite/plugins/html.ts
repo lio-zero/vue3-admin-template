@@ -1,6 +1,6 @@
 /**
- * 在 index.html 中最小化和使用 ejs 模板语法的插件。
- * https://github.com/anncwb/vite-plugin-html
+ * @description 在 index.html 中最小化和使用 ejs 模板语法的插件。
+ * @link https://github.com/anncwb/vite-plugin-html
  */
 import type { PluginOption } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'

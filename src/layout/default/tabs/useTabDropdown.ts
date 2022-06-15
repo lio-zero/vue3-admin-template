@@ -1,6 +1,5 @@
 import { MenuEventEnum } from './types'
 import { useTabStore } from '@/store/modules/tabView'
-import { useRouter, useRoute } from 'vue-router'
 import { usePermissionStore } from '@/store/modules/permission'
 import { WHITE_NAME_LIST } from '@/router'
 import { resolve } from 'path-browserify'
@@ -163,7 +162,7 @@ export function useTabDropdown(tag, scrollPane) {
         break
       // 关闭当前标签页
       case MenuEventEnum.CLOSE_CURRENT:
-        closeSelectedTag(menu, selectedTag)
+        closeSelectedTag(selectedTag)
         break
       // 关闭其他标签页
       case MenuEventEnum.CLOSE_OTHER:

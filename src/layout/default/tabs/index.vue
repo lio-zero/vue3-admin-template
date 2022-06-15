@@ -42,7 +42,6 @@
 
 <script lang="ts" setup name="Tab">
 import ScrollPane from './ScrollPane.vue'
-import { useRoute } from 'vue-router'
 import { useTabSetting } from '@/hooks/setting/useTabSetting'
 
 import { useTabDropdown, dropMenuList } from './useTabDropdown'

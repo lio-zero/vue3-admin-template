@@ -1,6 +1,6 @@
 /**
- * Vue 的按需组件自动导入
- * https://github.com/antfu/unplugin-vue-components
+ * @description Vue 的按需组件自动导入
+ * @link https://github.com/antfu/unplugin-vue-components
  */
 import Components from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
@@ -10,7 +10,7 @@ export function autoRegistryComponents() {
   return Components({
     extensions: ['vue'],
     deep: true,
-    dts: 'src/components.d.ts',
+    dts: 'types/components.d.ts',
     directoryAsNamespace: false,
     globalNamespaces: [],
     directives: true,

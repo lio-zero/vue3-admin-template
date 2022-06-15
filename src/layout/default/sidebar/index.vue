@@ -22,8 +22,6 @@
 import SidebarItem from './SidebarItem.vue'
 import Logo from './Logo.vue'
 import variables from '@/styles/variables.module.scss'
-// import { routes } from '@/router/index'
-import { useRoute } from 'vue-router'
 import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
 import { useRootSetting } from '@/hooks/setting/useRootSetting'
 import { usePermissionStore } from '@/store/modules/permission'

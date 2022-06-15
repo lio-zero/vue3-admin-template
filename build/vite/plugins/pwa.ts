@@ -1,6 +1,6 @@
 /**
- * Vite 零配置 PWA
- * https://github.com/antfu/vite-plugin-pwa
+ * @description Vite 零配置 PWA
+ * @link https://github.com/antfu/vite-plugin-pwa
  */
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -8,7 +8,6 @@ export function configPwaConfig(env: ViteEnv) {
   const { VITE_USE_PWA, VITE_GLOB_APP_TITLE, VITE_GLOB_APP_SHORT_NAME } = env
 
   if (VITE_USE_PWA) {
-    // vite-plugin-pwa
     const pwaPlugin = VitePWA({
       manifest: {
         name: VITE_GLOB_APP_TITLE,

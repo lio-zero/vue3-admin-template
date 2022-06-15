@@ -4,10 +4,10 @@
       <Hamburger
         id="hamburger-container"
         :is-active="getCollapsed"
-        class="hamburger-container cursor-pointer"
+        class="cursor-pointer hamburger-container"
         @toggle-click="toggleCollapsed"
       />
-      <Breadcrumb class="breadcrumb-container flex-1" />
+      <Breadcrumb class="flex-1 breadcrumb-container" />
 
       <div class="right-menu">
         <Fullscreen v-if="getShowFullScreen" />
@@ -17,7 +17,7 @@
         <MessageBox />
 
         <el-dropdown class="avatar-container">
-          <div class="avatar-wrapper cursor-pointer">
+          <div class="cursor-pointer avatar-wrapper">
             <el-avatar shape="square" :src="getUserInfo.avatar" />
             <i class="el-icon-caret-bottom"></i>
           </div>
@@ -44,7 +44,6 @@ import Fullscreen from './components/Fullscreen.vue'
 import MessageBox from './components/MessageBox.vue'
 import MultipleTabs from '../tabs/index.vue'
 import Setting from './components/Setting.vue'
-import { Dark } from '@/components/Dark'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useRootSetting } from '@/hooks/setting/useRootSetting'

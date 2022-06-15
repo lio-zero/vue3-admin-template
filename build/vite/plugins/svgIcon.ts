@@ -1,6 +1,6 @@
 /**
- * 用于快速创建 SVG sprites 的 Vite 插件。
- * https://github.com/vbenjs/vite-plugin-svg-icons
+ * @description 用于快速创建 SVG sprites 的 Vite 插件。
+ * @link https://github.com/vbenjs/vite-plugin-svg-icons
  */
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'

@@ -1,4 +1,11 @@
-// Read all environment variable configuration files to process.env
+/**
+ * 是否生成包预览
+ */
+export function isReportMode(): boolean {
+  return process.env.REPORT === 'true'
+}
+
+// 读取所有环境变量配置文件到 process.env
 export function wrapperEnv(envConf: Recordable): ViteEnv {
   const ret: any = {}
 
