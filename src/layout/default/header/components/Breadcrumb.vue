@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { compile } from 'path-to-regexp'
-import { useRoute, useRouter } from 'vue-router'
 
 const levelList: any = ref(null)
 const router = useRouter()

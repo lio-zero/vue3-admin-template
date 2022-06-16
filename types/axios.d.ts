@@ -12,7 +12,7 @@ export interface RequestOptions {
   isReturnNativeResponse?: boolean
   // 是否加入 url
   joinPrefix?: boolean
-  // 接口地址，如果保留为空，则使用默认 APIRL
+  // 接口地址，如果保留为空，则使用默认 API URL
   apiUrl?: string
   // 请求拼接路径
   urlPrefix?: string

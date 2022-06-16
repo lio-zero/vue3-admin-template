@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 import { Persistent } from '@/utils/cache/persistent'
 import { PROJ_CFG_KEY } from '@/enums/cacheEnum'
 import { deepMerge } from '@/utils'
+import { resetRouter } from '@/router'
 
 let timeId: TimeoutHandle
 
@@ -42,6 +43,10 @@ export const useAppStore = defineStore({
     setPageLoading(loading: boolean): void {
       this.pageLoading = loading
     },
+    async resetAllState() {
+      resetRouter()
+      Persistent.clearAll()
+    },
     async setPageLoadingAction(loading: boolean): Promise<void> {
       if (loading) {
         clearTimeout(timeId)
@@ -61,7 +66,6 @@ export const useAppStore = defineStore({
   }
 })
 
-// 需要在 setup 之外使用
 export function useAppStoreWithOut() {
   return useAppStore(store)
 }

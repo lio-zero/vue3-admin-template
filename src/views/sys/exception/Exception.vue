@@ -1,6 +1,6 @@
 <template>
   <div class="error">
-    <div class="col-xs-12 ground-color text-center">
+    <div class="text-center col-xs-12 ground-color">
       <div class="container-error-404">
         <div class="clip">
           <div class="shadow"><span ref="thirdDigit" class="digit"></span></div>
@@ -21,19 +21,18 @@
   </div>
 </template>
 
-<script setup lang="ts" name="ErrorPage404">
-import { useRouter } from 'vue-router'
+<script setup lang="ts" name="ErrorPage">
 const router = useRouter()
 
 const randomNum = () => Math.floor(Math.random() * 9) + 1
-const thirdDigit = ref<Nullable<HTMLElement>>(null)
-const secondDigit = ref<Nullable<HTMLElement>>(null)
-const firstDigit = ref<Nullable<HTMLElement>>(null)
+const thirdDigit = ref<HTMLElement | null>(null)
+const secondDigit = ref<HTMLElement | null>(null)
+const firstDigit = ref<HTMLElement | null>(null)
+let loop1
+let loop2
+let loop3
 
 const reciprocal = () => {
-  let loop1
-  let loop2
-  let loop3
   const time = 30
   let i = 0
 
@@ -69,6 +68,9 @@ const reciprocal = () => {
 }
 
 const goBack = () => {
+  clearInterval(loop1)
+  clearInterval(loop2)
+  clearInterval(loop3)
   router.push('/')
 }
 

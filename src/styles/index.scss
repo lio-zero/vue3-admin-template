@@ -65,8 +65,17 @@ a:hover {
 }
 
 // 进度条颜色
-#nprogress .bar {
-  background-color: plum !important;
+#nprogress {
+  .bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 2px;
+    background-color: plum;
+    opacity: 75%;
+  }
 }
 
 button:focus {

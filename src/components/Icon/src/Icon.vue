@@ -7,7 +7,6 @@
 <script lang="ts" setup name="Icon">
 import type { PropType } from 'vue'
 import { CSSProperties } from 'vue'
-import SvgIcon from './SvgIcon.vue'
 import Iconify from '@purge-icons/generated'
 import { isString } from '@/utils/is'
 import { propTypes } from '@/utils/propTypes'

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "useDefineForClassFields": true,
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
@@ -13,6 +12,7 @@
     "isolatedModules": true,
     "noLib": false,
     "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
     "strictFunctionTypes": false,
     "baseUrl": ".",
@@ -21,6 +21,7 @@
     "noUnusedParameters": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
+    "newLine": "lf",
     "skipLibCheck": true,
     "types": ["vite/client", "unplugin-icons/types/vue"],
     "removeComments": true,

@@ -11,6 +11,6 @@ export interface RouteItem {
 }
 
 /**
- * @description: Get menu return value
+ * @description: 获取菜单返回值
  */
 export type getMenuListResultModel = RouteItem[]

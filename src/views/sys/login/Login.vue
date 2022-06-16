@@ -2,7 +2,7 @@
   <div>
     <Dark class="absolute top-4 right-4" />
   </div>
-  <div class="login flex justify-center items-center h-screen">
+  <div class="flex items-center justify-center h-screen login">
     <el-card class="w-380px">
       <el-form
         ref="loginForm"
@@ -11,8 +11,8 @@
         :rules="rules"
         label-position="top"
       >
-        <p class="font-bold mb-2">你好!</p>
-        <p class="color-808080 text-13px mb-1">请登录您的帐户</p>
+        <p class="mb-2 font-bold">你好!</p>
+        <p class="mb-1 color-808080 text-13px">请登录您的帐户</p>
 
         <el-form-item label="用户名">
           <el-input v-model="model.username" />
@@ -47,9 +47,7 @@
   </div>
 </template>
 <script setup lang="ts" name="Login">
-import { Dark } from '@/components/Dark'
 import { validUsername } from '@/utils/validate'
-import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { model } from './data'
@@ -72,7 +70,7 @@ const validatePassword = (_rule: any, value: string, callback: any) => {
 
 const loading = ref(false)
 // const forgetPass = ref(true)
-const loginForm = ref<Nullable<HTMLElement>>(null)
+const loginForm = ref<HTMLFormElement | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -82,7 +80,7 @@ const rules = reactive({
 })
 
 const loginBtn = () => {
-  loginForm.value.validate(async (valid: any) => {
+  loginForm?.value?.validate(async (valid: any) => {
     if (valid) {
       await userStore.login(model)
       ElMessage.success('登录成功')

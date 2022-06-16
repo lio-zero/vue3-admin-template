@@ -7,10 +7,11 @@ export function useHeaderSetting() {
 
   const getHeaderFixed = computed(() => appStore.getHeaderSetting.fixed)
 
-  // Set header configuration
+  // 设置 header 配置
   function setHeaderSetting(headerSetting: Partial<HeaderSetting>) {
     appStore.setProjectConfig({ headerSetting })
   }
+
   return {
     setHeaderSetting,
 

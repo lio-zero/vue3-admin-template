@@ -1,13 +1,13 @@
 <template>
   <div :class="classObj" class="default-layout">
     <div
-      v-if="device === 'mobile' && sidebar.opened"
+      v-if="getDevice === 'mobile' && getCollapsed"
       class="drawer-bg"
       @click="handleClickOutside"
     ></div>
     <LayoutSidebar class="vzr-sidebar-container" />
     <div class="main-container">
-      <div v-if="getHeaderFixed" style="height: 50px"></div>
+      <div v-if="getHeaderFixed" style="height: 84px"></div>
       <LayoutHeader />
       <LayoutMain />
       <LayoutFooter />
@@ -20,79 +20,23 @@ import LayoutSidebar from './sidebar/index.vue'
 import LayoutHeader from './header/index.vue'
 import LayoutMain from './content/index.vue'
 import LayoutFooter from './footer/index.vue'
-import { useAppStore } from '@/store/modules/app'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useResize } from './resize'
 
 const { getHeaderFixed } = useHeaderSetting()
+const { getDevice, getCollapsed, getWithoutAnimation, handleClickOutside } = useMenuSetting()
 
-const appStore = useAppStore()
-const { body } = document
-const WIDTH = 992
-const device = computed(() => appStore.getDevice)
-const sidebar = computed(() => appStore.getProjectConfig.sidebar)
 const classObj = computed(() => {
   return {
-    hideSidebar: !unref(sidebar).opened,
-    openSidebar: unref(sidebar).opened,
-    withoutAnimation: unref(sidebar).withoutAnimation,
-    mobile: unref(device) === 'mobile'
+    hideSidebar: !unref(getCollapsed),
+    openSidebar: unref(getCollapsed),
+    withoutAnimation: unref(getWithoutAnimation),
+    mobile: unref(getDevice) === 'mobile'
   }
 })
 
-const handleFullWidthSizing = () => {
-  const scrollbarWidth = window.innerWidth - document.body.clientWidth
-
-  document.querySelector('body')!.style.width = `calc(100vw - ${scrollbarWidth}px)`
-}
-
-const handleClickOutside = () =>
-  appStore.setProjectConfig({
-    sidebar: {
-      opened: false,
-      withoutAnimation: false
-    }
-  })
-
-const isMobile = () => {
-  const rect = body.getBoundingClientRect()
-  return rect.width - 1 < WIDTH
-}
-
-const resizeHandler = () => {
-  if (!document.hidden) {
-    appStore.toggleDevice(isMobile() ? 'mobile' : 'desktop')
-
-    if (isMobile()) {
-      appStore.setProjectConfig({
-        sidebar: {
-          opened: false,
-          withoutAnimation: true
-        }
-      })
-    }
-  }
-}
-
-onMounted(() => {
-  handleFullWidthSizing()
-  if (isMobile()) {
-    appStore.toggleDevice('mobile')
-    appStore.setProjectConfig({
-      sidebar: {
-        opened: false,
-        withoutAnimation: true
-      }
-    })
-  }
-})
-
-onBeforeMount(() => {
-  window.addEventListener('resize', resizeHandler)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resizeHandler)
-})
+useResize()
 </script>
 
 <style lang="scss" scoped>

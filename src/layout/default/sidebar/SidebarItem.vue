@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import AppLink from './Link.vue'
 import Item from './Item.vue'
-import { Icon } from '@/components/Icon'
 import { isExternal } from '@/utils/is'
 import { resolve } from 'path-browserify'
 
@@ -87,6 +86,7 @@ const hasOneShowingChild = (children = [], parent: any) => {
   }
   return false
 }
+
 const resolvePath = (routePath: any) => {
   if (isExternal(routePath)) {
     return routePath

@@ -1,38 +1,26 @@
 import type { Router, RouteRecordRaw } from 'vue-router'
-
+import { getPageTitle } from '@/utils/get-page-title'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
-
-import { PageEnum } from '@/enums/pageEnum'
 import { useUserStoreWithOut } from '@/store/modules/user'
 
-import { NotFound } from '@/router/routes/basic'
-
-import { RootRoute } from '@/router/routes'
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
+import { PageEnum } from '@/enums/pageEnum'
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN
-
-const ROOT_PATH = RootRoute.path
-
 const whitePathList: PageEnum[] = [LOGIN_PATH]
 
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut()
   const permissionStore = usePermissionStoreWithOut()
-  router.beforeEach(async (to, from, next) => {
-    if (
-      from.path === ROOT_PATH &&
-      to.path === PageEnum.BASE_HOME &&
-      userStore.getUserInfo.homePath &&
-      userStore.getUserInfo.homePath !== PageEnum.BASE_HOME
-    ) {
-      next(userStore.getUserInfo.homePath)
-      return
-    }
+
+  router.beforeEach(async (to: any, from: any, next) => {
+    document.title = getPageTitle(to.meta.title)
 
     const token = userStore.getToken
 
-    // Whitelist can be directly entered
+    // 白名单
     if (whitePathList.includes(to.path as PageEnum)) {
+      // 是否是登录页，并且 token 是否存在
       if (to.path === LOGIN_PATH && token) {
         const isSessionTimeout = userStore.getSessionTimeout
         try {
@@ -47,40 +35,42 @@ export function createPermissionGuard(router: Router) {
       return
     }
 
-    // token does not exist
+    // token 不存在
     if (!token) {
-      // You can access without permission. You need to set the routing meta.ignoreAuth to true
+      // 您可以不经许可访问。您需要设置路由 meta.ignoreAuth 为 true
       if (to.meta.ignoreAuth) {
         next()
         return
       }
 
-      // redirect login page
+      // 重定向登录页
       const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
         path: LOGIN_PATH,
         replace: true
       }
+
       if (to.path) {
         redirectData.query = {
           ...redirectData.query,
           redirect: to.path
         }
       }
+
       next(redirectData)
       return
     }
 
-    // Jump to the 404 page after processing the login
+    // 处理登录后跳转到 404 页
     if (
       from.path === LOGIN_PATH &&
-      to.name === NotFound.name &&
+      to.name === PAGE_NOT_FOUND_ROUTE.name &&
       to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
     ) {
       next(userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
       return
     }
 
-    // get userinfo while last fetch time is empty
+    // 在上次获取时间为空时获取 userinfo
     if (userStore.getLastUpdateTime === 0) {
       try {
         await userStore.getUserInfoAction()
@@ -101,12 +91,12 @@ export function createPermissionGuard(router: Router) {
       router.addRoute(route as unknown as RouteRecordRaw)
     })
 
-    router.addRoute(NotFound as unknown as RouteRecordRaw)
+    router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw)
 
     permissionStore.setDynamicAddedRoute(true)
 
-    if (to.name === NotFound.name) {
-      // 动态添加路由后，此处应当重定向到fullPath，否则会加载404页面内容
+    if (to.name === PAGE_NOT_FOUND_ROUTE.name) {
+      // 动态添加路由后，此处应当重定向到 fullPath，否则会加载 404 页面内容
       next({ path: to.fullPath, replace: true, query: to.query })
     } else {
       const redirectPath = (from.query.redirect || to.path) as string

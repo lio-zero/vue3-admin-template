@@ -1,6 +1,6 @@
 /**
- * 按需引入组件库样式。
- * https://github.com/anncwb/vite-plugin-style-import
+ * @description 按需引入组件库样式。
+ * @link https://github.com/anncwb/vite-plugin-style-import
  */
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
 

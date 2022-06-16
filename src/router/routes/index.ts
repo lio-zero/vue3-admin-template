@@ -1,7 +1,7 @@
 import type { AppRouteRecordRaw, AppRouteModule } from '@/router/types'
 import { PageEnum } from '@/enums/pageEnum'
 
-import { NotFound } from '@/router/routes/basic'
+import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@/router/routes/basic'
 
 const modules = import.meta.globEager('./modules/**/*.ts')
 
@@ -24,7 +24,7 @@ export const RootRoute: AppRouteRecordRaw = {
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
-  component: () => import('@/views/login/Login.vue')
+  component: () => import('@/views/sys/login/Login.vue')
 }
 
-export const basicRoutes = [RootRoute, LoginRoute, NotFound]
+export const basicRoutes = [RootRoute, LoginRoute, PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE]

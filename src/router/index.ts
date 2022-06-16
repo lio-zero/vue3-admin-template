@@ -1,63 +1,33 @@
 import type { App } from 'vue'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Layout from '@/layout/default/index.vue'
-import permission from './modules/permission'
-import middleware from '../middleware'
-import { ReRoute } from './types'
+import { basicRoutes } from './routes'
 
-export const routes: Array<ReRoute> = [
-  {
-    path: '/login',
-    name: 'Login',
-    hidden: true,
-    component: () => import('@/views/login/Login.vue')
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'dashicons:dashboard', badge: 'new' }
-      }
-    ]
-  },
-  permission,
-  {
-    path: '/setting',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Setting',
-        component: () => import('@/views/setting/index.vue'),
-        meta: { title: '个人设置', icon: 'ci:settings-filled' }
-      }
-    ]
-  },
-  {
-    path: '/404',
-    name: 'NotFound',
-    hidden: true,
-    component: () => import('@/views/error-page/NotFound.vue')
-  },
-  {
-    path: '/:path(.*)',
-    hidden: true,
-    redirect: '/404'
-  }
-]
+// 白名单应该包含基本静态路由
+export const WHITE_NAME_LIST: string[] = []
+const getRouteNames = (array: any[]) =>
+  array.forEach(item => {
+    item.name && WHITE_NAME_LIST.push(item.name)
+    getRouteNames(item.children || [])
+  })
+getRouteNames(basicRoutes)
+
+// 重置路由
+export function resetRouter() {
+  router.getRoutes().forEach(route => {
+    const { name } = route
+    if (name && !WHITE_NAME_LIST.includes(name as string)) {
+      router.hasRoute(name) && router.removeRoute(name)
+    }
+  })
+}
 
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: basicRoutes as unknown as RouteRecordRaw[],
+  strict: true,
+  scrollBehavior: () => ({ left: 0, top: 0 })
 })
-
-middleware(router)
 
 export function setupRouter(app: App<Element>) {
   app.use(router)

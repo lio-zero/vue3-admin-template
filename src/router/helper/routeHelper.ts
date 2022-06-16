@@ -7,16 +7,14 @@ import { warn } from '@/utils/log'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 export type LayoutMapKey = 'LAYOUT'
-// const IFRAME = () => import('@/views/sys/iframe/FrameBlank.vue')
 
 const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>()
 
 LayoutMap.set('LAYOUT', LAYOUT)
-// LayoutMap.set('IFRAME', IFRAME)
 
 let dynamicViewsModules: Record<string, () => Promise<Recordable>>
 
-// Dynamic introduction
+// 动态导入路由
 function asyncImportRoute(routes: AppRouteRecordRaw[] | undefined) {
   dynamicViewsModules = dynamicViewsModules || import.meta.glob('../../views/**/*.{vue,tsx}')
   if (!routes) return
@@ -58,11 +56,12 @@ function dynamicImport(
     return dynamicViewsModules[matchKey]
   } else if (matchKeys?.length > 1) {
     warn(
-      'Please do not create `.vue` and `.TSX` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure'
+      '请不要在 views 文件夹下相同层次目录中创建具有相同文件名的 `.vue` 和 `.tsx` 文件。这将导致动态引入失败'
     )
+
     return
   } else {
-    warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!')
+    warn('在 src/views/ 下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!')
     return EXCEPTION_COMPONENT
   }
 }
@@ -107,9 +106,9 @@ export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
   return modules
 }
 
-// Routing level upgrade
+// 路由级别升级
 function promoteRouteLevel(routeModule: AppRouteModule) {
-  // Use vue-router to splice menus
+  // 使用 vue-router 拼接菜单
   let router: Router | null = createRouter({
     routes: [routeModule as unknown as RouteRecordNormalized],
     history: createWebHashHistory()
@@ -122,7 +121,7 @@ function promoteRouteLevel(routeModule: AppRouteModule) {
   routeModule.children = routeModule.children?.map(item => omit(item, 'children'))
 }
 
-// Add all sub-routes to the secondary route
+// 将所有子路由添加到次要路由
 function addToChildren(
   routes: RouteRecordNormalized[],
   children: AppRouteRecordRaw[],
@@ -144,7 +143,7 @@ function addToChildren(
   }
 }
 
-// Determine whether the level exceeds 2 levels
+// 确定层级是否超过 2 个层级
 function isMultipleRoute(routeModule: AppRouteModule) {
   if (!routeModule || !Reflect.has(routeModule, 'children') || !routeModule.children?.length) {
     return false

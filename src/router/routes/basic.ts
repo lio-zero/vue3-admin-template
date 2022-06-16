@@ -1,23 +1,20 @@
 import type { AppRouteRecordRaw } from '@/router/types'
+import { LAYOUT, EXCEPTION_COMPONENT } from '@/router/constant'
 
-// export const NotFound: AppRouteRecordRaw = {
-//   path: '/:path(.*)*',
-//   children: [
-//     {
-//       path: '/:path(.*)*',
-//       name: 'NotFound',
-//       component: () => import('@/views/error-page/NotFound.vue')
-//     }
-//   ]
-// }
-
-export const NotFound: AppRouteRecordRaw = {
-  path: '/404',
-  name: 'NotFound',
-  component: () => import('@/views/error-page/NotFound.vue')
+export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
+  path: '/:path(.*)',
+  name: 'ErrorPage',
+  component: EXCEPTION_COMPONENT
 }
 
-// export const NotFound: AppRouteRecordRaw = {
-//   path: '/:path(.*)',
-//   redirect: '/dashboard'
-// }
+export const REDIRECT_ROUTE: AppRouteRecordRaw = {
+  path: '/redirect',
+  component: LAYOUT,
+  children: [
+    {
+      path: '/redirect/:path(.*)',
+      name: 'Redirect',
+      component: () => import('@/views/sys/redirect/index.vue')
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 <template>
-  <div :class="{ 'has-logo': showLogo }">
-    <logo v-if="showLogo" :collapse="isCollapse" />
+  <div :class="{ 'has-logo': getShowLogo }">
+    <logo v-if="getShowLogo" :collapse="!getCollapsed" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
+        :collapse="!getCollapsed"
         :unique-opened="false"
         :collapse-transition="false"
         :background-color="variables.menuBg"
@@ -19,15 +19,22 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { routes } from '@/router/index'
 import SidebarItem from './SidebarItem.vue'
 import Logo from './Logo.vue'
 import variables from '@/styles/variables.module.scss'
-import { useAppStore } from '@/store/modules/app'
+import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
+import { useRootSetting } from '@/hooks/setting/useRootSetting'
+import { usePermissionStore } from '@/store/modules/permission'
 
+const routes = ref()
 const route = useRoute()
-const appStore = useAppStore()
+const { getCollapsed } = useMenuSetting()
+const { getShowLogo } = useRootSetting()
+const { buildRoutesAction } = usePermissionStore()
+
+onBeforeMount(async () => {
+  routes.value = await buildRoutesAction()
+})
 
 const activeMenu: any = computed(() => {
   const { meta, path } = route
@@ -36,9 +43,6 @@ const activeMenu: any = computed(() => {
   if (meta.activeMenu) return meta.activeMenu
   return path
 })
-
-const isCollapse = computed(() => !appStore.getProjectConfig.sidebar.opened)
-const showLogo = computed(() => appStore.getProjectConfig.showLogo)
 </script>
 
 <style lang="scss" scoped>

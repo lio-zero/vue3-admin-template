@@ -1,8 +1,8 @@
 import { PermissionModeEnum, RouterTransitionEnum } from '@/enums/appEnum'
 
 export interface ProjectConfig {
-  // 侧边栏设置
-  sidebar: Sidebar
+  // 菜单设置
+  menuSetting: MenuSetting
   // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum
   // 过渡设置
@@ -22,10 +22,11 @@ export interface ProjectConfig {
   headerSetting: {
     fixed: boolean
   }
+  removeAllHttpPending: boolean
 }
 
-export interface Sidebar {
-  opened: boolean
+export interface MenuSetting {
+  collapsed: boolean
   withoutAnimation: boolean
 }
 
@@ -43,7 +44,6 @@ export interface TransitionSetting {
   // 是否打开顶部进度条
   openNProgress: boolean
 }
-
 export interface GlobEnvConfig {
   // 网站标题
   VITE_GLOB_APP_TITLE: string
@@ -68,15 +68,4 @@ export interface GlobConfig {
   urlPrefix?: string
   // 项目缩写
   shortName: string
-}
-
-export interface TransitionSetting {
-  // 是否打开页面切换动画
-  enable: boolean
-  // 路由基本切换动画
-  basicTransition: RouterTransitionEnum
-  // 是否打开页面切换加载
-  openPageLoading: boolean
-  // 是否打开顶部进度条
-  openNProgress: boolean
 }

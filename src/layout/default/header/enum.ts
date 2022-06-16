@@ -3,5 +3,6 @@ export enum HandlerEnum {
   SHOW_LOGO,
   GRAY_MODE,
   COLOR_WEAK,
-  HEADER_FIXED
+  HEADER_FIXED,
+  OPEN_PROGRESS
 }

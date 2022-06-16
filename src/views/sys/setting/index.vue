@@ -21,10 +21,10 @@
           <el-input v-model="ruleForm.username" />
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="ruleForm.password" />
+          <el-input type="password" v-model="ruleForm.password" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="deleteHandler">删除</el-button>
+          <el-button type="danger" @click="deleteHandler">删除</el-button>
           <el-button @click="saveForm">更新</el-button>
         </el-form-item>
       </el-form>
@@ -32,15 +32,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Setting">
 import type { UserInfo } from '#/store'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { isPhone, isEmail } from '@/utils/is'
+
 const userStore = useUserStore()
 const labelPosition = ref('right')
 const FormData = ref()
 const ruleForm: UserInfo = reactive(userStore.getUserInfo)
+
 const validEmail = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入邮箱'))
@@ -50,6 +52,7 @@ const validEmail = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
+
 const validPhone = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请输入手机号'))
@@ -61,6 +64,7 @@ const validPhone = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
+
 const validPass = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
@@ -71,6 +75,7 @@ const validPass = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
+
 const validConfirmPwd = (_rule: any, value: string, callback: any) => {
   if (value === '') {
     callback(new Error('请重新输入密码'))
@@ -80,15 +85,34 @@ const validConfirmPwd = (_rule: any, value: string, callback: any) => {
     callback()
   }
 }
+
 const rules: object = reactive({
   email: [{ validator: validEmail, trigger: 'blur' }],
   phone: [{ validator: validPhone, trigger: 'blur' }],
   password: [{ validator: validPass, trigger: 'blur' }],
   confirmPwd: [{ validator: validConfirmPwd, trigger: 'blur' }]
 })
+
 const deleteHandler = () => {
-  console.log(111)
+  ElMessageBox.confirm('是否确认删除用户?', '温馨提示', {
+    confirmButtonText: '确实',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: '删除成功'
+      })
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '取消删除'
+      })
+    })
 }
+
 const saveForm = () => {
   FormData.value.validate((valid: boolean) => {
     if (valid) {

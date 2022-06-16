@@ -1,4 +1,4 @@
-import type { PropType as VuePropType } from 'vue'
+import type { ComponentPublicInstance, FunctionalComponent } from 'vue'
 
 declare global {
   // vue
@@ -50,4 +50,10 @@ export interface GlobEnvConfig {
   VITE_GLOB_APP_SHORT_NAME: string
   // 上传 URL
   VITE_GLOB_UPLOAD_URL?: string
+}
+
+declare module 'vue' {
+  export type JSXComponent<Props = any> =
+    | { new (): ComponentPublicInstance<Props> }
+    | FunctionalComponent<Props>
 }
