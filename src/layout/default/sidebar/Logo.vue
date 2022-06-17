@@ -15,6 +15,7 @@
 
 <script setup lang="ts" name="SidebarLogo">
 import img from '@/assets/logo.png'
+import { useGlobSetting } from '@/hooks/setting'
 
 defineProps({
   collapse: {
@@ -23,7 +24,7 @@ defineProps({
   }
 })
 
-const title = ref('Vue3 Admin Template')
+const { title } = useGlobSetting()
 const logo = ref(img)
 </script>
 

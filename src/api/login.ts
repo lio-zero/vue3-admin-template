@@ -20,12 +20,6 @@ export function doLogout() {
   })
 }
 
-// export function getUserInfo(id?: number) {
-//   return http({
-//     url: `/user/getUserDetail/${id}`
-//   })
-// }
-
 export function getUserInfo() {
   return http.get({
     url: Api.GetUserDetail

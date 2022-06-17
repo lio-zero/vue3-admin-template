@@ -43,7 +43,7 @@
 <script lang="ts" setup name="Tab">
 import ScrollPane from './ScrollPane.vue'
 import { useTabSetting } from '@/hooks/setting/useTabSetting'
-
+import type { RouteLocationNormalized } from 'vue-router'
 import { useTabDropdown, dropMenuList } from './useTabDropdown'
 
 const route = useRoute()
@@ -52,9 +52,9 @@ const top = ref(0)
 const menuLeft = ref(0)
 const visible = ref(false)
 const tag = ref<HTMLElement | null>(null)
-const scrollPane = ref<HTMLElement | null>(null)
-const tagArea = ref<HTMLDivElement | null>(null)
-let selectedTag = ref({})
+const scrollPane = ref<ComponentRef>(null)
+const tagArea = ref<ElRef>(null)
+const selectedTag = ref<Nullable<RouteLocationNormalized>>(null)
 
 const { getVisitedViews } = useTabSetting()
 const { addTags, isActive, isAffix, moveToCurrentTag, closeSelectedTag, handleMenuEvent } =

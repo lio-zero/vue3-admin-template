@@ -3,23 +3,23 @@
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
-        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+        (!onlyOneChild?.children || onlyOneChild?.noShowingChildren) &&
         !item.alwaysShow
       "
     >
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <app-link v-if="onlyOneChild?.meta" :to="resolvePath(onlyOneChild?.path)">
         <el-menu-item
-          :index="resolvePath(onlyOneChild.path)"
+          :index="resolvePath(onlyOneChild?.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
           <Icon
-            v-if="onlyOneChild.meta.icon"
+            v-if="onlyOneChild?.meta.icon"
             :size="20"
-            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
+            :icon="onlyOneChild?.meta.icon || (item.meta && item.meta.icon)"
           />
           <template #title>
-            <span v-if="onlyOneChild.meta && onlyOneChild.meta.title">
-              {{ onlyOneChild.meta.title }}
+            <span v-if="onlyOneChild?.meta && onlyOneChild?.meta.title">
+              {{ onlyOneChild?.meta.title }}
             </span>
           </template>
         </el-menu-item>
@@ -28,7 +28,8 @@
 
     <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+        <Icon v-if="item.meta && item.meta.icon" :size="20" :icon="item.meta && item.meta.icon" />
+        <span v-if="item.meta.title">{{ item.meta.title }}</span>
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -43,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Menu } from '@/router/types'
 import AppLink from './Link.vue'
-import Item from './Item.vue'
 import { isExternal } from '@/utils/is'
 import { resolve } from 'path-browserify'
 
@@ -63,7 +64,7 @@ const props = defineProps({
   }
 })
 
-const onlyOneChild: any = ref(null)
+const onlyOneChild = ref<Nullable<Menu>>(null)
 
 const hasOneShowingChild = (children = [], parent: any) => {
   const showingChildren = children.filter((item: any) => {

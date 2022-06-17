@@ -11,7 +11,8 @@
 
 <script setup lang="ts" name="ScrollPane">
 const tagAndTagSpacing = 4
-const scrollContainer = ref<HTMLElement | null>(null)
+const scrollContainer = ref<ComponentRef>(null)
+
 const scrollWrapper = computed(() => unref(scrollContainer)?.wrap$)
 const emit = defineEmits(['scroll'])
 

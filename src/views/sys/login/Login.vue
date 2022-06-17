@@ -7,7 +7,7 @@
       <el-form
         ref="loginForm"
         label-width="60px"
-        :model="model"
+        :model="formData"
         :rules="rules"
         label-position="top"
       >
@@ -15,16 +15,16 @@
         <p class="mb-1 color-808080 text-13px">请登录您的帐户</p>
 
         <el-form-item label="用户名">
-          <el-input v-model="model.username" />
+          <el-input v-model="formData.username" />
         </el-form-item>
 
         <el-form-item label="密码">
-          <el-input v-model="model.password" type="password" />
+          <el-input v-model="formData.password" type="password" />
         </el-form-item>
 
         <el-form-item>
           <el-button class="btn-half">
-            <el-checkbox v-model="model.rememberMe"> 记住我 </el-checkbox>
+            <el-checkbox v-model="formData.rememberMe"> 记住我 </el-checkbox>
           </el-button>
           <el-button
             class="btn-half"
@@ -50,7 +50,7 @@
 import { validUsername } from '@/utils/validate'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
-import { model } from './data'
+import { formData } from './data'
 
 const validateUsername = (_rule: any, value: string, callback: any) => {
   if (!validUsername(value)) {
@@ -69,7 +69,6 @@ const validatePassword = (_rule: any, value: string, callback: any) => {
 }
 
 const loading = ref(false)
-// const forgetPass = ref(true)
 const loginForm = ref<HTMLFormElement | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
@@ -80,9 +79,9 @@ const rules = reactive({
 })
 
 const loginBtn = () => {
-  loginForm?.value?.validate(async (valid: any) => {
+  loginForm.value?.validate(async (valid: any) => {
     if (valid) {
-      await userStore.login(model)
+      await userStore.login(formData)
       ElMessage.success('登录成功')
       router.push({ path: '/' })
     } else {
