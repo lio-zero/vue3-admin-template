@@ -1,10 +1,10 @@
 export type User = {
   username: string
-  password: number
+  password: string
   rememberMe?: boolean
 }
 
-export const model: User = reactive({
+export const formData: User = reactive({
   username: 'admin',
-  password: 123456
+  password: '123456'
 })

@@ -3,6 +3,7 @@ import { useTabStore } from '@/store/modules/tabView'
 import { usePermissionStore } from '@/store/modules/permission'
 import { WHITE_NAME_LIST } from '@/router'
 import { resolve } from 'path-browserify'
+import type { RouteLocationNormalized } from 'vue-router'
 
 export interface DropMenu {
   icon?: string
@@ -127,7 +128,7 @@ export function useTabDropdown(tag, scrollPane) {
   }
 
   const addTags = () => {
-    const { name }: any = route
+    const { name } = route
 
     if (name && !WHITE_NAME_LIST.includes(name)) {
       tabStore.addView(route)
@@ -144,14 +145,14 @@ export function useTabDropdown(tag, scrollPane) {
     })
   }
 
-  function handleMenuEvent(menu, selectedTag): void {
+  function handleMenuEvent(menu: DropMenu, route: RouteLocationNormalized): void {
     const { event } = menu
 
     switch (event) {
       // 刷新页面
       case MenuEventEnum.REFRESH_PAGE:
-        tabStore.delCachedView(selectedTag).then(() => {
-          const { fullPath } = selectedTag
+        tabStore.delCachedView(route).then(() => {
+          const { fullPath } = route
 
           nextTick(() => {
             router.replace({
@@ -162,22 +163,22 @@ export function useTabDropdown(tag, scrollPane) {
         break
       // 关闭当前标签页
       case MenuEventEnum.CLOSE_CURRENT:
-        closeSelectedTag(selectedTag)
+        closeSelectedTag(route)
         break
       // 关闭其他标签页
       case MenuEventEnum.CLOSE_OTHER:
-        router.push(selectedTag)
-        tabStore.delOthersViews(selectedTag).then(() => {
+        router.push(route)
+        tabStore.delOthersViews(route).then(() => {
           moveToCurrentTag()
         })
         break
       // 关闭所有标签页
       case MenuEventEnum.CLOSE_ALL:
         tabStore.delAllViews().then(({ visitedViews }) => {
-          if (unref(affixTags).some((tag: any) => tag.path === selectedTag.path)) {
+          if (unref(affixTags).some((tag: RouteLocationNormalized) => tag.path === route.path)) {
             return
           }
-          toLastView(visitedViews, selectedTag)
+          toLastView(visitedViews, route)
         })
         break
     }

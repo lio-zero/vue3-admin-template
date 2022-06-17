@@ -32,7 +32,7 @@ export interface Menu {
 
   path: string
 
-  // path contains param, auto assignment.
+  // 路径包含参数，自动分配。
   paramPath?: string
 
   disabled?: boolean
@@ -48,6 +48,8 @@ export interface Menu {
   tag?: MenuTag
 
   hideMenu?: boolean
+
+  noShowingChildren?: boolean
 }
 
 export interface MenuModule {
