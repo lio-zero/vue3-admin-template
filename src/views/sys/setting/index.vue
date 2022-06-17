@@ -5,27 +5,28 @@
         <p>个人信息</p>
       </template>
       <el-form
+        ref="ruleFormRef"
         :label-position="labelPosition"
         label-width="60px"
         :model="ruleForm"
         :rules="rules"
         style="max-width: 460px"
       >
-        <el-form-item label="姓名">
-          <el-input v-model="ruleForm.name" />
+        <el-form-item label="姓名" prop="realName">
+          <el-input v-model="ruleForm.realName" />
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-input v-model="ruleForm.email" />
         </el-form-item>
-        <el-form-item label="用户名">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="ruleForm.username" />
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password" />
         </el-form-item>
         <el-form-item>
           <el-button type="danger" @click="deleteHandler">删除</el-button>
-          <el-button @click="saveForm">更新</el-button>
+          <el-button @click="saveForm(ruleFormRef)">更新</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -33,15 +34,15 @@
 </template>
 
 <script setup lang="ts" name="Setting">
-import type { UserInfo } from '#/store'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
-import { isPhone, isEmail } from '@/utils/is'
+import { isEmail } from '@/utils/is'
+import type { FormRules, FormInstance } from 'element-plus'
 
 const userStore = useUserStore()
 const labelPosition = ref('right')
-const FormData = ref()
-const ruleForm: UserInfo = reactive(userStore.getUserInfo)
+const ruleFormRef = ref()
+const ruleForm = reactive(userStore.getUserInfo)
 
 const validEmail = (_rule: any, value: string, callback: any) => {
   if (value === '') {
@@ -53,13 +54,17 @@ const validEmail = (_rule: any, value: string, callback: any) => {
   }
 }
 
-const validPhone = (_rule: any, value: string, callback: any) => {
+const validRealName = (_rule: any, value: string, callback: any) => {
   if (value === '') {
-    callback(new Error('请输入手机号'))
-  } else if (value.toString().length < 10) {
-    callback(new Error('手机号需要11位'))
-  } else if (!isPhone(value)) {
-    callback(new Error('请输入正确的手机号'))
+    callback(new Error('请输入真实姓名'))
+  } else {
+    callback()
+  }
+}
+
+const validUsername = (_rule: any, value: string, callback: any) => {
+  if (value === '') {
+    callback(new Error('请输入用户名'))
   } else {
     callback()
   }
@@ -76,21 +81,11 @@ const validPass = (_rule: any, value: string, callback: any) => {
   }
 }
 
-const validConfirmPwd = (_rule: any, value: string, callback: any) => {
-  if (value === '') {
-    callback(new Error('请重新输入密码'))
-  } else if (value !== ruleForm.password) {
-    callback(new Error('两个密码输入不匹配！'))
-  } else {
-    callback()
-  }
-}
-
-const rules: object = reactive({
+const rules = reactive<FormRules>({
+  realName: [{ validator: validRealName, trigger: 'blur' }],
   email: [{ validator: validEmail, trigger: 'blur' }],
-  phone: [{ validator: validPhone, trigger: 'blur' }],
-  password: [{ validator: validPass, trigger: 'blur' }],
-  confirmPwd: [{ validator: validConfirmPwd, trigger: 'blur' }]
+  username: [{ validator: validUsername, trigger: 'blur' }],
+  password: [{ validator: validPass, trigger: 'blur' }]
 })
 
 const deleteHandler = () => {
@@ -113,8 +108,9 @@ const deleteHandler = () => {
     })
 }
 
-const saveForm = () => {
-  FormData.value.validate((valid: boolean) => {
+const saveForm = async (formEl: FormInstance) => {
+  if (!formEl) return
+  await formEl.validate((valid, _fields) => {
     if (valid) {
       ElMessage({
         message: '保存成功',
