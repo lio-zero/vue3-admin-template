@@ -29,6 +29,7 @@
   border-bottom: 1px solid var(--c-divider);
   background: var(--c-bg);
   overflow: hidden;
+  transition: background-color var(--el-transition-duration);
 
   &--fixed {
     position: fixed;

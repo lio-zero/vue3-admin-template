@@ -58,8 +58,9 @@ useResize()
     flex-direction: column;
     min-height: 100%;
     margin-left: 210px;
-    transition: margin-left 0.28s;
     background: var(--c-gray-bg);
+    transition: margin-left 0.28s, background-color var(--el-transition-duration),
+      color var(--el-transition-duration) !important;
 
     .vzr-footer-container {
       margin-top: auto;

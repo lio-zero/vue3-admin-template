@@ -6,6 +6,10 @@
   width: 22px;
 }
 
+.el-menu-item {
+  transition: background-color var(--el-transition-duration) !important;
+}
+
 .vzr-header-container {
   .el-badge__content {
     right: 10px !important;

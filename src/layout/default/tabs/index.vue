@@ -109,6 +109,8 @@ const closeMenu = () => {
   width: 100%;
   background: var(--c-bg);
   border-bottom: 1px solid var(--c-divider);
+  transition: background-color var(--el-transition-duration) !important;
+
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
