@@ -60,7 +60,7 @@ const { getVisitedViews } = useTabSetting()
 const { addTags, isActive, isAffix, moveToCurrentTag, closeSelectedTag, handleMenuEvent } =
   useTabDropdown(tag, scrollPane)
 
-const handleClickMenu = (item: any) => {
+const handleClickMenu = item => {
   handleMenuEvent(item, unref(selectedTag))
 }
 

@@ -36,7 +36,7 @@ onBeforeMount(async () => {
   routes.value = await buildRoutesAction()
 })
 
-const activeMenu: any = computed(() => {
+const activeMenu = computed(() => {
   const { meta, path } = route
 
   // 如果设置路径，侧栏将突出显示您设置的路径
