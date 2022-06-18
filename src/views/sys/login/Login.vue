@@ -26,7 +26,13 @@
           <el-button class="btn-half">
             <el-checkbox v-model="formData.rememberMe"> 记住我 </el-checkbox>
           </el-button>
-          <el-button class="btn-half" type="primary" icon="Lock" :loading="loading" @click="login">
+          <el-button
+            class="btn-half"
+            type="primary"
+            icon="Lock"
+            :loading="loading"
+            @click="login(loginForm)"
+          >
             登录
           </el-button>
         </el-form-item>
@@ -64,7 +70,7 @@ const validatePassword = (_rule: any, value: string, callback: any) => {
 }
 
 const loading = ref(false)
-const loginForm = ref<HTMLFormElement | null>(null)
+const loginForm = ref()
 const router = useRouter()
 const userStore = useUserStore()
 
