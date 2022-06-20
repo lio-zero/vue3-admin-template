@@ -45,6 +45,7 @@ const logo = ref(img)
   line-height: 50px;
   background: #2b2f3a;
   overflow: hidden;
+  transition: background-color var(--el-transition-duration) !important;
 
   & .sidebar-logo-link {
     height: 100%;

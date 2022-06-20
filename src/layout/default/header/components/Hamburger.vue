@@ -22,5 +22,6 @@ const toggleClick = () => emit('toggleClick')
 <style lang="scss" scoped>
 .hamburger {
   padding: 0 10px;
+  transition: color var(--el-transition-duration);
 }
 </style>

@@ -34,10 +34,10 @@
 </template>
 
 <script setup lang="ts" name="Setting">
+import type { FormRules, FormInstance } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { isEmail } from '@/utils/is'
-import type { FormRules, FormInstance } from 'element-plus'
 
 const userStore = useUserStore()
 const labelPosition = ref('right')

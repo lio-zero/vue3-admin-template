@@ -36,7 +36,7 @@ onBeforeMount(async () => {
   routes.value = await buildRoutesAction()
 })
 
-const activeMenu: any = computed(() => {
+const activeMenu = computed(() => {
   const { meta, path } = route
 
   // 如果设置路径，侧栏将突出显示您设置的路径
@@ -52,6 +52,7 @@ const activeMenu: any = computed(() => {
     vertical-align: -0.25em;
     transition: all 0.3s;
   }
+
   &:hover > .el-icon,
   .el-sub-menu__title:hover > .el-icon {
     transform: scale(1.2);

@@ -14,11 +14,11 @@
         <p class="mb-2 font-bold">你好!</p>
         <p class="mb-1 color-808080 text-13px">请登录您的帐户</p>
 
-        <el-form-item label="用户名">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="formData.username" />
         </el-form-item>
 
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="formData.password" type="password" />
         </el-form-item>
 
@@ -31,7 +31,7 @@
             type="primary"
             icon="Lock"
             :loading="loading"
-            @click="loginBtn"
+            @click="login(loginForm)"
           >
             登录
           </el-button>
@@ -47,6 +47,7 @@
   </div>
 </template>
 <script setup lang="ts" name="Login">
+import type { FormRules, FormInstance } from 'element-plus'
 import { validUsername } from '@/utils/validate'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
@@ -69,23 +70,24 @@ const validatePassword = (_rule: any, value: string, callback: any) => {
 }
 
 const loading = ref(false)
-const loginForm = ref<HTMLFormElement | null>(null)
+const loginForm = ref()
 const router = useRouter()
 const userStore = useUserStore()
 
-const rules = reactive({
+const rules = reactive<FormRules>({
   username: [{ required: true, trigger: 'blur', validator: validateUsername }],
   password: [{ required: true, trigger: 'blur', validator: validatePassword }]
 })
 
-const loginBtn = () => {
-  loginForm.value?.validate(async (valid: any) => {
+const login = async (formEl: FormInstance) => {
+  if (!formEl) return
+  await formEl.validate(async (valid, _fields) => {
     if (valid) {
       await userStore.login(formData)
       ElMessage.success('登录成功')
       router.push({ path: '/' })
     } else {
-      ElMessage.error('账号密码错误')
+      ElMessage.error('用户名、密码错误')
     }
   })
 }

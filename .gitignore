@@ -8,7 +8,7 @@ dist
 *.local
 
 # Editor directories and files
-.vscode
+# .vscode
 
 # Logs
 logs
