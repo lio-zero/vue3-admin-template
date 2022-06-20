@@ -42,11 +42,14 @@
     display: flex;
     margin: auto;
     align-items: center;
+
     &:focus {
       outline: none;
     }
+
     .vzr-setting-hover {
       transition: transform 0.3s ease-out;
+
       &:hover {
         transform: rotateZ(-90deg);
       }
@@ -59,25 +62,31 @@
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
+
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
+
         &:hover {
-          background: rgba(0, 0, 0, 0.025);
+          background: rgb(0 0 0 / 2.5%);
         }
       }
     }
+
     .avatar-container {
       padding-left: 10px;
+
       .avatar-wrapper {
         margin-top: 2px;
         position: relative;
+
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
+
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
@@ -127,10 +136,6 @@
   // setting dark
   .el-drawer__header {
     color: var(--c-text) !important;
-  }
-
-  .el-drawer__header {
-    border-bottom: 1px solid var(--c-divider);
     border-bottom: 1px solid var(--c-divider);
   }
 

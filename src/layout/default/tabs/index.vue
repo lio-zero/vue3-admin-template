@@ -125,12 +125,15 @@ const closeMenu = () => {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+
       &:first-of-type {
         margin-left: 15px;
       }
+
       &:last-of-type {
         margin-right: 15px;
       }
+
       &.active {
         background-color: #1890ff;
         color: #fff;
@@ -138,6 +141,7 @@ const closeMenu = () => {
       }
     }
   }
+
   .contextmenu {
     margin: 0;
     width: 160px;
@@ -151,10 +155,12 @@ const closeMenu = () => {
     font-weight: 400;
     color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+
     li {
       margin: 0;
       padding: 7px 16px;
       cursor: pointer;
+
       &:hover {
         background: #eee;
       }
@@ -174,15 +180,18 @@ const closeMenu = () => {
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
+
       &:before {
         transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }
+
       &:hover {
         transform: scale(1.2);
       }
     }
+
     &:hover .el-icon-close {
       display: inline-block !important;
     }

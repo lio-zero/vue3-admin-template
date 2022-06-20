@@ -42,6 +42,7 @@ useResize()
 <style lang="scss" scoped>
 .default-layout {
   height: 100%;
+
   .drawer-bg {
     background: #000;
     opacity: 0.3;

@@ -52,6 +52,7 @@ const activeMenu = computed(() => {
     vertical-align: -0.25em;
     transition: all 0.3s;
   }
+
   &:hover > .el-icon,
   .el-sub-menu__title:hover > .el-icon {
     transform: scale(1.2);
