@@ -14,12 +14,8 @@
       >
         <span @click="navigate" @keypress.enter="navigate" role="link">
           {{ tagItem.title }}
-          <el-icon v-if="!isAffix(tagItem)" class="align-sub">
-            <Close
-              v-show="isActive(tagItem)"
-              class="el-icon-close"
-              @click.prevent.stop="closeSelectedTag(tagItem)"
-            />
+          <el-icon v-if="!isAffix(tagItem)" class="align-sub el-icon-close">
+            <Close @click.prevent.stop="closeSelectedTag(tagItem)" />
           </el-icon>
         </span>
       </router-link>
@@ -125,6 +121,8 @@ const closeMenu = () => {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+      transition: padding var(--el-transition-duration)
+        var(--el-transition-function-ease-in-out-bezier);
 
       &:first-of-type {
         margin-left: 15px;
@@ -135,9 +133,44 @@ const closeMenu = () => {
       }
 
       &.active {
-        background-color: #1890ff;
-        color: #fff;
         border-color: #1890ff;
+        color: #fff;
+        background-color: #1890ff;
+
+        & .el-icon-close {
+          width: 16px;
+        }
+
+        &::before {
+          content: '';
+          background: #fff;
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          position: relative;
+          margin-right: 8px;
+        }
+      }
+
+      &:hover .el-icon-close {
+        width: 16px;
+      }
+
+      .el-icon-close {
+        position: relative;
+        right: -2px;
+        width: 0;
+        height: 16px;
+        overflow: hidden;
+        vertical-align: -2px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transform-origin: 100% 50%;
+
+        &:hover {
+          transform: scale(1.2);
+        }
       }
     }
   }
@@ -164,36 +197,6 @@ const closeMenu = () => {
       &:hover {
         background: #eee;
       }
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-// reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: 2px;
-      text-align: center;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      transform-origin: 100% 50%;
-
-      &:before {
-        transform: scale(0.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-
-      &:hover {
-        transform: scale(1.2);
-      }
-    }
-
-    &:hover .el-icon-close {
-      display: inline-block !important;
     }
   }
 }
