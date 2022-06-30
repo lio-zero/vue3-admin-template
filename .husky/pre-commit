@@ -4,6 +4,5 @@
 
 [ -n "$CI" ] && exit 0
 
-# Format and submit code according to lintstagedrc.js configuration
 # 根据 lintstagedrc.js 配置格式化并提交代码。
 npm run lint:lint-staged
