@@ -1,85 +1,8 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "volar.tsPlugin": true,
-  "volar.tsPluginStatus": false,
-  //===========================================
-  //============= Editor ======================
-  //===========================================
-  "editor.tabSize": 2,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  //===========================================
-  //============= files =======================
-  //===========================================
-  "files.eol": "\n",
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/*.log": true,
-    "**/*.log*": true,
-    "**/dist": true,
-    "**/.git": true,
-    "**/.gitignore": true,
-    "**/.DS_Store": true,
-    "**/.idea": true,
-    "**/.vscode": false,
-    "**/yarn.lock": true,
-    "**/.yarn": true,
-    "**/pnpm.lock": true,
-    "yarn-error.log": true,
-    "dist": true,
-    "node_modules": true
-  },
-  "files.exclude": {
-    "**/.cache": true,
-    "**/.editorconfig": true,
-    "**/.eslintcache": true,
-    "**/.idea": true,
-    "**/.git": true,
-    "**/.DS_Store": true
-  },
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.vscode/**": true,
-    "**/node_modules/**": true,
-    "**/dist/**": true,
-    "**/yarn.lock": true
-  },
-  "stylelint.enable": true,
-  "stylelint.packageManager": "pnpm",
-  "path-intellisense.mappings": {
-    "@/": "${workspaceRoot}/src"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[less]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
+    "source.fixAll": false,
     "source.fixAll.eslint": true
-  },
-  "[vue]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": false
-    }
   },
   "cSpell.words": [
     "vlio",
@@ -96,15 +19,7 @@
     "unplugin",
     "windicss",
     "nprogress",
-    "browserslist"
+    "browserslist",
+    "lintstagedrc"
   ],
-  "[dotenv]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
 }

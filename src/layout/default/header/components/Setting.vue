@@ -2,7 +2,6 @@
   <div class="nav-btn setting">
     <el-tooltip effect="dark" content="设置" placement="bottom">
       <div class="right-menu-item cursor-pointer" @click="toggleSetting">
-        <!-- <SvgIcon class="vzr-setting-hover" size="20" name="settings" /> -->
         <Icon size="20" icon="ci:settings-filled" />
       </div>
     </el-tooltip>

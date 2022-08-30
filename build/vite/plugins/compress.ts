@@ -1,5 +1,5 @@
 /**
- * @description 用于打包和输出 gzip。请注意，这在 Vite 中无法正常工作，具体原因仍在调查中
+ * @description 用于打包和输出 gzip。
  * @link https://github.com/anncwb/vite-plugin-compression
  */
 import type { PluginOption } from 'vite'

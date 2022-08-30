@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "octref.vetur",
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "stylelint.vscode-stylelint",
