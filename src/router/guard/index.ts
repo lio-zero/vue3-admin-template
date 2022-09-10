@@ -1,13 +1,13 @@
-import type { Router, RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationNormalized, Router } from 'vue-router'
 
 import NProgress from 'nprogress'
+import { createPermissionGuard } from './permissionGuard'
+import { createParamMenuGuard } from './paramMenuGuard'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { setRouteChange } from '@/logics/mitt/routeChange'
 import { AxiosCanceler } from '@/utils/http/axiosCancel'
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting'
-import { createPermissionGuard } from './permissionGuard'
-import { createParamMenuGuard } from './paramMenuGuard'
 // import { createStateGuard } from './stateGuard'
 import projectSetting from '@/settings/projectSetting'
 
@@ -28,7 +28,7 @@ export function setupRouterGuard(router: Router) {
 function createPageGuard(router: Router) {
   const loadedPageMap = new Map<string, boolean>()
 
-  router.beforeEach(async to => {
+  router.beforeEach(async (to) => {
     // 页面已经加载，再次打开会更快，无需进行加载和其他处理
     to.meta.loaded = !!loadedPageMap.get(to.path)
     // 通知路由更改
@@ -37,7 +37,7 @@ function createPageGuard(router: Router) {
     return true
   })
 
-  router.afterEach(to => {
+  router.afterEach((to) => {
     loadedPageMap.set(to.path, true)
   })
 }
@@ -47,9 +47,11 @@ function createPageLoadingGuard(router: Router) {
   const appStore = useAppStoreWithOut()
   const { getOpenPageLoading } = useTransitionSetting()
 
-  router.beforeEach(async to => {
-    if (!userStore.getToken) return true
-    if (to.meta.loaded) return true
+  router.beforeEach(async (to) => {
+    if (!userStore.getToken)
+      return true
+    if (to.meta.loaded)
+      return true
 
     if (unref(getOpenPageLoading)) {
       appStore.setPageLoadingAction(true)
@@ -78,9 +80,9 @@ function createPageLoadingGuard(router: Router) {
 function createHttpGuard(router: Router) {
   const { removeAllHttpPending } = projectSetting
   let axiosCanceler: Nullable<AxiosCanceler>
-  if (removeAllHttpPending) {
+  if (removeAllHttpPending)
     axiosCanceler = new AxiosCanceler()
-  }
+
   router.beforeEach(async () => {
     // 切换路由将删除以前的请求
     axiosCanceler?.removeAllPending()
@@ -90,11 +92,11 @@ function createHttpGuard(router: Router) {
 
 // 路由切换滚动至顶部
 function createScrollGuard(router: Router) {
-  const isHash = (href: string) => /^#/.test(href)
+  const isHash = (href: string) => href.startsWith('#')
 
   const body = document.body
 
-  router.afterEach(async to => {
+  router.afterEach(async (to) => {
     // 滚动至顶部
     isHash((to as RouteLocationNormalized & { href: string })?.href) && body.scrollTo(0, 0)
     return true
@@ -105,10 +107,9 @@ function createScrollGuard(router: Router) {
 export function createProgressGuard(router: Router) {
   NProgress.configure({ showSpinner: false })
   const { getOpenNProgress } = useTransitionSetting()
-  router.beforeEach(async to => {
-    if (to.meta.loaded) {
+  router.beforeEach(async (to) => {
+    if (to.meta.loaded)
       return true
-    }
 
     unref(getOpenNProgress) && NProgress.start()
     return true

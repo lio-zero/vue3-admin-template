@@ -1,4 +1,4 @@
-import type { Router, RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw, Router } from 'vue-router'
 import { getPageTitle } from '@/utils/get-page-title'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
@@ -29,7 +29,8 @@ export function createPermissionGuard(router: Router) {
             next((to.query?.redirect as string) || '/')
             return
           }
-        } catch {}
+        }
+        catch {}
       }
       next()
       return
@@ -46,13 +47,13 @@ export function createPermissionGuard(router: Router) {
       // 重定向登录页
       const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
         path: LOGIN_PATH,
-        replace: true
+        replace: true,
       }
 
       if (to.path) {
         redirectData.query = {
           ...redirectData.query,
-          redirect: to.path
+          redirect: to.path,
         }
       }
 
@@ -62,9 +63,9 @@ export function createPermissionGuard(router: Router) {
 
     // 处理登录后跳转到 404 页
     if (
-      from.path === LOGIN_PATH &&
-      to.name === PAGE_NOT_FOUND_ROUTE.name &&
-      to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
+      from.path === LOGIN_PATH
+      && to.name === PAGE_NOT_FOUND_ROUTE.name
+      && to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
     ) {
       next(userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
       return
@@ -74,7 +75,8 @@ export function createPermissionGuard(router: Router) {
     if (userStore.getLastUpdateTime === 0) {
       try {
         await userStore.getUserInfoAction()
-      } catch (err) {
+      }
+      catch (err) {
         next()
         return
       }
@@ -87,7 +89,7 @@ export function createPermissionGuard(router: Router) {
 
     const routes = await permissionStore.buildRoutesAction()
 
-    routes.forEach(route => {
+    routes.forEach((route) => {
       router.addRoute(route as unknown as RouteRecordRaw)
     })
 
@@ -98,7 +100,8 @@ export function createPermissionGuard(router: Router) {
     if (to.name === PAGE_NOT_FOUND_ROUTE.name) {
       // 动态添加路由后，此处应当重定向到 fullPath，否则会加载 404 页面内容
       next({ path: to.fullPath, replace: true, query: to.query })
-    } else {
+    }
+    else {
       const redirectPath = (from.query.redirect || to.path) as string
       const redirect = decodeURIComponent(redirectPath)
       const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }

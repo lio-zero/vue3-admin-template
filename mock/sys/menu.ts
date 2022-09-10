@@ -1,5 +1,6 @@
-import { MockMethod } from 'vite-plugin-mock'
-import { resultSuccess, resultError, getRequestToken, requestParams } from '../_util'
+import type { MockMethod } from 'vite-plugin-mock'
+import type { requestParams } from '../_util'
+import { getRequestToken, resultError, resultSuccess } from '../_util'
 import { fakeUser } from './user'
 
 const dashboardRoute = {
@@ -11,9 +12,9 @@ const dashboardRoute = {
       path: 'dashboard',
       name: 'Dashboard',
       component: '@/views/dashboard/index.vue',
-      meta: { title: '首页', icon: 'HomeFilled', badge: 'new' }
-    }
-  ]
+      meta: { title: '首页', icon: 'HomeFilled', badge: 'new' },
+    },
+  ],
 }
 
 export default [
@@ -23,22 +24,22 @@ export default [
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request)
-      if (!token) {
+      if (!token)
         return resultError('Invalid token!')
-      }
+
       const checkUser = fakeUser().find(item => item.token === token)
-      if (!checkUser) {
+      if (!checkUser)
         return resultError('Invalid user token!')
-      }
+
       const id = checkUser.userId
       let menu: Object[]
       switch (id) {
         case 1:
-          dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[0].path
+          dashboardRoute.redirect = `${dashboardRoute.path}/${dashboardRoute.children[0].path}`
           menu = [dashboardRoute]
           break
         case 2:
-          dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[1].path
+          dashboardRoute.redirect = `${dashboardRoute.path}/${dashboardRoute.children[1].path}`
           menu = [dashboardRoute]
           break
         default:
@@ -46,6 +47,6 @@ export default [
       }
 
       return resultSuccess(menu)
-    }
-  }
+    },
+  },
 ] as MockMethod[]

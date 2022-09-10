@@ -6,5 +6,5 @@ export enum PageEnum {
   // 错误页面路径
   ERROR_PAGE = '/exception',
   // 错误日志页面路径
-  ERROR_LOG_PAGE = '/error-log/list'
+  ERROR_LOG_PAGE = '/error-log/list',
 }

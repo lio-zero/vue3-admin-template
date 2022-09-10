@@ -7,14 +7,25 @@
     "email": "licroning@163.com",
     "url": "https://github.com/lio-zero"
   },
+  "license": "MIT",
+  "homepage": "https://github.com/lio-zero/vue3-admin-template",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lio-zero/vue3-admin-template"
+  },
+  "bugs": {
+    "url": "https://github.com/lio-zero/vue3-admin-template/issues"
+  },
+  "engines": {
+    "node": "^12 || >=14"
+  },
   "scripts": {
     "serve": "npm run dev",
     "dev": "vite",
-    "build": "cross-env NODE_ENV=production vite build",
+    "build": "vite build",
     "preview": "npm run build && vite preview",
     "preview:dist": "vite preview",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
-    "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
@@ -43,14 +54,13 @@
     "vue-types": "^4.1.1"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.26.3",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@iconify/json": "^2.1.79",
     "@purge-icons/generated": "^0.8.1",
     "@types/node": "^18.0.6",
     "@types/nprogress": "^0.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-    "@typescript-eslint/parser": "^5.30.7",
     "@vitejs/plugin-legacy": "^2.0.0",
     "@vitejs/plugin-vue": "^3.0.1",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
@@ -59,17 +69,11 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "eslint": "^8.20.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-define-config": "^1.5.1",
-    "eslint-plugin-jest": "^26.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.2.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "postcss": "^8.4.14",
     "postcss-html": "^1.5.0",
     "postcss-scss": "^4.0.4",
-    "prettier": "^2.7.1",
     "rollup-plugin-visualizer": "^5.7.1",
     "sass": "^1.54.0",
     "stylelint": "^14.9.1",
@@ -79,13 +83,13 @@
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-order": "^5.0.0",
+    "terser": "^5.15.0",
     "typescript": "^4.7.4",
     "unplugin-auto-import": "^0.9.3",
     "unplugin-icons": "^0.14.7",
     "unplugin-vue-components": "^0.21.1",
     "vite": "^3.0.2",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-eslint": "^1.7.0",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-pages": "^0.25.0",
@@ -97,17 +101,5 @@
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vite-plugin-windicss": "^1.8.7",
     "vue-tsc": "^0.38.8"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lio-zero/vue3-admin-template"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lio-zero/vue3-admin-template/issues"
-  },
-  "homepage": "https://github.com/lio-zero/vue3-admin-template",
-  "engines": {
-    "node": "^12 || >=14"
   }
 }

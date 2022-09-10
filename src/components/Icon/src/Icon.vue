@@ -1,17 +1,10 @@
-<template>
-  <SvgIcon :size="size" :name="getSvgIcon" v-if="isSvgIcon" />
-  <el-icon v-else>
-    <span ref="elRef" class="app-iconify" :style="getWrapStyle"></span>
-  </el-icon>
-</template>
 <script lang="ts" setup name="Icon">
-import type { PropType } from 'vue'
-import { CSSProperties } from 'vue'
+import type { CSSProperties, PropType } from 'vue'
+
 import Iconify from '@purge-icons/generated'
 import { isString } from '@/utils/is'
 import { propTypes } from '@/utils/propTypes'
 
-const SVG_END_WITH_FLAG = '|svg'
 const props = defineProps({
   // icon name
   icon: propTypes.string,
@@ -20,33 +13,38 @@ const props = defineProps({
   // icon size
   size: {
     type: [String, Number] as PropType<string | number>,
-    default: 16
+    default: 16,
   },
   spin: propTypes.bool.def(false),
-  prefix: propTypes.string.def('')
+  prefix: propTypes.string.def(''),
 })
+const SVG_END_WITH_FLAG = '|svg'
 const elRef = ref<ElRef>(null)
 
 const isSvgIcon = computed(() => props.icon?.endsWith(SVG_END_WITH_FLAG))
 const getSvgIcon = computed(() => props.icon.replace(SVG_END_WITH_FLAG, ''))
-const getIconRef = computed(() => `${props.prefix ? props.prefix + ':' : ''}${props.icon}`)
+const getIconRef = computed(() => `${props.prefix ? `${props.prefix}:` : ''}${props.icon}`)
 
 const update = async () => {
-  if (unref(isSvgIcon)) return
+  if (unref(isSvgIcon))
+    return
 
   const el = unref(elRef)
-  if (!el) return
+  if (!el)
+    return
 
   await nextTick()
   const icon = unref(getIconRef)
-  if (!icon) return
+  if (!icon)
+    return
 
   const svg = Iconify.renderSVG(icon, {})
 
   if (svg) {
     el.textContent = ''
     el.appendChild(svg)
-  } else {
+  }
+  else {
     const span = document.createElement('span')
     span.className = 'iconify'
     span.dataset.icon = icon
@@ -58,14 +56,13 @@ const update = async () => {
 const getWrapStyle = computed((): CSSProperties => {
   const { size, color } = props
   let fs = size
-  if (isString(size)) {
+  if (isString(size))
     fs = parseInt(size, 10)
-  }
 
   return {
     fontSize: `${fs}px`,
-    color: color,
-    display: 'inline-flex'
+    color,
+    display: 'inline-flex',
   }
 })
 
@@ -73,6 +70,13 @@ watch(() => props.icon, update, { flush: 'post' })
 
 onMounted(update)
 </script>
+
+<template>
+  <SvgIcon v-if="isSvgIcon" :size="size" :name="getSvgIcon" />
+  <el-icon v-else>
+    <span ref="elRef" class="app-iconify" :style="getWrapStyle" />
+  </el-icon>
+</template>
 
 <style lang="scss">
 .app-iconify {

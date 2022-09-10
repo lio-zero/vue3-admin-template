@@ -17,6 +17,6 @@ export function useRootSetting() {
     getShowFullScreen,
     getColorWeak,
     getGrayMode,
-    getShowLogo
+    getShowLogo,
   }
 }

@@ -1,28 +1,23 @@
-<template>
-  <svg class="svg-icon-spin" :style="getStyle" aria-hidden="true">
-    <use :xlink:href="symbolId" />
-  </svg>
-</template>
 <script lang="ts" setup name="SvgIcon">
 import type { CSSProperties } from 'vue'
 
 const props = defineProps({
   prefix: {
     type: String,
-    default: 'icon'
+    default: 'icon',
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   size: {
     type: [Number, String],
-    default: 16
+    default: 16,
   },
   spin: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const symbolId = computed(() => `#${props.prefix}-${props.name}`)
@@ -34,10 +29,17 @@ const getStyle = computed((): CSSProperties => {
   s = `${s.replace('px', '')}px`
   return {
     width: s,
-    height: s
+    height: s,
   }
 })
 </script>
+
+<template>
+  <svg class="svg-icon-spin" :style="getStyle" aria-hidden="true">
+    <use :xlink:href="symbolId" />
+  </svg>
+</template>
+
 <style lang="scss" scoped name="SvgIcon">
 .svg-icon-spin {
   display: inline-block;

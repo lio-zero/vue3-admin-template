@@ -10,9 +10,9 @@ const dashboard: AppRouteModule = {
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index.vue'),
-      meta: { title: '首页', icon: 'dashicons:dashboard', affix: true }
-    }
-  ]
+      meta: { title: '首页', icon: 'dashicons:dashboard', affix: true },
+    },
+  ],
 }
 
 export default dashboard

@@ -1,6 +1,6 @@
-import type { ProjectConfig, TransitionSetting, HeaderSetting } from '#/config'
-import { store } from '@/store'
 import { defineStore } from 'pinia'
+import type { HeaderSetting, ProjectConfig, TransitionSetting } from '#/config'
+import { store } from '@/store'
 
 import { Persistent } from '@/utils/cache/persistent'
 import { PROJ_CFG_KEY } from '@/enums/cacheEnum'
@@ -20,7 +20,7 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     pageLoading: false,
     projectConfig: Persistent.getLocal(PROJ_CFG_KEY),
-    device: 'desktop'
+    device: 'desktop',
   }),
   getters: {
     getProjectConfig(): ProjectConfig {
@@ -34,7 +34,7 @@ export const useAppStore = defineStore({
     },
     getHeaderSetting(): HeaderSetting {
       return this.getProjectConfig.headerSetting
-    }
+    },
   },
   actions: {
     toggleDevice(device: string) {
@@ -54,7 +54,8 @@ export const useAppStore = defineStore({
         timeId = setTimeout(() => {
           this.setPageLoading(loading)
         }, 50)
-      } else {
+      }
+      else {
         this.setPageLoading(loading)
         clearTimeout(timeId)
       }
@@ -62,8 +63,8 @@ export const useAppStore = defineStore({
     setProjectConfig(config: DeepPartial<ProjectConfig>): void {
       this.projectConfig = deepMerge(this.projectConfig || {}, config)
       Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig)
-    }
-  }
+    },
+  },
 })
 
 export function useAppStoreWithOut() {

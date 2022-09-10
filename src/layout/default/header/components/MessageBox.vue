@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div aria-label="Message" class="nav-btn">
     <el-tooltip effect="dark" content="消息" placement="bottom">
@@ -7,5 +9,3 @@
     </el-tooltip>
   </div>
 </template>
-
-<script setup lang="ts"></script>

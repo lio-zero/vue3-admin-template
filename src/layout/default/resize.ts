@@ -26,7 +26,7 @@ export function useResize() {
       if (isMobile()) {
         setMenuSetting({
           collapsed: false,
-          withoutAnimation: true
+          withoutAnimation: true,
         })
       }
     }
@@ -39,7 +39,7 @@ export function useResize() {
 
       setMenuSetting({
         collapsed: false,
-        withoutAnimation: true
+        withoutAnimation: true,
       })
     }
   })

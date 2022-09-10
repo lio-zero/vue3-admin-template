@@ -1,21 +1,23 @@
+import type { RouteLocationNormalized } from 'vue-router'
+import { toRaw } from 'vue'
+import { omit, pick } from 'lodash-es'
+import { Memory } from './memory'
 import type { UserInfo } from '#/store'
 import type { ProjectConfig } from '#/config'
-import type { RouteLocationNormalized } from 'vue-router'
 
 import { createLocalStorage, createSessionStorage } from '@/utils/cache'
-import { Memory } from './memory'
-import {
-  TOKEN_KEY,
-  USER_INFO_KEY,
-  ROLES_KEY,
+import type {
+  MULTIPLE_TABS_KEY,
   PROJ_CFG_KEY,
+  ROLES_KEY,
+} from '@/enums/cacheEnum'
+import {
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
-  MULTIPLE_TABS_KEY
+  TOKEN_KEY,
+  USER_INFO_KEY,
 } from '@/enums/cacheEnum'
 import { DEFAULT_CACHE_TIME } from '@/settings/encryptionSetting'
-import { toRaw } from 'vue'
-import { pick, omit } from 'lodash-es'
 
 interface BasicStore {
   [TOKEN_KEY]: string | number | null | undefined
@@ -80,6 +82,7 @@ export class Persistent {
     sessionMemory.remove(key)
     immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache)
   }
+
   static clearSession(immediate = false): void {
     sessionMemory.clear()
     immediate && ss.clear()
@@ -95,15 +98,15 @@ export class Persistent {
   }
 }
 
-window.addEventListener('beforeunload', function () {
+window.addEventListener('beforeunload', () => {
   // TOKEN_KEY 在登录或注销时已经写入到 storage 了，此处为了解决同时打开多个窗口时 token 不同步的问题
   ls.set(APP_LOCAL_CACHE_KEY, {
     ...omit(localMemory.getCache),
-    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY])
+    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
   })
   ss.set(APP_SESSION_CACHE_KEY, {
     ...omit(sessionMemory.getCache),
-    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY])
+    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
   })
 })
 
@@ -116,12 +119,11 @@ function storageChange(e: any) {
   }
 
   if (!!newValue && !!oldValue) {
-    if (APP_LOCAL_CACHE_KEY === key) {
+    if (APP_LOCAL_CACHE_KEY === key)
       Persistent.clearLocal()
-    }
-    if (APP_SESSION_CACHE_KEY === key) {
+
+    if (APP_SESSION_CACHE_KEY === key)
       Persistent.clearSession()
-    }
   }
 }
 

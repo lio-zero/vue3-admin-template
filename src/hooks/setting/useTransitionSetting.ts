@@ -1,5 +1,5 @@
-import type { TransitionSetting } from '#/config'
 import { computed } from 'vue'
+import type { TransitionSetting } from '#/config'
 import { useAppStore } from '@/store/modules/app'
 
 export function useTransitionSetting() {
@@ -24,6 +24,6 @@ export function useTransitionSetting() {
     getEnableTransition,
     getOpenNProgress,
     getOpenPageLoading,
-    getBasicTransition
+    getBasicTransition,
   }
 }

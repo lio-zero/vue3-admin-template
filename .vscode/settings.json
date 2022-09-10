@@ -5,7 +5,8 @@
     "source.fixAll.eslint": true
   },
   "cSpell.words": [
-    "vlio",
+    "antfu",
+    "nuxt",
     "unref",
     "Validable",
     "windi",
@@ -14,12 +15,12 @@
     "browserify",
     "iconify",
     "vueuse",
-    "demi",
     "brotli",
     "unplugin",
     "windicss",
     "nprogress",
     "browserslist",
-    "lintstagedrc"
+    "lintstagedrc",
+    "taze"
   ],
 }

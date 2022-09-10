@@ -1,5 +1,5 @@
-import type { GlobEnvConfig } from '#/config'
 import pkg from '../../package.json'
+import type { GlobEnvConfig } from '#/config'
 import { warn } from '@/utils/log'
 
 export function getCommonStoragePrefix() {
@@ -22,19 +22,18 @@ export function getAppEnvConfig() {
     VITE_GLOB_API_URL,
     VITE_GLOB_APP_SHORT_NAME,
     VITE_GLOB_API_URL_PREFIX,
-    VITE_GLOB_UPLOAD_URL
+    VITE_GLOB_UPLOAD_URL,
   } = ENV
 
-  if (!/^[0-9a-zA-Z\_]*$/.test(VITE_GLOB_APP_SHORT_NAME)) {
-    warn(`VITE_GLOB_APP_SHORT_NAME 变量只能是数字/字符/下划线，请在环境变量中修改并重新运行。`)
-  }
+  if (!/^[0-9a-zA-Z\_]*$/.test(VITE_GLOB_APP_SHORT_NAME))
+    warn('VITE_GLOB_APP_SHORT_NAME 变量只能是数字/字符/下划线，请在环境变量中修改并重新运行。')
 
   return {
     VITE_GLOB_APP_TITLE,
     VITE_GLOB_API_URL,
     VITE_GLOB_APP_SHORT_NAME,
     VITE_GLOB_API_URL_PREFIX,
-    VITE_GLOB_UPLOAD_URL
+    VITE_GLOB_UPLOAD_URL,
   }
 }
 

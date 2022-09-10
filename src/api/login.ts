@@ -4,31 +4,31 @@ enum Api {
   Login = '/login',
   Logout = '/logout',
   GetUserDetail = '/user/getUserDetail',
-  RefreshToken = '/refreshToken'
+  RefreshToken = '/refreshToken',
 }
 
 export function login(params: any) {
   return http.post({
     url: '/login',
-    params
+    params,
   })
 }
 
 export function doLogout() {
   return http.get({
-    url: Api.Logout
+    url: Api.Logout,
   })
 }
 
 export function getUserInfo() {
   return http.get({
-    url: Api.GetUserDetail
+    url: Api.GetUserDetail,
   })
 }
 
 export function getNewToken(params: any) {
   return http.post({
     url: Api.RefreshToken,
-    params
+    params,
   })
 }

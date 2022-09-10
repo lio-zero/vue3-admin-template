@@ -52,7 +52,7 @@ const codeMap = {
   '-3003': '用户未登录',
   '-3004': '原始密码错误',
   '-3005': '密码不一致',
-  '-10001': '您当前没有访问权限'
+  '-10001': '您当前没有访问权限',
 }
 
 const errorMap = {
@@ -70,7 +70,7 @@ const errorMap = {
   ADMIN_HAVE_EXIST: '-3002',
   OPUSER_NO_LOGIN: '-3003',
   ORIGIN_PWD_ERROR: '-3004',
-  PWD_INCONFORM: '-3005'
+  PWD_INCONFORM: '-3005',
 }
 
 export const checkStatus = (status: number, msg: string): string => {

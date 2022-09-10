@@ -1,21 +1,21 @@
+<script setup lang="ts" name="Footer">
+import { openWindow } from '@/utils'
+import { GITHUB_URL } from '@/settings/siteSetting'
+</script>
+
 <template>
   <footer class="vzr-footer-container">
     <div class="vzr-footer_links">
       <Icon
         class="vzr-footer__github cursor-pointer"
-        @click="openWindow(GITHUB_URL)"
         size="24"
         icon="ant-design:github-filled"
+        @click="openWindow(GITHUB_URL)"
       />
     </div>
-    <div>Copyright &copy;2020 vlio Admin</div>
+    <div>Copyright &copy;2020 vue3-admin-template</div>
   </footer>
 </template>
-
-<script setup lang="ts" name="Footer">
-import { openWindow } from '@/utils'
-import { GITHUB_URL } from '@/settings/siteSetting'
-</script>
 
 <style lang="scss" scoped>
 .vzr-footer-container {

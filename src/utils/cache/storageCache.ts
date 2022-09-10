@@ -10,23 +10,16 @@ export interface CreateStorageParams extends EncryptionParams {
   timeout?: Nullable<number>
 }
 
-export interface CreateStorageParams extends EncryptionParams {
-  prefixKey: string
-  storage: Storage
-  hasEncrypt: boolean
-  timeout?: Nullable<number>
-}
 export const createStorage = ({
   prefixKey = '',
   storage = sessionStorage,
   key = cacheCipher.key,
   iv = cacheCipher.iv,
   timeout = null,
-  hasEncrypt = true
+  hasEncrypt = true,
 }: Partial<CreateStorageParams> = {}) => {
-  if (hasEncrypt && [key.length, iv.length].some(item => item !== 16)) {
+  if (hasEncrypt && [key.length, iv.length].some(item => item !== 16))
     throw new Error('当 hasEncrypt 为 true 时，密钥或 iv 必须为 16 位！')
-  }
 
   const encryption = new AesEncryption({ key, iv })
 
@@ -67,7 +60,7 @@ export const createStorage = ({
       const stringData = JSON.stringify({
         value,
         time: Date.now(),
-        expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null
+        expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null,
       })
       const stringifyValue = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData
       this.storage.setItem(this.getKey(key), stringifyValue)
@@ -81,17 +74,19 @@ export const createStorage = ({
      */
     get(key: string, def: any = null): any {
       const val = this.storage.getItem(this.getKey(key))
-      if (!val) return def
+      if (!val)
+        return def
 
       try {
         const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val
         const data = JSON.parse(decVal)
         const { value, expire } = data
-        if (isNullOrUnDef(expire) || expire >= new Date().getTime()) {
+        if (isNullOrUnDef(expire) || expire >= new Date().getTime())
           return value
-        }
+
         this.remove(key)
-      } catch (e) {
+      }
+      catch (e) {
         return def
       }
     }

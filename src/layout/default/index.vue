@@ -1,28 +1,11 @@
-<template>
-  <div :class="classObj" class="default-layout">
-    <div
-      v-if="getDevice === 'mobile' && getCollapsed"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    ></div>
-    <LayoutSidebar class="vzr-sidebar-container" />
-    <div class="main-container">
-      <div v-if="getHeaderFixed" style="height: 84px"></div>
-      <LayoutHeader />
-      <LayoutMain />
-      <LayoutFooter />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import LayoutSidebar from './sidebar/index.vue'
 import LayoutHeader from './header/index.vue'
 import LayoutMain from './content/index.vue'
 import LayoutFooter from './footer/index.vue'
+import { useResize } from './resize'
 import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting'
 import { useMenuSetting } from '@/hooks/setting/useMenuSetting'
-import { useResize } from './resize'
 
 const { getHeaderFixed } = useHeaderSetting()
 const { getDevice, getCollapsed, getWithoutAnimation, handleClickOutside } = useMenuSetting()
@@ -32,12 +15,29 @@ const classObj = computed(() => {
     hideSidebar: !unref(getCollapsed),
     openSidebar: unref(getCollapsed),
     withoutAnimation: unref(getWithoutAnimation),
-    mobile: unref(getDevice) === 'mobile'
+    mobile: unref(getDevice) === 'mobile',
   }
 })
 
 useResize()
 </script>
+
+<template>
+  <div :class="classObj" class="default-layout">
+    <div
+      v-if="getDevice === 'mobile' && getCollapsed"
+      class="drawer-bg"
+      @click="handleClickOutside"
+    />
+    <LayoutSidebar class="vzr-sidebar-container" />
+    <div class="main-container">
+      <div v-if="getHeaderFixed" style="height: 84px" />
+      <LayoutHeader />
+      <LayoutMain />
+      <LayoutFooter />
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .default-layout {

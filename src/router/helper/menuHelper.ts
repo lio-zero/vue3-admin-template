@@ -1,10 +1,10 @@
-import { AppRouteModule } from '@/router/types'
-import type { MenuModule, Menu, AppRouteRecordRaw } from '@/router/types'
-import { findPath, treeMap } from '@/utils/helper/treeHelper'
 import { cloneDeep } from 'lodash-es'
-import { isUrl } from '@/utils/is'
-import { RouteParams } from 'vue-router'
+import type { RouteParams } from 'vue-router'
 import { toRaw } from 'vue'
+import type { AppRouteModule, AppRouteRecordRaw, Menu, MenuModule } from '@/router/types'
+
+import { findPath, treeMap } from '@/utils/helper/treeHelper'
+import { isUrl } from '@/utils/is'
 
 export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
   const menuList = findPath(treeData, n => n.path === path) as Menu[]
@@ -21,9 +21,8 @@ function joinParentPath(menus: Menu[], parentPath = '') {
       // 路径不是以 / 开头，也不是 url，请加入父路径
       menu.path = `${parentPath}/${menu.path}`
     }
-    if (menu?.children?.length) {
+    if (menu?.children?.length)
       joinParentPath(menu.children, menu.meta?.hidePathForChildren ? parentPath : menu.path)
-    }
   }
 }
 
@@ -41,14 +40,15 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
   const cloneRouteModList = cloneDeep(routeModList)
   const routeList: AppRouteRecordRaw[] = []
 
-  cloneRouteModList.forEach(item => {
-    if (routerMapping && item.meta?.hideChildrenInMenu && typeof item.redirect === 'string') {
+  cloneRouteModList.forEach((item) => {
+    if (routerMapping && item.meta?.hideChildrenInMenu && typeof item.redirect === 'string')
       item.path = item.redirect
-    }
+
     if (item.meta?.single) {
       const realItem = item?.children?.[0]
       realItem && routeList.push(realItem)
-    } else {
+    }
+    else {
       routeList.push(item)
     }
   })
@@ -61,9 +61,9 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
         name: title,
         hideMenu,
         path: node.path,
-        ...(node.redirect ? { redirect: node.redirect } : {})
+        ...(node.redirect ? { redirect: node.redirect } : {}),
       }
-    }
+    },
   })
 
   joinParentPath(list)
@@ -76,19 +76,18 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
 const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g
 export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
   const { path, paramPath } = toRaw(menu)
-  let realPath = paramPath ? paramPath : path
+  let realPath = paramPath || path
   const matchArr = realPath.match(menuParamRegex)
 
-  matchArr?.forEach(it => {
+  matchArr?.forEach((it) => {
     const realIt = it.substr(1)
-    if (params[realIt]) {
+    if (params[realIt])
       realPath = realPath.replace(`:${realIt}`, params[realIt] as string)
-    }
   })
   // 保存原始参数路径。
-  if (!paramPath && matchArr && matchArr.length > 0) {
+  if (!paramPath && matchArr && matchArr.length > 0)
     menu.paramPath = path
-  }
+
   menu.path = realPath
   // children
   menu.children?.forEach(item => configureDynamicParamsMenu(item, params))

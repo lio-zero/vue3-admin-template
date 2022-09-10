@@ -5,33 +5,33 @@ enum Api {
   AddUser = '/user/addUser',
   DelUser = '/user/delUser',
   UpdateUser = '/user/updateUser',
-  GetPermCode = '/getPermCode'
+  GetPermCode = '/getPermCode',
 }
 
 export function addUser(params: any) {
   return http.post({
     url: Api.AddUser,
-    params
+    params,
   })
 }
 
 export function getAllUser() {
   return http.get({
-    url: Api.GetUser
+    url: Api.GetUser,
   })
 }
 
 export function deleteUser(params: any) {
   return http.post({
     url: Api.DelUser,
-    params
+    params,
   })
 }
 
 export function updateUser(params: any) {
   return http.post({
     url: Api.UpdateUser,
-    params
+    params,
   })
 }
 

@@ -1,12 +1,12 @@
+import { defineStore } from 'pinia'
 import type { UserInfo } from '#/store'
 import { store } from '@/store'
-import { defineStore } from 'pinia'
 import { router } from '@/router'
-import { getToken, setAuthCache, getAuthCache } from '@/utils/auth'
-import { ROLES_KEY, USER_INFO_KEY, TOKEN_KEY } from '@/enums/cacheEnum'
-import { login, getUserInfo, doLogout } from '@/api/login'
+import { getAuthCache, getToken, setAuthCache } from '@/utils/auth'
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '@/enums/cacheEnum'
+import { doLogout, getUserInfo, login } from '@/api/login'
 import { PageEnum } from '@/enums/pageEnum'
-import { RoleEnum } from '@/enums/roleEnum'
+import type { RoleEnum } from '@/enums/roleEnum'
 
 interface UserState {
   userInfo: Nullable<UserInfo>
@@ -23,7 +23,7 @@ export const useUserStore = defineStore({
     token: undefined,
     roleList: [],
     sessionTimeout: false,
-    lastUpdateTime: 0
+    lastUpdateTime: 0,
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -40,11 +40,11 @@ export const useUserStore = defineStore({
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout
-    }
+    },
   },
   actions: {
     setToken(info) {
-      this.token = info ? info : ''
+      this.token = info || ''
       setAuthCache(TOKEN_KEY, info)
     },
     setUserInfo(info) {
@@ -65,22 +65,24 @@ export const useUserStore = defineStore({
         const { token }: any = await login(userInfo)
         this.setToken(token)
         return this.afterLoginAction()
-      } catch (error) {
+      }
+      catch (error) {
         return Promise.reject(error)
       }
     },
     async afterLoginAction() {
-      if (!getToken()) return null
+      if (!getToken())
+        return null
       const userInfo = await this.getUserInfoAction()
       const sessionTimeout = this.sessionTimeout
-      if (sessionTimeout) {
+      if (sessionTimeout)
         this.setSessionTimeout(false)
-      }
 
       return userInfo
     },
     async getUserInfoAction() {
-      if (!getToken()) return null
+      if (!getToken())
+        return null
       const userInfo = await getUserInfo()
       this.setUserInfo(userInfo)
       return userInfo
@@ -89,7 +91,8 @@ export const useUserStore = defineStore({
       if (this.token) {
         try {
           await doLogout()
-        } catch {
+        }
+        catch {
           console.log('注销 Token 失败')
         }
       }
@@ -97,8 +100,8 @@ export const useUserStore = defineStore({
       this.setSessionTimeout(false)
       this.setUserInfo(null)
       goLogin && router.push(PageEnum.BASE_LOGIN)
-    }
-  }
+    },
+  },
 })
 
 export function useUserStoreWithOut() {

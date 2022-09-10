@@ -5,6 +5,6 @@
 import ViteRestart from 'vite-plugin-restart'
 export function configRestartPlugin() {
   return ViteRestart({
-    restart: ['*.config.[jt]s', '**/config/*.[jt]s']
+    restart: ['*.config.[jt]s', '**/config/*.[jt]s'],
   })
 }

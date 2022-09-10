@@ -1,21 +1,21 @@
-import type { Menu, MenuModule } from '@/router/types'
 import type { RouteRecordNormalized } from 'vue-router'
+import { pathToRegexp } from 'path-to-regexp'
+import type { Menu, MenuModule } from '@/router/types'
 
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { usePermissionStore } from '@/store/modules/permission'
-import { transformMenuModule, getAllParentPath } from '@/router/helper/menuHelper'
+import { getAllParentPath, transformMenuModule } from '@/router/helper/menuHelper'
 import { filter } from '@/utils/helper/treeHelper'
 import { isUrl } from '@/utils/is'
 import { router } from '@/router'
 import { PermissionModeEnum } from '@/enums/appEnum'
-import { pathToRegexp } from 'path-to-regexp'
 
 const modules = import.meta.globEager('./modules/**/*.ts')
 
 const menuModules: MenuModule[] = []
 
-Object.keys(modules).forEach(key => {
-  const mod = modules[key].default || {}
+Object.keys(modules).forEach((key) => {
+  const mod = (modules[key] as any).default || {}
   const modList = Array.isArray(mod) ? [...mod] : [mod]
   menuModules.push(...modList)
 })
@@ -46,19 +46,18 @@ const staticMenus: Menu[] = []
     return (a.orderNo || 0) - (b.orderNo || 0)
   })
 
-  for (const menu of menuModules) {
+  for (const menu of menuModules)
     staticMenus.push(transformMenuModule(menu))
-  }
 })()
 
 async function getAsyncMenus() {
   const permissionStore = usePermissionStore()
-  if (isBackMode()) {
+  if (isBackMode())
     return permissionStore.getBackMenuList.filter(item => !item.meta?.hideMenu && !item.hideMenu)
-  }
-  if (isRouteMappingMode()) {
+
+  if (isRouteMappingMode())
     return permissionStore.getFrontMenuList.filter(item => !item.hideMenu)
-  }
+
   return staticMenus
 }
 
@@ -92,9 +91,9 @@ export async function getShallowMenus(): Promise<Menu[]> {
 export async function getChildrenMenus(parentPath: string) {
   const menus = await getMenus()
   const parent = menus.find(item => item.path === parentPath)
-  if (!parent || !parent.children || !!parent?.meta?.hideChildrenInMenu) {
+  if (!parent || !parent.children || !!parent?.meta?.hideChildrenInMenu)
     return [] as Menu[]
-  }
+
   if (isRoleMode()) {
     const routes = router.getRoutes()
     return filter(parent.children, basicFilter(routes))
@@ -104,21 +103,25 @@ export async function getChildrenMenus(parentPath: string) {
 
 function basicFilter(routes: RouteRecordNormalized[]) {
   return (menu: Menu) => {
-    const matchRoute = routes.find(route => {
-      if (isUrl(menu.path)) return true
+    const matchRoute = routes.find((route) => {
+      if (isUrl(menu.path))
+        return true
 
-      if (route.meta?.carryParam) {
+      if (route.meta?.carryParam)
         return pathToRegexp(route.path).test(menu.path)
-      }
-      const isSame = route.path === menu.path
-      if (!isSame) return false
 
-      if (route.meta?.ignoreAuth) return true
+      const isSame = route.path === menu.path
+      if (!isSame)
+        return false
+
+      if (route.meta?.ignoreAuth)
+        return true
 
       return isSame || pathToRegexp(route.path).test(menu.path)
     })
 
-    if (!matchRoute) return false
+    if (!matchRoute)
+      return false
     menu.icon = (menu.icon || matchRoute.meta.icon) as string
     menu.meta = matchRoute.meta
     return true

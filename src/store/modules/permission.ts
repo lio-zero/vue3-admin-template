@@ -1,17 +1,17 @@
+import { defineStore } from 'pinia'
+import { useUserStore } from './user'
+import { useAppStoreWithOut } from './app'
 import type { AppRouteRecordRaw, Menu } from '@/router/types'
 
 import { store } from '@/store'
-import { defineStore } from 'pinia'
 import { asyncRoutes } from '@/router/routes'
 
 import projectSetting from '@/settings/projectSetting'
 import { transformRouteToMenu } from '@/router/helper/menuHelper'
-import { transformObjToRoute, flatMultiLevelRoutes } from '@/router/helper/routeHelper'
+import { flatMultiLevelRoutes, transformObjToRoute } from '@/router/helper/routeHelper'
 import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
 import { filter } from '@/utils/helper/treeHelper'
 import { PermissionModeEnum } from '@/enums/appEnum'
-import { useUserStore } from './user'
-import { useAppStoreWithOut } from './app'
 import { PageEnum } from '@/enums/pageEnum'
 import { getPermCode } from '@/api/user'
 import { getMenuList } from '@/api/menu'
@@ -35,7 +35,7 @@ export const usePermissionStore = defineStore({
     isDynamicAddedRoute: false,
     lastBuildMenuTime: 0,
     backMenuList: [],
-    frontMenuList: []
+    frontMenuList: [],
   }),
   getters: {
     getBackMenuList(): Menu[] {
@@ -46,7 +46,7 @@ export const usePermissionStore = defineStore({
     },
     getIsDynamicAddedRoute(): boolean {
       return this.isDynamicAddedRoute
-    }
+    },
   },
   actions: {
     setFrontMenuList(list: Menu[]) {
@@ -86,7 +86,8 @@ export const usePermissionStore = defineStore({
       const routeFilter = (route: AppRouteRecordRaw) => {
         const { meta } = route
         const { roles } = meta || {}
-        if (!roles) return true
+        if (!roles)
+          return true
         return roleList.some(role => roles.includes(role))
       }
 
@@ -100,17 +101,20 @@ export const usePermissionStore = defineStore({
        * @description 根据设置的首页 path，修正 routes 中的 affix 标记（固定首页）
        * */
       const patchHomeAffix = (routes: AppRouteRecordRaw[]) => {
-        if (!routes || routes.length === 0) return
+        if (!routes || routes.length === 0)
+          return
         let homePath: string = userStore.getUserInfo.homePath || PageEnum.BASE_HOME
         function patcher(routes: AppRouteRecordRaw[], parentPath = '') {
-          if (parentPath) parentPath = parentPath + '/'
+          if (parentPath)
+            parentPath = `${parentPath}/`
           routes.forEach((route: AppRouteRecordRaw) => {
             const { path, children, redirect } = route
             const currentPath = path?.startsWith('/') ? path : parentPath + path
             if (currentPath === homePath) {
               if (redirect) {
                 homePath = route.redirect! as string
-              } else {
+              }
+              else {
                 route.meta = Object.assign({}, route.meta, { affix: true })
                 throw new Error('end')
               }
@@ -120,10 +124,10 @@ export const usePermissionStore = defineStore({
         }
         try {
           patcher(routes)
-        } catch (e) {
+        }
+        catch (e) {
           // 已处理完毕跳出循环
         }
-        return
       }
 
       switch (permissionMode) {
@@ -137,6 +141,7 @@ export const usePermissionStore = defineStore({
         case PermissionModeEnum.ROUTE_MAPPING:
           routes = filter(asyncRoutes, routeFilter)
           routes = routes.filter(routeFilter)
+          // eslint-disable-next-line no-case-declarations
           const menuList = transformRouteToMenu(routes, true)
           routes = filter(routes, routeRemoveIgnoreFilter)
           routes = routes.filter(routeRemoveIgnoreFilter)
@@ -153,11 +158,13 @@ export const usePermissionStore = defineStore({
         case PermissionModeEnum.BACK:
           console.log('菜单加载中...')
 
+          // eslint-disable-next-line no-case-declarations
           let routeList: AppRouteRecordRaw[] = []
           try {
             this.changePermissionCode()
             routeList = (await getMenuList()) as AppRouteRecordRaw[]
-          } catch (error) {
+          }
+          catch (error) {
             console.error(error)
           }
 
@@ -165,6 +172,7 @@ export const usePermissionStore = defineStore({
           routeList = transformObjToRoute(routeList)
 
           // 后台路由到菜单结构
+          // eslint-disable-next-line no-case-declarations
           const backMenuList = transformRouteToMenu(routeList)
           this.setBackMenuList(backMenuList)
 
@@ -180,8 +188,8 @@ export const usePermissionStore = defineStore({
       // routes.push(ERROR_LOG_ROUTE)
       patchHomeAffix(routes)
       return routes
-    }
-  }
+    },
+  },
 })
 
 export function usePermissionStoreWithOut() {

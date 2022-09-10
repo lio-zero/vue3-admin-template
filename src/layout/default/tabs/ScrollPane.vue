@@ -1,21 +1,9 @@
-<template>
-  <el-scrollbar
-    ref="scrollContainer"
-    :vertical="false"
-    class="scroll-container"
-    @wheel.prevent="handleScroll"
-  >
-    <slot></slot>
-  </el-scrollbar>
-</template>
-
 <script setup lang="ts" name="ScrollPane">
+const emit = defineEmits(['scroll'])
 const tagAndTagSpacing = 4
 const scrollContainer = ref<ComponentRef>(null)
 
 const scrollWrapper = computed(() => unref(scrollContainer)?.wrap$)
-const emit = defineEmits(['scroll'])
-
 const emitScroll = () => {
   emit('scroll')
 }
@@ -28,7 +16,7 @@ onBeforeUnmount(() => {
   unref(scrollWrapper).removeEventListener('scroll', emitScroll)
 })
 
-const handleScroll = e => {
+const handleScroll = (e) => {
   const eventDelta = e.wheelDelta || -e.deltaY * 40
   const $scrollWrapper = unref(scrollWrapper)
   $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
@@ -36,7 +24,7 @@ const handleScroll = e => {
 
 const tags: any = inject('data')
 
-const moveToTarget = currentTag => {
+const moveToTarget = (currentTag) => {
   const $container = unref(scrollContainer)?.wrap$.parentElement
   const $containerWidth = $container.offsetWidth
   const $scrollWrapper = unref(scrollWrapper)
@@ -51,31 +39,43 @@ const moveToTarget = currentTag => {
   }
   if (firstTag === currentTag) {
     $scrollWrapper.scrollLeft = 0
-  } else if (lastTag === currentTag) {
+  }
+  else if (lastTag === currentTag) {
     $scrollWrapper.scrollLeft = $scrollWrapper.scrollWidth - $containerWidth
-  } else {
+  }
+  else {
     // 找到 preTag 和 nextTag
     const currentIndex = tagList.findIndex(item => item === currentTag)
     const prevTag = tagList[currentIndex - 1]
     const nextTag = tagList[currentIndex + 1]
     // 标签在 nextTag 之后的 offsetLeft
 
-    const afterNextTagOffsetLeft =
-      nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
+    const afterNextTagOffsetLeft
+      = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
     // 标签在 prevTag 之前的 offsetLeft
     const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
-    if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
+    if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth)
       $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth
-    } else if (beforePrevTagOffsetLeft < $scrollWrapper.scrollLeft) {
+    else if (beforePrevTagOffsetLeft < $scrollWrapper.scrollLeft)
       $scrollWrapper.scrollLeft = beforePrevTagOffsetLeft
-    }
   }
 }
 
 defineExpose({
-  moveToTarget
+  moveToTarget,
 })
 </script>
+
+<template>
+  <el-scrollbar
+    ref="scrollContainer"
+    :vertical="false"
+    class="scroll-container"
+    @wheel.prevent="handleScroll"
+  >
+    <slot />
+  </el-scrollbar>
+</template>
 
 <style lang="scss" scoped>
 .scroll-container {

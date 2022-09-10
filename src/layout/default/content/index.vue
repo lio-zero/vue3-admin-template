@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { useTabStore } from '@/store/modules/tabView'
+
+const fade = ref('fade-transform')
+
+const tabStore = useTabStore()
+const getCaches = computed(() => tabStore.getCachedViews)
+</script>
+
 <template>
   <section class="vzr-main-container">
     <router-view>
@@ -11,15 +20,6 @@
     </router-view>
   </section>
 </template>
-
-<script setup lang="ts">
-import { useTabStore } from '@/store/modules/tabView'
-
-const fade = ref('fade-transform')
-
-const tabStore = useTabStore()
-const getCaches = computed(() => tabStore.getCachedViews)
-</script>
 
 <style scoped lang="scss">
 .vzr-main-container {

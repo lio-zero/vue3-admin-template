@@ -1,5 +1,6 @@
-import { MockMethod } from 'vite-plugin-mock'
-import { getRequestToken, resultError, resultSuccess, requestParams } from '../_util'
+import type { MockMethod } from 'vite-plugin-mock'
+import type { requestParams } from '../_util'
+import { getRequestToken, resultError, resultSuccess } from '../_util'
 
 export function fakeUser() {
   return [
@@ -16,10 +17,10 @@ export function fakeUser() {
       roles: [
         {
           roleName: 'Super Admin',
-          value: 'super'
-        }
-      ]
-    }
+          value: 'super',
+        },
+      ],
+    },
   ]
 }
 
@@ -31,22 +32,25 @@ export default [
     response({ body }) {
       const { username, password } = body
       const checkUser = fakeUser().find(
-        item => item.username === username && item.password == password
+        item => item.username === username && item.password === +password,
       )
-      if (!checkUser) return resultError('帐户密码不正确！')
+      if (!checkUser)
+        return resultError('帐户密码不正确！')
       return resultSuccess(checkUser)
-    }
+    },
   },
   {
     url: '/api/user/getUserDetail',
     method: 'get',
     response(req: requestParams) {
       const token = getRequestToken(req)
-      if (!token) return resultError('无效 token')
+      if (!token)
+        return resultError('无效 token')
       const checkUser = fakeUser().find(item => item.token === token)
-      if (!checkUser) return resultError('未获得相应的用户信息！')
+      if (!checkUser)
+        return resultError('未获得相应的用户信息！')
       return resultSuccess(checkUser)
-    }
+    },
   },
   {
     url: '/api/logout',
@@ -54,10 +58,12 @@ export default [
     method: 'get',
     response(request: requestParams) {
       const token = getRequestToken(request)
-      if (!token) return resultError('无效 token')
+      if (!token)
+        return resultError('无效 token')
       const checkUser = fakeUser().find(item => item.token === token)
-      if (!checkUser) return resultError('无效 token!')
+      if (!checkUser)
+        return resultError('无效 token!')
       return resultSuccess(undefined, { message: 'Token 已被销毁' })
-    }
-  }
+    },
+  },
 ] as MockMethod[]

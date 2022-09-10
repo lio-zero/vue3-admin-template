@@ -16,9 +16,9 @@ export const LAYOUT = () => import('@/layout/default/index.vue')
  */
 export const getParentLayout = (_name?: string) => {
   return () =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       resolve({
-        name: PARENT_LAYOUT_NAME
+        name: PARENT_LAYOUT_NAME,
       })
     })
 }

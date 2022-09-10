@@ -19,9 +19,9 @@ export function autoRegistryComponents() {
       ElementPlusResolver(),
       // 自动注册图标组件
       IconsResolver({
-        enabledCollections: ['ep']
+        enabledCollections: ['ep'],
       }),
-      VueUseComponentsResolver()
-    ]
+      VueUseComponentsResolver(),
+    ],
   })
 }

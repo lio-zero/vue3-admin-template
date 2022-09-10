@@ -1,18 +1,79 @@
+<script lang="ts" setup name="Tab">
+import type { RouteLocationNormalized } from 'vue-router'
+import ScrollPane from './ScrollPane.vue'
+import { dropMenuList, useTabDropdown } from './useTabDropdown'
+import { useTabSetting } from '@/hooks/setting/useTabSetting'
+
+const route = useRoute()
+
+const top = ref(0)
+const menuLeft = ref(0)
+const visible = ref(false)
+const tag = ref<HTMLElement | null>(null)
+const scrollPane = ref<ComponentRef>(null)
+const tagArea = ref<ElRef>(null)
+const selectedTag = ref<Nullable<RouteLocationNormalized>>(null)
+
+const { getVisitedViews } = useTabSetting()
+const { addTags, isActive, isAffix, moveToCurrentTag, closeSelectedTag, handleMenuEvent }
+  = useTabDropdown(tag, scrollPane)
+
+const handleClickMenu = (item) => {
+  handleMenuEvent(item, unref(selectedTag) as any)
+}
+
+const closeMenu = () => {
+  visible.value = false
+}
+
+provide('data', tag)
+
+watch(route, () => {
+  addTags()
+  moveToCurrentTag()
+})
+
+watch(visible, (value) => {
+  if (value)
+    document.body.addEventListener('click', closeMenu)
+  else
+    document.body.removeEventListener('click', closeMenu)
+})
+
+const openMenu = (tag, e) => {
+  const menuMinWidth = 205
+
+  const offsetLeft = unref(tagArea)!.getBoundingClientRect().left // container 左边距
+  const offsetWidth = unref(tagArea)!.offsetWidth // container 宽度
+  const maxLeft = offsetWidth - menuMinWidth // 左边界
+  const left = e.clientX - offsetLeft + 15 // 15: margin right
+
+  if (left > maxLeft)
+    menuLeft.value = maxLeft
+  else
+    menuLeft.value = left
+
+  top.value = e.clientY
+  visible.value = true
+  selectedTag.value = tag
+}
+</script>
+
 <template>
-  <div ref="tagArea" id="tags-view-container" class="tags-view-container">
+  <div id="tags-view-container" ref="tagArea" class="tags-view-container">
     <ScrollPane ref="scrollPane" class="tags-view-wrapper">
       <router-link
-        ref="tag"
         v-for="tagItem in getVisitedViews"
+        ref="tag"
         :key="tagItem.path"
-        :to="{ path: tagItem.path, query: tagItem.query, fullPath: tagItem.fullPath }"
         v-slot="{ navigate }"
+        :to="{ path: tagItem.path, query: tagItem.query, fullPath: tagItem.fullPath }"
         class="tags-view-item"
         :class="isActive(tagItem) ? 'active' : ''"
         @click.middle="!isAffix(tagItem) ? closeSelectedTag(tagItem) : ''"
         @contextmenu.prevent="openMenu(tagItem, $event)"
       >
-        <span @click="navigate" @keypress.enter="navigate" role="link">
+        <span role="link" @click="navigate" @keypress.enter="navigate">
           {{ tagItem.title }}
           <el-icon v-if="!isAffix(tagItem)" class="align-sub el-icon-close">
             <Close @click.prevent.stop="closeSelectedTag(tagItem)" />
@@ -35,69 +96,6 @@
     </ul>
   </div>
 </template>
-
-<script lang="ts" setup name="Tab">
-import ScrollPane from './ScrollPane.vue'
-import { useTabSetting } from '@/hooks/setting/useTabSetting'
-import type { RouteLocationNormalized } from 'vue-router'
-import { useTabDropdown, dropMenuList } from './useTabDropdown'
-
-const route = useRoute()
-
-const top = ref(0)
-const menuLeft = ref(0)
-const visible = ref(false)
-const tag = ref<HTMLElement | null>(null)
-const scrollPane = ref<ComponentRef>(null)
-const tagArea = ref<ElRef>(null)
-const selectedTag = ref<Nullable<RouteLocationNormalized>>(null)
-
-const { getVisitedViews } = useTabSetting()
-const { addTags, isActive, isAffix, moveToCurrentTag, closeSelectedTag, handleMenuEvent } =
-  useTabDropdown(tag, scrollPane)
-
-const handleClickMenu = item => {
-  handleMenuEvent(item, unref(selectedTag))
-}
-
-provide('data', tag)
-
-watch(route, () => {
-  addTags()
-  moveToCurrentTag()
-})
-
-watch(visible, value => {
-  if (value) {
-    document.body.addEventListener('click', closeMenu)
-  } else {
-    document.body.removeEventListener('click', closeMenu)
-  }
-})
-
-const openMenu = (tag, e) => {
-  const menuMinWidth = 205
-
-  const offsetLeft = unref(tagArea)!.getBoundingClientRect().left // container 左边距
-  const offsetWidth = unref(tagArea)!.offsetWidth // container 宽度
-  const maxLeft = offsetWidth - menuMinWidth // 左边界
-  const left = e.clientX - offsetLeft + 15 // 15: margin right
-
-  if (left > maxLeft) {
-    menuLeft.value = maxLeft
-  } else {
-    menuLeft.value = left
-  }
-
-  top.value = e.clientY
-  visible.value = true
-  selectedTag.value = tag
-}
-
-const closeMenu = () => {
-  visible.value = false
-}
-</script>
 
 <style lang="scss" scoped>
 .tags-view-container {

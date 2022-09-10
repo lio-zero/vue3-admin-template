@@ -5,24 +5,24 @@ export enum ContentEnum {
   // 自动宽度
   FULL = 'full',
   // 固定宽度
-  FIXED = 'fixed'
+  FIXED = 'fixed',
 }
 
 // 菜单主题
 export enum ThemeEnum {
   DARK = 'dark',
-  LIGHT = 'light'
+  LIGHT = 'light',
 }
 
 export enum SettingButtonPositionEnum {
   AUTO = 'auto',
   HEADER = 'header',
-  FIXED = 'fixed'
+  FIXED = 'fixed',
 }
 
 export enum SessionTimeoutProcessingEnum {
   ROUTE_JUMP,
-  PAGE_COVERAGE
+  PAGE_COVERAGE,
 }
 
 /**
@@ -31,7 +31,7 @@ export enum SessionTimeoutProcessingEnum {
 export enum PermissionModeEnum {
   ROLE = 'ROLE',
   BACK = 'BACK',
-  ROUTE_MAPPING = 'ROUTE_MAPPING'
+  ROUTE_MAPPING = 'ROUTE_MAPPING',
 }
 
 // 路由切换动画
@@ -41,5 +41,5 @@ export enum RouterTransitionEnum {
   FADE_SIDE = 'fade-slide',
   FADE = 'fade',
   FADE_BOTTOM = 'fade-bottom',
-  FADE_SCALE = 'fade-scale'
+  FADE_SCALE = 'fade-scale',
 }

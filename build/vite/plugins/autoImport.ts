@@ -14,15 +14,15 @@ export function autoImportDeps() {
       'pinia',
       'vue-router',
       {
-        '@vueuse/core': ['useDark', 'useToggle', 'useFullscreen', 'useMouse']
-      }
+        '@vueuse/core': ['useDark', 'useToggle', 'useFullscreen', 'useMouse'],
+      },
     ],
     resolvers: [
       // 自动导入图标组件
       IconsResolver({
-        prefix: 'Icon'
+        prefix: 'Icon',
       }),
-      ElementPlusResolver()
-    ]
+      ElementPlusResolver(),
+    ],
   })
 }

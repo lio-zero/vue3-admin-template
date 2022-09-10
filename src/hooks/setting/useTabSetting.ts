@@ -6,6 +6,6 @@ export function useTabSetting() {
   const getVisitedViews = computed(() => tabStore.getVisitedViews)
 
   return {
-    getVisitedViews
+    getVisitedViews,
   }
 }

@@ -1,13 +1,12 @@
-import type { RouteRecordRaw, RouteMeta } from 'vue-router'
-import { RoleEnum } from '@/enums/roleEnum'
-import { defineComponent } from 'vue'
+import type { RouteMeta, RouteRecordRaw } from 'vue-router'
+import type { defineComponent } from 'vue'
+import type { RoleEnum } from '@/enums/roleEnum'
 
 export type Component<T = any> =
   | ReturnType<typeof defineComponent>
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>)
 
-// @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   path?: string
   name?: string

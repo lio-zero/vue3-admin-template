@@ -1,8 +1,8 @@
+import type { getMenuListResultModel } from './model/menuModel'
 import { http } from '@/utils/http'
-import { getMenuListResultModel } from './model/menuModel'
 
 enum Api {
-  GetMenuList = '/getMenuList'
+  GetMenuList = '/getMenuList',
 }
 
 /**

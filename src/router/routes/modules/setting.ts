@@ -10,9 +10,9 @@ const dashboard: AppRouteModule = {
       path: 'index',
       name: 'Setting',
       component: () => import('@/views/sys/setting/index.vue'),
-      meta: { title: '个人设置', icon: 'ci:settings-filled' }
-    }
-  ]
+      meta: { title: '个人设置', icon: 'ci:settings-filled' },
+    },
+  ],
 }
 
 export default dashboard

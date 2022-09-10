@@ -1,23 +1,3 @@
-<template>
-  <div :class="{ 'has-logo': getShowLogo }">
-    <logo v-if="getShowLogo" :collapse="!getCollapsed" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="!getCollapsed"
-        :unique-opened="false"
-        :collapse-transition="false"
-        :background-color="variables.menuBg"
-        :active-text-color="variables.menuActiveText"
-        :text-color="variables.menuText"
-        mode="vertical"
-      >
-        <sidebar-item v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
-      </el-menu>
-    </el-scrollbar>
-  </div>
-</template>
-
 <script setup lang="ts">
 import SidebarItem from './SidebarItem.vue'
 import Logo from './Logo.vue'
@@ -40,10 +20,31 @@ const activeMenu = computed(() => {
   const { meta, path } = route
 
   // 如果设置路径，侧栏将突出显示您设置的路径
-  if (meta.activeMenu) return meta.activeMenu
+  if (meta.activeMenu)
+    return meta.activeMenu
   return path
 })
 </script>
+
+<template>
+  <div :class="{ 'has-logo': getShowLogo }">
+    <Logo v-if="getShowLogo" :collapse="!getCollapsed" />
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="activeMenu"
+        :collapse="!getCollapsed"
+        :unique-opened="false"
+        :collapse-transition="false"
+        :background-color="variables.menuBg"
+        :active-text-color="variables.menuActiveText"
+        :text-color="variables.menuText"
+        mode="vertical"
+      >
+        <SidebarItem v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
+      </el-menu>
+    </el-scrollbar>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 ::v-deep(.el-sub-menu),

@@ -4,5 +4,5 @@ export enum HandlerEnum {
   GRAY_MODE,
   COLOR_WEAK,
   HEADER_FIXED,
-  OPEN_PROGRESS
+  OPEN_PROGRESS,
 }

@@ -21,7 +21,7 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
     inject: {
       // 将数据注入 ejs 模板
       data: {
-        title: VITE_GLOB_APP_TITLE
+        title: VITE_GLOB_APP_TITLE,
       },
       // 嵌入生成的 app.config.js 文件
       tags: isBuild
@@ -29,12 +29,12 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
             {
               tag: 'script',
               attrs: {
-                src: getAppConfigSrc()
-              }
-            }
+                src: getAppConfigSrc(),
+              },
+            },
           ]
-        : []
-    }
+        : [],
+    },
   })
 
   return htmlPlugin

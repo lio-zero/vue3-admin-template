@@ -25,24 +25,24 @@ export function getPopupContainer(node?: HTMLElement): HTMLElement {
  */
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
   let parameters = ''
-  for (const key in obj) {
-    parameters += key + '=' + encodeURIComponent(obj[key]) + '&'
-  }
+  for (const key in obj)
+    parameters += `${key}=${encodeURIComponent(obj[key])}&`
+
   parameters = parameters.replace(/&$/, '')
   return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters
 }
 
 export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
   let key: string
-  for (key in target) {
+  for (key in target)
     src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : (src[key] = target[key])
-  }
+
   return src
 }
 
 export function openWindow(
   url: string,
-  opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean }
+  opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean },
 ) {
   const { target = '__blank', noopener = true, noreferrer = true } = opt || {}
   const feature: string[] = []
@@ -57,7 +57,7 @@ export function openWindow(
 export function getDynamicProps<T, U>(props: T): Partial<U> {
   const ret: Recordable = {}
 
-  Object.keys(props).map(key => {
+  Object.keys(props).forEach((key) => {
     ret[key] = unref((props as Recordable)[key])
   })
 
@@ -65,17 +65,18 @@ export function getDynamicProps<T, U>(props: T): Partial<U> {
 }
 
 export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormalized {
-  if (!route) return route
+  if (!route)
+    return route
   const { matched, ...opt } = route
   return {
     ...opt,
     matched: (matched
       ? matched.map(item => ({
-          meta: item.meta,
-          name: item.name,
-          path: item.path
-        }))
-      : undefined) as RouteRecordNormalized[]
+        meta: item.meta,
+        name: item.name,
+        path: item.path,
+      }))
+      : undefined) as RouteRecordNormalized[],
   }
 }
 
@@ -83,24 +84,23 @@ export const withInstall = <T>(component: T, alias?: string) => {
   const comp = component as any
   comp.install = (app: App) => {
     app.component(comp.name || comp.displayName, component)
-    if (alias) {
+    if (alias)
       app.config.globalProperties[alias] = component
-    }
   }
   return component as T & Plugin
 }
 
 export function deepClone(source: any) {
-  if (!source && typeof source !== 'object') {
+  if (!source && typeof source !== 'object')
     throw new Error('error arguments')
-  }
+
   const targetObj = source.constructor === Array ? [] : {}
-  Object.keys(source).forEach(keys => {
-    if (source[keys] && typeof source[keys] === 'object') {
+  Object.keys(source).forEach((keys) => {
+    if (source[keys] && typeof source[keys] === 'object')
       targetObj[keys] = deepClone(source[keys])
-    } else {
+
+    else
       targetObj[keys] = source[keys]
-    }
   })
   return targetObj
 }

@@ -1,4 +1,5 @@
-import { createStorage as create, CreateStorageParams } from './storageCache'
+import type { CreateStorageParams } from './storageCache'
+import { createStorage as create } from './storageCache'
 import { getStorageShortName } from '@/utils/env'
 import { DEFAULT_CACHE_TIME, enableStorageEncryption } from '@/settings/encryptionSetting'
 
@@ -10,7 +11,7 @@ const createOptions = (storage: Storage, options: Options = {}): Options => {
     hasEncrypt: enableStorageEncryption,
     storage,
     prefixKey: getStorageShortName(),
-    ...options
+    ...options,
   }
 }
 

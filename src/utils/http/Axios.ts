@@ -1,13 +1,12 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios'
-import type { RequestOptions, Result, UploadFileParams } from '#/axios'
-import type { CreateAxiosOptions } from './axiosTransform'
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 import qs from 'qs'
+import { cloneDeep } from 'lodash-es'
+import type { CreateAxiosOptions } from './axiosTransform'
 import { AxiosCanceler } from './axiosCancel'
 import { isFunction } from '@/utils/is'
-import { cloneDeep } from 'lodash-es'
-import { ContentTypeEnum } from '@/enums/httpEnum'
-import { RequestEnum } from '@/enums/httpEnum'
+import type { RequestOptions, Result, UploadFileParams } from '#/axios'
+import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum'
 
 /**
  * @description:  axios module
@@ -42,9 +41,9 @@ export class VAxios {
    * @description: 重新配置 axios
    */
   configAxios(config: CreateAxiosOptions) {
-    if (!this.axiosInstance) {
+    if (!this.axiosInstance)
       return
-    }
+
     this.createAxios(config)
   }
 
@@ -52,9 +51,9 @@ export class VAxios {
    * @description: 设置通用头
    */
   setHeader(headers: any): void {
-    if (!this.axiosInstance) {
+    if (!this.axiosInstance)
       return
-    }
+
     Object.assign(this.axiosInstance.defaults.headers, headers)
   }
 
@@ -63,14 +62,14 @@ export class VAxios {
    */
   private setupInterceptors() {
     const transform = this.getTransform()
-    if (!transform) {
+    if (!transform)
       return
-    }
+
     const {
       requestInterceptors,
       requestInterceptorsCatch,
       responseInterceptors,
-      responseInterceptorsCatch
+      responseInterceptorsCatch,
     } = transform
 
     const axiosCanceler = new AxiosCanceler()
@@ -79,40 +78,39 @@ export class VAxios {
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       // 如果启用了取消重复请求，则禁止取消重复请求
       const {
-        // @ts-ignore
-        headers: { ignoreCancelToken }
+        headers: { ignoreCancelToken },
       } = config
 
-      const ignoreCancel =
-        ignoreCancelToken !== undefined
+      const ignoreCancel
+        = ignoreCancelToken !== undefined
           ? ignoreCancelToken
           : this.options.requestOptions?.ignoreCancelToken
 
       !ignoreCancel && axiosCanceler.addPending(config)
-      if (requestInterceptors && isFunction(requestInterceptors)) {
+      if (requestInterceptors && isFunction(requestInterceptors))
         config = requestInterceptors(config, this.options)
-      }
+
       return config
     }, undefined)
 
     // 请求拦截器错误捕获
-    requestInterceptorsCatch &&
-      isFunction(requestInterceptorsCatch) &&
-      this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
+    requestInterceptorsCatch
+      && isFunction(requestInterceptorsCatch)
+      && this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
 
     // 响应结果拦截器处理
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
       res && axiosCanceler.removePending(res.config)
-      if (responseInterceptors && isFunction(responseInterceptors)) {
+      if (responseInterceptors && isFunction(responseInterceptors))
         res = responseInterceptors(res)
-      }
+
       return res
     }, undefined)
 
     // 响应结果拦截器错误捕获
-    responseInterceptorsCatch &&
-      isFunction(responseInterceptorsCatch) &&
-      this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
+    responseInterceptorsCatch
+      && isFunction(responseInterceptorsCatch)
+      && this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
   }
 
   /**
@@ -122,17 +120,17 @@ export class VAxios {
     const formData = new window.FormData()
     const customFilename = params.name || 'file'
 
-    if (params.filename) {
+    if (params.filename)
       formData.append(customFilename, params.file, params.filename)
-    } else {
+
+    else
       formData.append(customFilename, params.file)
-    }
 
     if (params.data) {
-      Object.keys(params.data).forEach(key => {
+      Object.keys(params.data).forEach((key) => {
         const value = params.data![key]
         if (Array.isArray(value)) {
-          value.forEach(item => {
+          value.forEach((item) => {
             formData.append(`${key}[]`, item)
           })
           return
@@ -148,9 +146,8 @@ export class VAxios {
       data: formData,
       headers: {
         'Content-type': ContentTypeEnum.FORM_DATA,
-        // @ts-ignore
-        ignoreCancelToken: true
-      }
+        'ignoreCancelToken': true,
+      },
     })
   }
 
@@ -160,16 +157,15 @@ export class VAxios {
     const contentType = headers?.['Content-Type'] || headers?.['content-type']
 
     if (
-      contentType !== ContentTypeEnum.FORM_URLENCODED ||
-      !Reflect.has(config, 'data') ||
-      config.method?.toUpperCase() === RequestEnum.GET
-    ) {
+      contentType !== ContentTypeEnum.FORM_URLENCODED
+      || !Reflect.has(config, 'data')
+      || config.method?.toUpperCase() === RequestEnum.GET
+    )
       return config
-    }
 
     return {
       ...config,
-      data: qs.stringify(config.data, { arrayFormat: 'brackets' })
+      data: qs.stringify(config.data, { arrayFormat: 'brackets' }),
     }
   }
 
@@ -199,9 +195,9 @@ export class VAxios {
     const opt: RequestOptions = Object.assign({}, requestOptions, options)
 
     const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {}
-    if (beforeRequestHook && isFunction(beforeRequestHook)) {
+    if (beforeRequestHook && isFunction(beforeRequestHook))
       conf = beforeRequestHook(conf, opt)
-    }
+
     conf.requestOptions = opt
 
     conf = this.supportFormData(conf)
@@ -214,7 +210,8 @@ export class VAxios {
             try {
               const ret = transformRequestHook(res, opt)
               resolve(ret)
-            } catch (err) {
+            }
+            catch (err) {
               reject(err || new Error('request error!'))
             }
             return

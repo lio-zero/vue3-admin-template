@@ -1,3 +1,11 @@
+<script setup lang="ts" name="ErrorPage">
+const router = useRouter()
+
+const goBack = () => {
+  router.push('/')
+}
+</script>
+
 <template>
   <div class="flex flex-col items-center justify-center my-auto h-screen">
     <svg
@@ -417,20 +425,18 @@
       />
     </svg>
     <div class="text-center">
-      <h1 class="text-8xl font-bold my-8">404</h1>
-      <p class="my-4">Oops! Page not found</p>
-      <el-button type="info" icon="Back" @click="goBack">go back!</el-button>
+      <h1 class="text-8xl font-bold my-8">
+        404
+      </h1>
+      <p class="my-4">
+        Oops! Page not found
+      </p>
+      <el-button type="info" icon="Back" @click="goBack">
+        go back!
+      </el-button>
     </div>
   </div>
 </template>
-
-<script setup lang="ts" name="ErrorPage">
-const router = useRouter()
-
-const goBack = () => {
-  router.push('/')
-}
-</script>
 
 <style lang="scss" scoped>
 .image {

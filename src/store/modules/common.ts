@@ -1,11 +1,11 @@
-import { store } from '@/store'
 import { defineStore } from 'pinia'
+import { store } from '@/store'
 
 export const useCommonStore = defineStore({
   id: 'Common',
   state: () => ({}),
   getters: {},
-  actions: {}
+  actions: {},
 })
 
 // 需要在 setup 之外使用

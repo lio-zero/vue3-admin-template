@@ -1,4 +1,4 @@
-export type User = {
+export interface User {
   username: string
   password: string
   rememberMe?: boolean
@@ -6,5 +6,5 @@ export type User = {
 
 export const formData: User = reactive({
   username: 'admin',
-  password: '123456'
+  password: '123456',
 })

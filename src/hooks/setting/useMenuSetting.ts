@@ -19,14 +19,14 @@ export function useMenuSetting() {
   function toggleCollapsed() {
     setMenuSetting({
       collapsed: !unref(getCollapsed),
-      withoutAnimation: false
+      withoutAnimation: false,
     })
   }
 
   const handleClickOutside = () =>
     setMenuSetting({
       collapsed: false,
-      withoutAnimation: false
+      withoutAnimation: false,
     })
 
   return {
@@ -36,6 +36,6 @@ export function useMenuSetting() {
 
     getDevice,
     getCollapsed,
-    getWithoutAnimation
+    getWithoutAnimation,
   }
 }

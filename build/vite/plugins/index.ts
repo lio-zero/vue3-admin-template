@@ -2,7 +2,7 @@
  * @name createVitePlugins
  * @description 封装 plugins 数组统一调用
  */
-import type { Plugin } from 'vite'
+import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
@@ -15,7 +15,6 @@ import { autoImportDeps } from './autoImport'
 import { configMockPlugin } from './mock'
 import { configVisualizerConfig } from './visualizer'
 import { configCompressPlugin } from './compress'
-import { configPagesPlugin } from './page'
 import { configRestartPlugin } from './restart'
 import { configStyleImportPlugin } from './styleImport'
 import { configPwaConfig } from './pwa'
@@ -27,10 +26,10 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VITE_LEGACY,
     VITE_USE_MOCK,
     VITE_BUILD_COMPRESS,
-    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
   } = viteEnv
 
-  const vitePlugins: (Plugin | Plugin[])[] = [
+  const vitePlugins: (PluginOption | PluginOption[])[] = [
     // vue 支持
     vue(),
     // JSX 支持
@@ -39,16 +38,14 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     autoRegistryComponents(),
     // 自动按需引入依赖
     autoImportDeps(),
-    // 自动生成路由
-    configPagesPlugin(),
     // setup name 属性
     vueSetupExtend(),
     // 监听配置文件改动重启
     configRestartPlugin(),
     Icons({
       autoInstall: true,
-      compiler: 'vue3'
-    })
+      compiler: 'vue3',
+    }),
   ]
 
   // vite-plugin-windicss
@@ -77,7 +74,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   if (isBuild) {
     // 开启.gz压缩  rollup-plugin-gzip
-    configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
+    vitePlugins.push(configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE))
 
     // vite-plugin-pwa
     vitePlugins.push(configPwaConfig(viteEnv))

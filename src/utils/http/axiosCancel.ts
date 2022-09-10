@@ -15,9 +15,9 @@ export class AxiosCanceler {
   addPending(config: AxiosRequestConfig) {
     this.removePending(config)
     const url = getPendingUrl(config)
-    config.cancelToken =
-      config.cancelToken ||
-      new axios.CancelToken(cancel => {
+    config.cancelToken
+      = config.cancelToken
+      || new axios.CancelToken((cancel) => {
         if (!pendingMap.has(url)) {
           // 如果没有挂起的当前请求，请添加它
           pendingMap.set(url, cancel)
@@ -29,7 +29,7 @@ export class AxiosCanceler {
    * @description: 清除所有 pending
    */
   removeAllPending() {
-    pendingMap.forEach(cancel => {
+    pendingMap.forEach((cancel) => {
       cancel && isFunction(cancel) && cancel()
     })
     pendingMap.clear()

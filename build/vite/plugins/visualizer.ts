@@ -7,12 +7,11 @@ import { isReportMode } from '../../utils'
 
 export function configVisualizerConfig() {
   if (isReportMode()) {
-    process.env.REPORT
     return visualizer({
       filename: './node_modules/.cache/visualizer/stats.html',
       open: true,
       gzipSize: true,
-      brotliSize: true
+      brotliSize: true,
     })
   }
   return []

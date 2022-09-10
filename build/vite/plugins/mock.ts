@@ -14,6 +14,6 @@ export function configMockPlugin(isBuild: boolean) {
       import { setupProdMockServer } from '../mock/_createProdMockServer';
 
       setupProdMockServer();
-      `
+      `,
   })
 }

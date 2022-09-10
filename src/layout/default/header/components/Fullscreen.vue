@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const { toggle, isFullscreen } = useFullscreen()
+
+const getTitle = computed(() => (unref(isFullscreen) ? '退出全屏' : '全屏'))
+</script>
+
 <template>
   <div aria-label="Toggle Theme" class="nav-btn" @click="toggle">
     <el-tooltip effect="dark" :content="getTitle" placement="bottom">
@@ -8,9 +14,3 @@
     </el-tooltip>
   </div>
 </template>
-
-<script setup lang="ts">
-const { toggle, isFullscreen } = useFullscreen()
-
-const getTitle = computed(() => (unref(isFullscreen) ? '退出全屏' : '全屏'))
-</script>

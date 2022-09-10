@@ -1,18 +1,3 @@
-<template>
-  <div class="sidebar-logo-container">
-    <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title text-white">{{ title }} </h1>
-      </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title">{{ title }} </h1>
-      </router-link>
-    </transition>
-  </div>
-</template>
-
 <script setup lang="ts" name="SidebarLogo">
 import img from '@/assets/logo.png'
 import { useGlobSetting } from '@/hooks/setting'
@@ -20,13 +5,32 @@ import { useGlobSetting } from '@/hooks/setting'
 defineProps({
   collapse: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const { title } = useGlobSetting()
 const logo = ref(img)
 </script>
+
+<template>
+  <div class="sidebar-logo-container">
+    <transition name="sidebarLogoFade">
+      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 v-else class="sidebar-title text-white">
+          {{ title }}
+        </h1>
+      </router-link>
+      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 class="sidebar-title">
+          {{ title }}
+        </h1>
+      </router-link>
+    </transition>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .sidebarLogoFade-enter-active {

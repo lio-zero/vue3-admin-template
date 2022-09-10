@@ -2,7 +2,7 @@ import { HandlerEnum } from './enum'
 import { updateGrayMode } from '@/logics/theme/updateGrayMode'
 import { updateColorWeak } from '@/logics/theme/updateColorWeak'
 import { useAppStore } from '@/store/modules/app'
-import { ProjectConfig } from '#/config'
+import type { ProjectConfig } from '#/config'
 
 export function baseHandler(event: HandlerEnum, value: any) {
   const appStore = useAppStore()

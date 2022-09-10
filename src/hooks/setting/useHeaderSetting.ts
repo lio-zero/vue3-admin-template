@@ -15,6 +15,6 @@ export function useHeaderSetting() {
   return {
     setHeaderSetting,
 
-    getHeaderFixed
+    getHeaderFixed,
   }
 }

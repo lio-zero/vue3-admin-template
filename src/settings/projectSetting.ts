@@ -6,7 +6,7 @@ const setting: ProjectConfig = {
   // 侧边栏
   menuSetting: {
     collapsed: true,
-    withoutAnimation: false
+    withoutAnimation: false,
   },
   // 过渡设置
   transitionSetting: {
@@ -17,7 +17,7 @@ const setting: ProjectConfig = {
     // 是否仅在 enable: true 时打开页面切换加载
     openPageLoading: true,
     // 是否打开顶部进度条
-    openNProgress: false
+    openNProgress: false,
   },
   // 权限相关信息的存储位置
   permissionCacheType: CacheTypeEnum.LOCAL,
@@ -34,9 +34,9 @@ const setting: ProjectConfig = {
   colorWeak: false,
   headerSetting: {
     // 是否固定头部
-    fixed: true
+    fixed: true,
   },
-  removeAllHttpPending: false
+  removeAllHttpPending: false,
 }
 
 export default setting
