@@ -83,7 +83,12 @@ const resolvePath = (routePath: any) => {
       </AppLink>
     </template>
 
-    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-sub-menu
+      v-else
+      ref="subMenu"
+      :index="resolvePath(item.path)"
+      popper-append-to-body
+    >
       <template #title>
         <Icon v-if="item.meta && item.meta.icon" :size="20" :icon="item.meta && item.meta.icon" />
         <span v-if="item.meta.title">{{ item.meta.title }}</span>

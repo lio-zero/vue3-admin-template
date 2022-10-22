@@ -1,6 +1,28 @@
 {
   "extends": "@antfu",
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "vue/multiline-html-element-content-newline": [
+      "error",
+      {
+        "ignoreWhenEmpty": true,
+        "ignores": [
+          "pre",
+          "textarea"
+        ],
+        "allowEmptyLines": false
+      }
+    ],
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": {
+          "max": 3
+        },
+        "multiline": {
+          "max": 1
+        }
+      }
+    ]
   }
 }

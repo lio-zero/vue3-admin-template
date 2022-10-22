@@ -33,7 +33,12 @@ const toggleSetting = () =>
     </el-tooltip>
   </div>
 
-  <el-drawer v-model="openSetting" title="项目配置" size="330px" @close="toggleSetting">
+  <el-drawer
+    v-model="openSetting"
+    title="项目配置"
+    size="330px"
+    @close="toggleSetting"
+  >
     <div class="v-drawer-body">
       <el-divider> 界面功能 </el-divider>
       <SwitchItem title="固定 header" :event="HandlerEnum.HEADER_FIXED" :def="getHeaderFixed" />

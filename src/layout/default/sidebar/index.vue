@@ -40,7 +40,12 @@ const activeMenu = computed(() => {
         :text-color="variables.menuText"
         mode="vertical"
       >
-        <SidebarItem v-for="item in routes" :key="item.path" :item="item" :base-path="item.path" />
+        <SidebarItem
+          v-for="item in routes"
+          :key="item.path"
+          :item="item"
+          :base-path="item.path"
+        />
       </el-menu>
     </el-scrollbar>
   </div>

@@ -1,8 +1,0 @@
-node_modules
-dist
-*.md
-.vscode
-/public
-/docs
-.husky
-.local
