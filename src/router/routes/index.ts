@@ -3,7 +3,7 @@ import { PageEnum } from '@/enums/pageEnum'
 
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@/router/routes/basic'
 
-const modules = import.meta.glob('./modules/**/*.ts')
+const modules = import.meta.glob('./modules/**/*.ts', { eager: true })
 
 const routeModuleList: AppRouteModule[] = []
 
@@ -13,7 +13,7 @@ Object.keys(modules).forEach((key) => {
   routeModuleList.push(...modList)
 })
 
-export const asyncRoutes = [...routeModuleList]
+export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...routeModuleList]
 
 export const RootRoute: AppRouteRecordRaw = {
   path: '/',
